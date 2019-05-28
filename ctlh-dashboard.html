@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>PDX Hackerspace Dashboard</title>
+<meta name="viewport" content="width=device-width">
+<meta name="description" content="Portland's Hackerspace. Check out our website calendar for our weekly open house and all other events open to the public.">
+
+<link rel="stylesheet" href="https://pdxhackerspace.org/style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="https://pdxhackerspace.org/css/font-awesome/css/font-awesome.min.css">
+<link href="//fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+<style>
+html {
+    font-size: 16px;
+}
+
+.hr-green {
+border-color: green !important;
+}
+</style>
+
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+	<h1>PDX Hackerspace Dashboard</h1>
+	<hr class="star-primary">
+      </div>
+    </div>
+
+    <div class='row'>
+
+      <div class='col-lg-8'>
+
+        <div class='row'>
+          <div class='col'>
+            <h2>Weather</h2>
+            <p id='weather'>
+            </p>
+          </div><!-- col -->
+          <div class='col'>
+            <h2>Trimet</h2>
+            <p id='trimet'>
+            </p>
+          </div><!-- col -->
+        </div><!-- row -->
+
+        <div class='row'>
+          <div class='col'>
+	    <h2>Rooms</h2>
+	<table class='table table-striped'>
+	  <tr>
+	    <th>Room</th><th>Temp</th><th>Hum</th><th>Occ?</th><th>Watts</th>
+	  <tr>
+	    <td>Unit 1</td><td></td><td></td><td></td><td></td>
+	  <tr>
+	  </tr>
+	    <td>Unit 2</td><td><span id='unit2_temperature'></span>°C</td><td><span id='unit2_humidity'></span>%</td><td><span id='unit2_occupied'></span></td>
+	  <tr>
+	  </tr>
+	    <td>Electronics Lab</td><td></td><td></td><td></td><td></td>
+	  <tr>
+	  </tr>
+	    <td>Unit 3</td><td></td><td></td><td></td><td></td>
+	  <tr>
+	  </tr>
+	    <td>Slytherin</td><td></td><td></td><td></td><td></td>
+	  </tr>
+	  </tr>
+	    <td>Hydroponics</td><td></td><td></td><td></td><td></td>
+	  </tr>
+	  </tr>
+	    <td>Garden</td><td></td><td></td><td></td><td></td>
+	  </tr>
+	</table>
+          </div><!-- col -->
+          <div class='col'>
+	    <h2>Facilities</h2>
+	<table class='table table-striped'>
+	  <tr>
+	    <td>Network</td>
+	    <td>rx: <span id='network_rx'></span>ps</td>
+	    <td>tx: <span id='network_tx'></span>ps</td>
+	  </tr>
+	  <tr>
+	    <td>^H Sign</td>
+	    <td></td>
+	    <td></td>
+	  </tr>
+	  <tr>
+	    <td>Buckets</td>
+	    <td></td>
+	    <td></td>
+	  </tr>
+	  <tr>
+	    <td>Unit 2 Projector</td>
+	    <td id="unit2_projector_status"></td>
+	    <td></td>
+	  </tr>
+	  <tr>
+	    <td>Unit 3 Projector</td>
+	    <td id="unit3_projector_status"></td>
+	    <td></td>
+	  </tr>
+	  <tr>
+	    <td>Grill</td>
+	    <td></td>
+	    <td></td>
+	  </tr>
+	  <tr>
+	    <td>Freezer</td>
+	    <td></td>
+	    <td></td>
+	  </tr>
+	</table>
+
+          </div><!-- col -->
+        </div><!-- row -->
+
+        <div class='row'>
+          <div class='col'>
+	    <h2>Access</h2>
+            <ul id="access" class="list-group list-group-flush">
+	    </ul>
+          </div><!-- col -->
+          <div class='col'>
+	    <h2>Printers</h>
+	    <p>
+              <h5 class='printer-name'></h5>
+	      <p class='printer-status'></p>
+	      <p><span class='pages-printed'></span> pages printed</p>
+            </p>
+          </div><!-- col -->
+        </div><!-- row -->
+
+        <div class='row'>
+          <div class='col'>
+	    <h2>Slack</h2>
+          </div><!-- col -->
+          <div class='col'>
+	    <h2>IRC</h2>
+            <ul id='irc' class='list-group list-group-flush'>
+	    </ul>
+          </div><!-- col -->
+        </div><!-- row -->
+
+
+      </div><!-- col-lg-8 -->
+      <div class='col-lg-4 cameras-col'>
+	<h2>Cameras</h2>
+	<ul class='list-group'>
+	  <li class='list-group-item'><h4>Unit 2</h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </li>
+	  <li class='list-group-item'><h4>Unit 3</h4>
+	  <iframe src='https://video.nest.com/embedded/live/WdeSzuB41b?autoplay=1'>
+	  </iframe>
+	  </li>
+	  <li class='list-group-item'><h4>Front 1</h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </li>
+	  <li class='list-group-item'><h4>Front 2</h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </li>
+	  <li class='list-group-item'><h4>Garden</h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </li>
+	  <li class='list-group-item'><h4>Hydroponics</h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </li>
+	</ul>
+	</div><!-- cameras-col -->
+      </div><!- row />
+
+      <div class='row'>
+        <i>Want to hack this?</i> Source is at <a href='https://github.com/romkey/ctrlh-dashboard'>https://github.com/romkey/ctrlh-dashboard</a>
+      </div>
+  </div>
+</div>
+
+<!-- from https://www.cloudmqtt.com/docs/websocket.html -->
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js"
+type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+<script src='http://ctrlh.romkey.com/credentials.js'></script>
+</script>
+<script type="text/javascript">
+// we loaded the credentials in separate JS
+// this is still not at all secure but it allows us to decouple management of this page and its content	    
+// from management of the credentials, and lets us not check them into Github
+// (despite the fact that they're flapping in the window here on the web)
+// they should be for an account with read-only access only to the topic used for the hydroponics
+//  var credentials = new CTLHProjectorMQTT();
+
+client = new Paho.MQTT.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID);
+client.onConnectionLost = onConnectionLost;
+client.onMessageArrived = onMessageArrived;
+var options = {
+  useSSL: false,
+  userName: credentials.MQTT_USERNAME,
+  password: credentials.MQTT_PASSWORD,
+  onSuccess:onConnect,
+  onFailure:doFail
+}
+
+client.connect(options);
+
+function onConnect() {
+  console.log("onConnect");
+  client.subscribe('/network/bandwidth');
+  client.subscribe('/furball');
+  client.subscribe('/projectors'); 
+  client.subscribe('/door'); 
+  client.subscribe('/weather/current'); 
+  client.subscribe('/printer'); 
+  client.subscribe('/irc'); 
+}
+
+function doFail(e){
+  console.log(e);
+}
+
+function onConnectionLost(responseObject) {
+  if(responseObject.errorCode !== 0) {
+    console.log("onConnectionLost:"+responseObject.errorMessage);
+  }
+}
+
+// shamelessly taken from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
+function formatBytes(bytes, decimals = 2) {
+  if (bytes === 0) return '0 Bytes';
+
+  const k = 1024;
+  const dm = decimals < 0 ? 0 : decimals;
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+function onMessageArrived(message) {
+  $('hr').addClass('hr-green');
+  setTimeout(function () {
+    $('hr').removeClass('hr-green');
+  }, 1000);
+
+  console.log('onMessageArrived:' + message.payloadString);
+  console.log('topic is ' + message.destinationName);
+
+  if(message.destinationName == '/network/bandwidth') 
+    onNetworkBandwidth(message); 
+
+  if(message.destinationName == '/furball') 
+    onFurball(message); 
+ 
+ if(message.destinationName == '/projectors') 
+    onProjectors(message); 
+
+ if(message.destinationName == '/door') 
+    onDoor(message); 
+
+ if(message.destinationName == '/weather/current') 
+    onWeather(message); 
+
+ if(message.destinationName == '/printer') 
+    onPrinter(message); 
+
+ if(message.destinationName == '/irc') 
+    onIRC(message); 
+}
+
+
+function onNetworkBandwidth(message) {
+  var bandwidth = JSON.parse(message.payloadString);
+
+  $("#network_rx").text(formatBytes(Number(bandwidth["rx_bps"])));
+  $("#network_tx").text(formatBytes(Number(bandwidth["tx_bps"])));
+}
+
+function onFurball(message) {
+  var furball = JSON.parse(message.payloadString);
+
+  $("#unit2_temperature").text(furball["environment"]["temperature"]); 
+  $("#unit2_humidity").text(furball["environment"]["humidity"]); 
+  $("#unit2_occupied").text(furball["presence"] ? "y" : "n");
+}
+
+function onProjectors(message) {
+  var projectors = JSON.parse(message.payloadString); 
+
+  if(projectors["name"] == "Unit 2")
+    id = "#unit2_projector_status";
+
+  if(projectors["name"] == "Unit 3")
+    id = "#unit3_projector_status";
+
+  $(id).text(projectors["status"]);
+}
+
+function onDoor(message) {
+  var door = JSON.parse(message.payloadString);
+
+  if(door["message"])
+    return;
+
+  $("#access").prepend("<li class='list-group-item'>" + door["person"] + " " + door["action"] + " " + door["unit"] + " " + door["door"]);
+}
+
+function onWeather(message) {
+  var w = JSON.parse(message.payloadString);
+
+  $("#weather").text(w["weather"]["conditions_short"] + ": " + w["weather"]["temperature"] + "°C, " + w["weather"]["humidity"] + "%, " + w["weather"]["conditions_long"]);
+}
+
+function onPrinter(message) {
+  var printer = JSON.parse(message.payloadString);
+
+  $(".printer-name").text(printer["model"]); 
+  $(".printer-status").text(printer["status"]); 
+  $(".pages-printed").text(printer["total_page_count"]);
+}
+
+function onIRC(message) {
+  var msg = JSON.parse(message.payloadString);
+
+  $('#irc').prepend("<li class='list-group-item'>" + msg["sender"]["nick"] +  ": " + msg["message"] + "</li>");
+}
+</script>
+
+</body>
+</html>

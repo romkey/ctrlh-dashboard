@@ -72,13 +72,13 @@ time, #last_updated {
 	    <td>Unit 2</td><td><span id='unit2_temperature'></span>°C</td><td><span id='unit2_humidity'></span>%</td><td><span id='unit2_occupied'></span></td>
 	  </tr>
 	  <tr>
-	    <td>Electronics Lab</td><td><span id='electronics_lab_temperature'></span>°C</td><td><span id='electronics_lab_humidity'></span>%</td><td><span id='electronics_lab_occupied'></span></td>
+	    <td>Electronics Lab</td><td><span id='electronics_lab_temperature'></span></td><td><span id='electronics_lab_humidity'></span></td><td><span id='electronics_lab_occupied'></span></td>
 	  </tr>
 	  <tr>
 	    <td>Unit 3</td><td></td><td></td><td></td><td></td>
 	  </tr>
 	  <tr>
-	    <td>Slytherin</td><td></td><td></td><td></td><td></td>
+	    <td>Slytherin</td><td><span id='slytherin_temperature'></span>°C</td><td><span id='slytherin_humidity'></span>%</td><td><span id='slytherin_occupied'></span></td>
 	  </tr>
 	  <tr>
 	    <td>Hydroponics</td><td></td><td></td><td></td><td></td>
@@ -309,7 +309,7 @@ function onFurball(message) {
   var unit;
 
   if(furball["id"] == "067746e8-7a2f-4f6e-bb59-e1b2043b37f3") 
-    unit = "electronics_lab"; 
+    unit = "slytherin"; 
 
   if(furball["id"] == "04001f9a-122b-4045-84f4-69b7c7318250")
     unit = "unit2";

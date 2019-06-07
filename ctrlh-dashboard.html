@@ -353,7 +353,8 @@ function onDoor(message) {
 function onWeather(message) {
   var w = JSON.parse(message.payloadString);
 
-  $("#weather").text(w["weather"]["conditions_short"] + ": " + w["weather"]["temperature"] + "°C, " + w["weather"]["humidity"] + "%, " + w["weather"]["conditions_long"]);
+  $("#weather").html(w["weather"]["conditions_short"] + ": " + w["weather"]["temperature"] + "°C, " + w["weather"]["humidity"] + "%, " + w["weather"]["conditions_long"] + "<br/>" + getTimeagostamp(w["timestamp"]));
+  activateTimeago(); 
 }
 
 function onPrinter(message) {
@@ -378,8 +379,9 @@ function onAQI(message) {
   msg["observations"].forEach(function(item, index) {
   text += item["name"] + " AQI is " + item["aqi"] + " (" + item["condition"]  + ")<br />";
   });
-
+  text +=  getTimeagostamp(msg["timestamp"]);
   $('#aqi').html(text);
+  activateTimeago(); 
 }
 
 </script>

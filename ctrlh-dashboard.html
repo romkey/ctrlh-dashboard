@@ -355,11 +355,12 @@ function activateTimeago() {
 
 function onDoor(message) {
   var door = JSON.parse(message.payloadString);
+  var access = door["access"];
 
-  if(door["message"])
+  if(!access || access["message"])
     return;
 
-  $("#access").prepend("<li class='list-group-item'>" + door["person"] + " " + door["action"] + " " + door["unit"] + " " + door["door"] + "<br/>" + getTimeagostamp(door["timestamp"]) + "</li>");
+  $("#access").prepend("<li class='list-group-item'>" + access["person"] + " " + access["action"] + " " + access["unit"] + " " + access["door"] + "<br/>" + getTimeagostamp(door["timestamp"]) + "</li>");
   activateTimeago(); 
 }
 
@@ -372,10 +373,12 @@ function onWeather(message) {
 
 function onPrinter(message) {
   var printer = JSON.parse(message.payloadString);
+  var system = printer["system"];
+  var status = printer["status"];
 
-  $(".printer-name").text(printer["model"]); 
-  $(".printer-status").text(printer["status"]); 
-  $(".pages-printed").text(printer["total_page_count"]);
+  $(".printer-name").text(system["model"]); 
+  $(".printer-status").text(status["status"]); 
+  $(".pages-printed").text(status["total_page_count"]);
 }
 
 function onIRC(message) {

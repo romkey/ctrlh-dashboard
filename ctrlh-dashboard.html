@@ -92,9 +92,12 @@ time, #last_updated {
 	    <h2>Facilities</h2>
 	<table class='table table-striped'>
 	  <tr>
-	    <td>Network</td>
+	    <td rowspan=2>Network</td>
 	    <td>rx: <span id='network_rx'></span>ps</td>
 	    <td>tx: <span id='network_tx'></span>ps</td>
+	  </tr>
+          <tr>
+	    <td>active hosts</td><td id='network_active'></td>
 	  </tr>
 	  <tr>
 	    <td>^H Sign</td>
@@ -222,7 +225,8 @@ client.connect(options);
 
 function onConnect() {
   console.log("onConnect");
-  client.subscribe('/network/bandwidth');
+  client.subscribe('/network/bandwidth'); 
+  client.subscribe('/network/active_hosts');
   client.subscribe('/furball');
   client.subscribe('/projectors'); 
   client.subscribe('/door'); 
@@ -273,6 +277,9 @@ function onMessageArrived(message) {
   if(message.destinationName == '/network/bandwidth') 
     onNetworkBandwidth(message); 
 
+  if(message.destinationName == '/network/active_hosts')
+    onNetworkActive(message);
+
   if(message.destinationName == '/furball') 
     onFurball(message); 
  
@@ -297,10 +304,16 @@ function onMessageArrived(message) {
 
 
 function onNetworkBandwidth(message) {
-  var bandwidth = JSON.parse(message.payloadString);
+  var network = JSON.parse(message.payloadString);
 
-  $("#network_rx").text(formatBytes(Number(bandwidth["rx_bps"])));
-  $("#network_tx").text(formatBytes(Number(bandwidth["tx_bps"])));
+  $("#network_rx").text(formatBytes(Number(network["bandwidth"]["rx_bps"])));
+  $("#network_tx").text(formatBytes(Number(network["bandwidth"]["tx_bps"])));
+}
+
+function onNetworkActive(message) {
+  var network = JSON.parse(message.payloadString);
+console.log(network);
+  $("#network_active").text(network["active_hosts"]["arp_table_length"]);
 }
 
 function onFurball(message) {

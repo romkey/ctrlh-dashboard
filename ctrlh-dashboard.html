@@ -45,7 +45,7 @@ time, #last_updated {
 
         <div class='row'>
           <div class='col'>
-            <h2>Weather</h2>
+            <h2><a href='graph.html?uuid=691faad6-bad4-4c87-838b-091ce650e4d4'>Weather</a></h2>
             <p id='weather'>
             </p>
             <p id='aqi'>
@@ -69,7 +69,7 @@ time, #last_updated {
 	    <td>Unit 1</td><td></td><td></td><td></td><td></td>
 	  </tr>
 	  <tr>
-	    <td>Unit 2</td><td><span id='unit2_temperature'></span>°C</td><td><span id='unit2_humidity'></span>%</td><td><span id='unit2_occupied'></span></td>
+	    <td><a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a></td><td><span id='unit2_temperature'></span>°C</td><td><span id='unit2_humidity'></span>%</td><td><span id='unit2_occupied'></span></td>
 	  </tr>
 	  <tr>
 	    <td>Electronics Lab</td><td><span id='electronics_lab_temperature'></span></td><td><span id='electronics_lab_humidity'></span></td><td><span id='electronics_lab_occupied'></span></td>
@@ -78,7 +78,7 @@ time, #last_updated {
 	    <td>Unit 3</td><td></td><td></td><td></td><td></td>
 	  </tr>
 	  <tr>
-	    <td>Slytherin</td><td><span id='slytherin_temperature'></span>°C</td><td><span id='slytherin_humidity'></span>%</td><td><span id='slytherin_occupied'></span></td>
+	    <td><a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a></td><td><span id='slytherin_temperature'></span>°C</td><td><span id='slytherin_humidity'></span>%</td><td><span id='slytherin_occupied'></span></td>
 	  </tr>
 	  <tr>
 	    <td>Hydroponics</td><td></td><td></td><td></td><td></td>
@@ -92,7 +92,7 @@ time, #last_updated {
 	    <h2>Facilities</h2>
 	<table class='table table-striped'>
 	  <tr>
-	    <td rowspan=2>Network</td>
+	    <td rowspan=2><a href='graph.html?uuid=7db061e9-d73a-47a0-a4ab-f3d097da5504'>Network</a></td>
 	    <td>rx: <span id='network_rx'></span>ps</td>
 	    <td>tx: <span id='network_tx'></span>ps</td>
 	  </tr>
@@ -136,12 +136,12 @@ time, #last_updated {
 
         <div class='row'>
           <div class='col'>
-	    <h2>Access</h2>
+	    <h2><a href='graph.html?uuid=03bf9198-1fe5-480f-b3c7-efdf628d2b8a'>Access</a></h2>
             <ul id="access" class="list-group list-group-flush">
 	    </ul>
           </div><!-- col -->
           <div class='col'>
-	    <h2>Printers</h>
+	    <h2><a href='graph.html?uuid=4f265e2c-3c08-4635-8e50-8400d5294c29'>Printers</a></h>
 	    <p>
               <h5 class='printer-name'></h5>
 	      <p class='printer-status'></p>
@@ -155,7 +155,7 @@ time, #last_updated {
 	    <h2>Slack</h2>
           </div><!-- col -->
           <div class='col'>
-	    <h2>IRC</h2>
+	    <h2><a href='graph.html?uuid=b2dbbde0-40e0-4bc6-80b3-fcd218f8a996'>IRC</a></h2>
             <ul id='irc' class='list-group list-group-flush'>
 	    </ul>
           </div><!-- col -->
@@ -384,7 +384,7 @@ function onPrinter(message) {
 function onIRC(message) {
   var msg = JSON.parse(message.payloadString);
 
-  $('#irc').prepend("<li class='list-group-item'>" + msg["sender"]["nick"] +  ": " + msg["message"] + "<br/>" + getTimeagostamp(msg["timestamp"]) + "</li>");
+  $('#irc').prepend("<li class='list-group-item'>" + msg["message"]["nick"] +  ": " + msg["message"]["message"] + "<br/>" + getTimeagostamp(msg["timestamp"]) + "</li>");
   activateTimeago(); 
 }
 

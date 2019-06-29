@@ -166,18 +166,27 @@ time, #last_updated {
       <div class='col-lg-4 cameras-col'>
 	<h2>Cameras</h2>
 	<ul class='list-group'>
-	  <li class='list-group-item'><h4>Unit 2</h4>
+	  <li class='list-group-item'id='unit-1-window-container'><h4>Unit 1 Window</h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </li>
+	  <li class='list-group-item' id='unit-2-entrance-container'><h4>Unit 2 Entry</h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </li>
+	  <li class='list-group-item' id='unit-2-entry2-container'><h4>Unit 2 Entry 2</h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </li>
+	  <li class='list-group-item' id='slytherin-camera'><h4>Slytherin</h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </li>
+	  <li class='list-group-item' id='unit-2-camera'><h4>Unit 2</h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </li>
+	  <li class='list-group-item' id='camera-6'><h4>Garden</h4>
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	  </li>
 	  <li class='list-group-item'><h4>Unit 3</h4>
 	  <iframe src='https://video.nest.com/embedded/live/WdeSzuB41b?autoplay=1'>
 	  </iframe>
-	  </li>
-	  <li class='list-group-item'><h4>Front 1</h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	  </li>
-	  <li class='list-group-item'><h4>Front 2</h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	  </li>
 	  <li class='list-group-item'><h4>Garden</h4>
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
@@ -234,6 +243,7 @@ function onConnect() {
   client.subscribe('/printer'); 
   client.subscribe('/irc'); 
   client.subscribe('/aqi'); 
+  client.subscribe('/cameras'); 
 }
 
 function doFail(e){
@@ -300,6 +310,9 @@ function onMessageArrived(message) {
 
  if(message.destinationName == '/aqi') 
     onAQI(message); 
+
+ if(message.destinationName ==  '/cameras')
+    onCamera(message);
 }
 
 
@@ -389,7 +402,7 @@ function onIRC(message) {
 }
 
 function onAQI(message) {
-  var msg = JSON.parse(message.payloadString);
+  var msg = JSON.parse(message.payloadString); 
   var text = "";
 
   msg["observations"].forEach(function(item, index) {
@@ -400,6 +413,39 @@ function onAQI(message) {
   activateTimeago(); 
 }
 
+function onCamera(message) {
+  var msg = JSON.parse(message.payloadString); 
+  var container = '';
+
+  if(msg['id'] == '3b22ad64-3439-4e94-971f-13f055878dfb') {
+    container = '#unit-2-entrance-container';
+  }
+
+  if(msg['id'] == '736ec20e-1320-48c2-9a6b-2376f97e3d52') {
+    container = '#unit-1-window-container';
+  }
+
+  if(msg['id'] == '8401df69-1edf-4ac2-bd70-5076bf84c0be') {
+    container = '#unit-2-entry2-container';
+  }
+
+  if(msg['id'] == 'fc4c1edb-c8e3-4771-9879-290358dbf746') {
+    container = '#slytherin-camera';
+  }
+
+  if(msg['id'] == '03eca981-8a78-467f-868d-2af2159b34dd') {
+    container = '#unit-2-camera';
+  }
+
+  if(msg['id'] == '6f971443-b685-4a2b-86fb-65522c0ab775') {
+    container = '#camera-6';
+  }
+
+  $(container + ' img').attr('src', 'data:' + msg['image']['mime_type'] + ';base64,' + msg['image']['data']);
+  $(container + ' time').remove();
+  $(container).append(getTimeagostamp(msg['timestamp']));
+  activateTimeago();
+}
 </script>
 
 </body>

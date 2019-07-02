@@ -147,6 +147,10 @@ time, #last_updated {
 	      <p class='printer-status'></p>
 	      <p><span class='pages-printed'></span> pages printed</p>
             </p>
+	    <div id='dremel-cam'>
+	    <h5><a href='graph.html?uuid=c0603a32-7817-4922-b661-2a6be57b6bd0'>Dremel</a></h5>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	    </div>
           </div><!-- col -->
         </div><!-- row -->
 
@@ -166,22 +170,22 @@ time, #last_updated {
       <div class='col-lg-4 cameras-col'>
 	<h2>Cameras</h2>
 	<ul class='list-group'>
-	  <li class='list-group-item'id='unit-1-window-container'><h4>Unit 1 Window</h4>
+	  <li class='list-group-item'id='unit-1-window-container'><h4><a href='graph.html?uuid=736ec20e-1320-48c2-9a6b-2376f97e3d52'>Unit 1 Window</a></h4>
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	  </li>
-	  <li class='list-group-item' id='unit-2-entrance-container'><h4>Unit 2 Entry</h4>
+	  <li class='list-group-item' id='unit-2-entrance-container'><h4><a href='graph.html?uuid=3b22ad64-3439-4e94-971f-13f055878dfb'>Unit 2 Entry</a></h4>
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	  </li>
-	  <li class='list-group-item' id='unit-2-entry2-container'><h4>Unit 2 Entry 2</h4>
+	  <li class='list-group-item' id='unit-2-entry2-container'><h4><a href='graph.html?uuid=8401df69-1edf-4ac2-bd70-5076bf84c0be'>Unit 2 Entry 2</a></h4>
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	  </li>
-	  <li class='list-group-item' id='slytherin-camera'><h4>Slytherin</h4>
+	  <li class='list-group-item' id='slytherin-camera'><h4><a href='graph.html?uuid=fc4c1edb-c8e3-4771-9879-290358dbf746'>Slytherin</a></h4>
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	  </li>
-	  <li class='list-group-item' id='unit-2-camera'><h4>Unit 2</h4>
+	  <li class='list-group-item' id='unit-2-camera'><h4><a href='graph.html?uuid=03eca981-8a78-467f-868d-2af2159b34dd'>Unit 2</a></h4>
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	  </li>
-	  <li class='list-group-item' id='camera-6'><h4>Garden</h4>
+	  <li class='list-group-item' id='electronics-lab-camera'><h4><a href='graph.html?uuid=3b22ad64-3439-4e94-971f-13f055878dfb'>Electronics Lab</a></h4>
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	  </li>
 	  <li class='list-group-item'><h4>Unit 3</h4>
@@ -275,7 +279,7 @@ function onMessageArrived(message) {
     $('hr').removeClass('hr-green');
   }, 1000);
 
-  console.log('onMessageArrived:' + message.payloadString);
+//  console.log('onMessageArrived:' + message.payloadString);
   console.log('topic is ' + message.destinationName);
 
   data = JSON.parse(message.payloadString);
@@ -325,7 +329,7 @@ function onNetworkBandwidth(message) {
 
 function onNetworkActive(message) {
   var network = JSON.parse(message.payloadString);
-console.log(network);
+
   $("#network_active").text(network["active_hosts"]["arp_table_length"]);
 }
 
@@ -417,28 +421,38 @@ function onCamera(message) {
   var msg = JSON.parse(message.payloadString); 
   var container = '';
 
-  if(msg['id'] == '3b22ad64-3439-4e94-971f-13f055878dfb') {
+  switch(msg['id']) {
+  case '3b22ad64-3439-4e94-971f-13f055878dfb':
     container = '#unit-2-entrance-container';
-  }
+    break;
 
-  if(msg['id'] == '736ec20e-1320-48c2-9a6b-2376f97e3d52') {
+  case '736ec20e-1320-48c2-9a6b-2376f97e3d52':
     container = '#unit-1-window-container';
-  }
+    break;
 
-  if(msg['id'] == '8401df69-1edf-4ac2-bd70-5076bf84c0be') {
+  case '8401df69-1edf-4ac2-bd70-5076bf84c0be':
     container = '#unit-2-entry2-container';
-  }
+    break;
 
-  if(msg['id'] == 'fc4c1edb-c8e3-4771-9879-290358dbf746') {
+  case 'fc4c1edb-c8e3-4771-9879-290358dbf746':
     container = '#slytherin-camera';
-  }
+    break;
 
-  if(msg['id'] == '03eca981-8a78-467f-868d-2af2159b34dd') {
+  case '03eca981-8a78-467f-868d-2af2159b34dd':
     container = '#unit-2-camera';
-  }
+    break;
 
-  if(msg['id'] == '6f971443-b685-4a2b-86fb-65522c0ab775') {
+  case '6f971443-b685-4a2b-86fb-65522c0ab775':
     container = '#camera-6';
+    break;
+
+  case 'c0603a32-7817-4922-b661-2a6be57b6bd0':
+    container = '#dremel-cam';
+    break;
+
+  default:
+    console.log("onCamera: unknown ID " + msg['id']);
+    return;
   }
 
   $(container + ' img').attr('src', 'data:' + msg['image']['mime_type'] + ';base64,' + msg['image']['data']);

@@ -277,6 +277,12 @@ function make_table_subsection(key, headings) {
     });
 }
 
+function fill_image_subsection(data, key, subkey) {
+    Object.keys(data).forEach(function(sub, index) {
+    // do something
+    });
+}
+
 function make_chart(json, status, jqXHR) {
   var data = json[0].data;
   var has_system = Object.keys(data).indexOf('system') != -1;
@@ -311,8 +317,6 @@ function make_chart(json, status, jqXHR) {
             }
 	  });
 
-  console.log("strings", strings);
-
         if(strings.length > 0) {
           strings = strings.sort();
 
@@ -331,8 +335,6 @@ function make_chart(json, status, jqXHR) {
             strings.forEach(function(item2, index) {
               current_obj[item2] = item["data"][key][item2];
               });
-
-    console.log("cmp", last_obj, current_obj);
 
             if(_.isEqual(last_obj, current_obj)) {
               repeat_count++;

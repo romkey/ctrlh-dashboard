@@ -226,15 +226,7 @@ time, #last_updated {
 client = new Paho.MQTT.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID);
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
-var options = {
-  useSSL: false,
-  userName: credentials.MQTT_USERNAME,
-  password: credentials.MQTT_PASSWORD,
-  onSuccess:onConnect,
-  onFailure:doFail
-}
-
-client.connect(options);
+mqtt_connect();
 
 function onConnect() {
   console.log("onConnect");
@@ -250,14 +242,31 @@ function onConnect() {
   client.subscribe('/cameras'); 
 }
 
-function doFail(e){
+function mqtt_connect() {
+  var options = {
+    useSSL: false,
+    userName: credentials.MQTT_USERNAME,
+    password: credentials.MQTT_PASSWORD,
+    onSuccess:onConnect,
+    onFailure:doFail
+  };
+
+  client.connect(options); 
+}
+
+
+function doFail(e) {
   console.log(e);
+
+  mqtt_connect(); 
 }
 
 function onConnectionLost(responseObject) {
   if(responseObject.errorCode !== 0) {
     console.log("onConnectionLost:"+responseObject.errorMessage);
   }
+
+  mqtt_connect(); 
 }
 
 // shamelessly taken from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
@@ -374,8 +383,10 @@ function onDoor(message) {
   var door = JSON.parse(message.payloadString);
   var access = door["access"];
 
-  if(!access || access["message"])
+  if(!access || access["message"] || door === message)
     return;
+
+  onDoor.last_door_msg = message;
 
   $("#access").prepend("<li class='list-group-item'>" + access["person"] + " " + access["action"] + " " + access["unit"] + " " + access["door"] + "<br/>" + getTimeagostamp(door["timestamp"]) + "</li>");
   activateTimeago(); 
@@ -400,6 +411,11 @@ function onPrinter(message) {
 
 function onIRC(message) {
   var msg = JSON.parse(message.payloadString);
+
+  if(onIRC.last_irc_msg === message)
+    return;
+
+  onIRC.last_irc_msg = message;
 
   $('#irc').prepend("<li class='list-group-item'>" + msg["message"]["nick"] +  ": " + msg["message"]["message"] + "<br/>" + getTimeagostamp(msg["timestamp"]) + "</li>");
   activateTimeago(); 

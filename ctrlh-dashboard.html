@@ -383,10 +383,11 @@ function onDoor(message) {
   var door = JSON.parse(message.payloadString);
   var access = door["access"];
 
-  if(!access || access["message"] || door === message)
+  if(!access || access["message"] ||onDoor.last_door_msg == message.payloadString)
     return;
 
-  onDoor.last_door_msg = message;
+console.log(onDoor.last_door_msg, message);
+  onDoor.last_door_msg = message.payloadString;
 
   $("#access").prepend("<li class='list-group-item'>" + access["person"] + " " + access["action"] + " " + access["unit"] + " " + access["door"] + "<br/>" + getTimeagostamp(door["timestamp"]) + "</li>");
   activateTimeago(); 
@@ -412,10 +413,12 @@ function onPrinter(message) {
 function onIRC(message) {
   var msg = JSON.parse(message.payloadString);
 
-  if(onIRC.last_irc_msg === message)
+  if(onIRC.last_irc_msg == message.payloadString)
     return;
 
-  onIRC.last_irc_msg = message;
+console.log(onIRC.last_irc_msg, message.payloadString);
+
+  onIRC.last_irc_msg = message; 
 
   $('#irc').prepend("<li class='list-group-item'>" + msg["message"]["nick"] +  ": " + msg["message"]["message"] + "<br/>" + getTimeagostamp(msg["timestamp"]) + "</li>");
   activateTimeago(); 

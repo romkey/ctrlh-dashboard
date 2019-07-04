@@ -110,6 +110,16 @@ time, #last_updated {
 	    <td></td>
 	  </tr>
 	  <tr>
+	    <td>Vendo LEDs</td>
+	    <td></td>
+	    <td></td>
+	  </tr>
+	  <tr>
+	    <td>LED strip</td>
+	    <td></td>
+	    <td></td>
+	  </tr>
+	  <tr>
 	    <td>Unit 2 Projector</td>
 	    <td id="unit2_projector_status"></td>
 	    <td></td>
@@ -118,6 +128,11 @@ time, #last_updated {
 	    <td>Unit 3 Projector</td>
 	    <td id="unit3_projector_status"></td>
 	    <td></td>
+	  </tr>
+	  <tr>
+	    <td><a href='graph.html?uuid=4cf5765b-6a1a-4f05-879f-1285e092beb3'>Vendo</a></td>
+	    <td><span id='vendo-temperature'></span>°C</td>
+	    <td><span id='vendo-humidity'></span>%</td>
 	  </tr>
 	  <tr>
 	    <td>Grill</td>
@@ -240,6 +255,9 @@ function onConnect() {
   client.subscribe('/irc'); 
   client.subscribe('/aqi'); 
   client.subscribe('/cameras'); 
+
+  // vendo
+  client.subscribe('/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3');
 }
 
 function mqtt_connect() {
@@ -330,6 +348,9 @@ function onMessageArrived(message) {
 
  if(message.destinationName ==  '/cameras')
     onCamera(message);
+
+  if(message.destinationName == '/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3')
+    onVendo(message);
 }
 
 
@@ -482,6 +503,13 @@ function onCamera(message) {
   $(container + ' time').remove();
   $(container).append(getTimeagostamp(msg['timestamp']));
   activateTimeago();
+}
+
+function onVendo(message) {
+  var msg = JSON.parse(message.payloadString); 
+
+  $('#vendo-temperature').text(msg['environment']['temperature']); 
+  $('#vendo-humidity').text(msg['environment']['humidity']); 
 }
 </script>
 

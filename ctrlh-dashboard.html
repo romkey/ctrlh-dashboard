@@ -223,7 +223,7 @@ time, #last_updated {
 // they should be for an account with read-only access only to the topic used for the hydroponics
 //  var credentials = new CTLHProjectorMQTT();
 
-client = new Paho.MQTT.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID);
+client = new Paho.MQTT.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
 mqtt_connect();
@@ -251,12 +251,15 @@ function mqtt_connect() {
     onFailure:doFail
   };
 
+console.log("mqtt connect");
   client.connect(options); 
 }
 
 
 function doFail(e) {
   console.log(e);
+
+console.log("doFail");
 
   mqtt_connect(); 
 }
@@ -266,6 +269,7 @@ function onConnectionLost(responseObject) {
     console.log("onConnectionLost:"+responseObject.errorMessage);
   }
 
+console.log("connection lost");
   mqtt_connect(); 
 }
 

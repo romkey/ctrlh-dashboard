@@ -418,7 +418,7 @@ function onIRC(message) {
 
 console.log(onIRC.last_irc_msg, message.payloadString);
 
-  onIRC.last_irc_msg = message; 
+  onIRC.last_irc_msg = message.payloadString; 
 
   $('#irc').prepend("<li class='list-group-item'>" + msg["message"]["nick"] +  ": " + msg["message"]["message"] + "<br/>" + getTimeagostamp(msg["timestamp"]) + "</li>");
   activateTimeago(); 

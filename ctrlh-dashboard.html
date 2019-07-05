@@ -247,7 +247,7 @@ function onConnect() {
   console.log("onConnect");
   client.subscribe('/network/bandwidth'); 
   client.subscribe('/network/active_hosts');
-  client.subscribe('/furball');
+//  client.subscribe('/furball');
   client.subscribe('/projectors'); 
   client.subscribe('/door'); 
   client.subscribe('/weather/current'); 
@@ -258,6 +258,10 @@ function onConnect() {
 
   // vendo
   client.subscribe('/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3');
+  // Unit 2 furball 
+  client.subscribe('/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250'); 
+  // Slytherin 
+  client.subscribe('/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3'); 
 }
 
 function mqtt_connect() {
@@ -325,9 +329,6 @@ function onMessageArrived(message) {
   if(message.destinationName == '/network/active_hosts')
     onNetworkActive(message);
 
-  if(message.destinationName == '/furball') 
-    onFurball(message); 
- 
  if(message.destinationName == '/projectors') 
     onProjectors(message); 
 
@@ -351,6 +352,12 @@ function onMessageArrived(message) {
 
   if(message.destinationName == '/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3')
     onVendo(message);
+
+  if(message. destinationName == '/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250')
+    onFurball(message, "unit2"); 
+
+  if(message. destinationName == '/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3')
+    onFurball(message, "slytherin"); 
 }
 
 
@@ -367,16 +374,8 @@ function onNetworkActive(message) {
   $("#network_active").text(network["active_hosts"]["arp_table_length"]);
 }
 
-function onFurball(message) {
+function onFurball(message, unit) {
   var furball = JSON.parse(message.payloadString);
-
-  var unit;
-
-  if(furball["id"] == "067746e8-7a2f-4f6e-bb59-e1b2043b37f3") 
-    unit = "slytherin"; 
-
-  if(furball["id"] == "04001f9a-122b-4045-84f4-69b7c7318250")
-    unit = "unit2";
 
   $("#" + unit + "_temperature").text(furball["environment"]["temperature"]); 
   $("#" + unit + "_humidity").text(furball["environment"]["humidity"]); 

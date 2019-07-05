@@ -163,7 +163,20 @@ time, #last_updated {
 	      <p><span class='pages-printed'></span> pages printed</p>
             </p>
 	    <div id='dremel-cam'>
-	    <h5><a href='graph.html?uuid=c0603a32-7817-4922-b661-2a6be57b6bd0'>Dremel</a></h5>
+	    <h5><a href='graph.html?uuid=7bfff065-f2e8-406d-b8d1-734a84c4c222'>Dremel</a></h5>
+	      <h6 id='dremel-status'></h6>
+  	      <div id='dremel-job' style='display: none'>
+		<ul>
+		  <li>Filename: <span id='dremel-filename'></span></li>
+		  <li>Progress: <span id='dremel-progress'><span>%</li>
+		  <li>Time Remaining: <span id='dremel-print-time'></span> of <span id='dremel-print-time-remaining'></span> sec</li>
+                </ul>
+	      </div>
+	      <table class='table'>
+		<tr><th>temp</th><th>actual</th><th>target</th></tr>
+		<tr><td>tool</td><td><span id='dremel-tool-temp'></span>°C</td><td><span id='dremel-tool-temp-target'></span>°C</td></tr>
+		<tr><td>bed</td><td><span id='dremel-bed-temp'></span>°C</td><td><span id='dremel-bed-temp-target'></span>°C</td></tr>
+	      </table>
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	    </div>
           </div><!-- col -->
@@ -243,6 +256,17 @@ client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
 mqtt_connect();
 
+// cameras
+var cameras = [
+  { uuid: '3b22ad64-3439-4e94-971f-13f055878dfb', container: '#unit-2-entrance-container' },
+  { uuid: '736ec20e-1320-48c2-9a6b-2376f97e3d52', container: '#unit-1-window-container' },
+  { uuid: '8401df69-1edf-4ac2-bd70-5076bf84c0be', container: '#unit-2-entry2-container' },
+  { uuid: 'fc4c1edb-c8e3-4771-9879-290358dbf746', container: '#slytherin-camera' },
+  { uuid: '03eca981-8a78-467f-868d-2af2159b34dd', container: '#unit-2-camera' },
+  { uuid: '6f971443-b685-4a2b-86fb-65522c0ab775', container: '#camera-6' },
+  { uuid: 'c0603a32-7817-4922-b661-2a6be57b6bd0', container: '#dremel-cam' }
+];
+
 function onConnect() {
   console.log("onConnect");
   client.subscribe('/network/bandwidth'); 
@@ -254,14 +278,19 @@ function onConnect() {
   client.subscribe('/printer'); 
   client.subscribe('/irc'); 
   client.subscribe('/aqi'); 
-  client.subscribe('/cameras'); 
 
   // vendo
   client.subscribe('/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3');
   // Unit 2 furball 
   client.subscribe('/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250'); 
   // Slytherin 
-  client.subscribe('/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3'); 
+  client.subscribe('/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3');
+  // Dremel
+  client.subscribe('/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222');
+
+  cameras.forEach(function(item, index) {
+    client.subscribe('/homebus/device/' + item["uuid"]);
+    });
 }
 
 function mqtt_connect() {
@@ -347,17 +376,22 @@ function onMessageArrived(message) {
  if(message.destinationName == '/aqi') 
     onAQI(message); 
 
- if(message.destinationName ==  '/cameras')
-    onCamera(message);
-
   if(message.destinationName == '/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3')
     onVendo(message);
 
-  if(message. destinationName == '/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250')
+  if(message.destinationName == '/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250')
     onFurball(message, "unit2"); 
 
-  if(message. destinationName == '/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3')
+  if(message.destinationName == '/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3')
     onFurball(message, "slytherin"); 
+
+  if(message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222')
+    onDremel(message);
+
+  cameras.forEach(function(item, index) {
+    if(message.destinationName == '/homebus/device/' + item['uuid'])
+      onCamera(message, item['container']);
+  });
 }
 
 
@@ -460,43 +494,8 @@ function onAQI(message) {
   activateTimeago(); 
 }
 
-function onCamera(message) {
+function onCamera(message, container) {
   var msg = JSON.parse(message.payloadString); 
-  var container = '';
-
-  switch(msg['id']) {
-  case '3b22ad64-3439-4e94-971f-13f055878dfb':
-    container = '#unit-2-entrance-container';
-    break;
-
-  case '736ec20e-1320-48c2-9a6b-2376f97e3d52':
-    container = '#unit-1-window-container';
-    break;
-
-  case '8401df69-1edf-4ac2-bd70-5076bf84c0be':
-    container = '#unit-2-entry2-container';
-    break;
-
-  case 'fc4c1edb-c8e3-4771-9879-290358dbf746':
-    container = '#slytherin-camera';
-    break;
-
-  case '03eca981-8a78-467f-868d-2af2159b34dd':
-    container = '#unit-2-camera';
-    break;
-
-  case '6f971443-b685-4a2b-86fb-65522c0ab775':
-    container = '#camera-6';
-    break;
-
-  case 'c0603a32-7817-4922-b661-2a6be57b6bd0':
-    container = '#dremel-cam';
-    break;
-
-  default:
-    console.log("onCamera: unknown ID " + msg['id']);
-    return;
-  }
 
   $(container + ' img').attr('src', 'data:' + msg['image']['mime_type'] + ';base64,' + msg['image']['data']);
   $(container + ' time').remove();
@@ -509,6 +508,27 @@ function onVendo(message) {
 
   $('#vendo-temperature').text(msg['environment']['temperature']); 
   $('#vendo-humidity').text(msg['environment']['humidity']); 
+}
+
+function onDremel(message) {
+  var msg = JSON.parse(message.payloadString);
+
+  console.log('onDremel');
+
+  $('#dremel-status').text(msg['status']['state']);
+
+  $('#dremel-filename').text(msg['job']['file']); 
+  $('#dremel-progress').text(msg['job']['progress'].toFixed(2)); 
+  $('#dremel-print-time').text(msg['job']['print_time']); 
+  $('#dremel-print-time-remaining').text(msg['job']['print_time_remaining']); 
+
+  if(msg['status']['state'] != 'idle')
+    $('#dremel-job').show();
+
+  $('#dremel-tool-temp').text(msg['temperatures']['tool0_actual']); 
+  $('#dremel-tool-temp-target').text(msg['temperatures']['tool0_target']); 
+  $('#dremel-bed-temp').text(msg['temperatures']['bed_actual']); 
+  $('#dremel-bed-temp-target').text(msg['temperatures']['bed_target']); 
 }
 </script>
 

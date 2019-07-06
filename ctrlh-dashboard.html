@@ -179,6 +179,25 @@ time, #last_updated {
 	      </table>
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	    </div>
+
+	    <div id='zoya'>
+	    <h5><a href='graph.html?uuid=37853276-5ac4-406c-bb66-e012cd360781'>Zoya (orange Ender3)</a></h5>
+	      <h6 class='status'></h6>
+  	      <div class='job' style='display: none'>
+		<ul>
+		  <li>Filename: <span class='filename'></span></li>
+		  <li>Progress: <span class='print-progress'></span>%</li>
+		  <li>Time Remaining: <span class='print-time'></span> of <span class='print-time-remaining'></span> sec</li>
+                </ul>
+	      </div>
+	      <table class='table'>
+		<tr><th>temp</th><th>actual</th><th>target</th></tr>
+		<tr><td>tool</td><td><span class='tool-temp'></span>°C</td><td><span class='tool-temp-target'></span>°C</td></tr>
+		<tr><td>bed</td><td><span class='bed-temp'></span>°C</td><td><span class='bed-temp-target'></span>°C</td></tr>
+	      </table>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	    </div>
+
           </div><!-- col -->
         </div><!-- row -->
 
@@ -264,7 +283,8 @@ var cameras = [
   { uuid: 'fc4c1edb-c8e3-4771-9879-290358dbf746', container: '#slytherin-camera' },
   { uuid: '03eca981-8a78-467f-868d-2af2159b34dd', container: '#unit-2-camera' },
   { uuid: '6f971443-b685-4a2b-86fb-65522c0ab775', container: '#camera-6' },
-  { uuid: 'c0603a32-7817-4922-b661-2a6be57b6bd0', container: '#dremel-cam' }
+  { uuid: 'c0603a32-7817-4922-b661-2a6be57b6bd0', container: '#dremel-cam' },
+  { uuid: 'd5a6e892-f89f-416b-91c4-2953330e5f17', container: '#zoya' }
 ];
 
 function onConnect() {
@@ -287,6 +307,9 @@ function onConnect() {
   client.subscribe('/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3');
   // Dremel
   client.subscribe('/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222');
+
+  // Zoya Ender3 printer
+  client.subscribe('/homebus/device/37853276-5ac4-406c-bb66-e012cd360781');
 
   cameras.forEach(function(item, index) {
     client.subscribe('/homebus/device/' + item["uuid"]);
@@ -388,6 +411,9 @@ function onMessageArrived(message) {
   if(message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222')
     onDremel(message);
 
+  if(message.destinationName == '/homebus/device/37853276-5ac4-406c-bb66-e012cd360781')
+    onOctoprint(message, 'zoya');
+
   cameras.forEach(function(item, index) {
     if(message.destinationName == '/homebus/device/' + item['uuid'])
       onCamera(message, item['container']);
@@ -474,8 +500,6 @@ function onIRC(message) {
   if(onIRC.last_irc_msg == message.payloadString)
     return;
 
-console.log(onIRC.last_irc_msg, message.payloadString);
-
   onIRC.last_irc_msg = message.payloadString; 
 
   $('#irc').prepend("<li class='list-group-item'>" + msg["message"]["nick"] +  ": " + msg["message"]["message"] + "<br/>" + getTimeagostamp(msg["timestamp"]) + "</li>");
@@ -513,8 +537,6 @@ function onVendo(message) {
 function onDremel(message) {
   var msg = JSON.parse(message.payloadString);
 
-  console.log('onDremel');
-
   $('#dremel-status').text(msg['status']['state']);
 
   $('#dremel-filename').text(msg['job']['file']); 
@@ -529,6 +551,27 @@ function onDremel(message) {
   $('#dremel-tool-temp-target').text(msg['temperatures']['tool0_target']); 
   $('#dremel-bed-temp').text(msg['temperatures']['bed_actual']); 
   $('#dremel-bed-temp-target').text(msg['temperatures']['bed_target']); 
+}
+
+function onOctoprint(message, id) {
+  var msg = JSON.parse(message.payloadString);
+
+  console.log('onOctoprint');
+
+  $('#' + id + ' .status').text(msg['status']['state']);
+
+  $('#' + id + ' .filename').text(msg['job']['file']); 
+  $('#' + id + ' .print-progress').text(msg['job']['progress'].toFixed(2)); 
+  $('#' + id + ' .print-time').text(msg['job']['print_time']); 
+  $('#' + id + ' .print-time-remaining').text(msg['job']['print_time_remaining']); 
+
+  if(msg['status']['state'] != 'idle')
+    $('#' + id + ' .job').show();
+
+  $('#' + id + ' .tool-temp').text(msg['temperatures']['tool0_actual']); 
+  $('#' + id + ' .tool-temp-target').text(msg['temperatures']['tool0_target']); 
+  $('#' + id + ' .bed-temp').text(msg['temperatures']['bed_actual']); 
+  $('#' + id + ' .bed-temp-target').text(msg['temperatures']['bed_target']); 
 }
 </script>
 

@@ -322,7 +322,8 @@ function mqtt_connect() {
     userName: credentials.MQTT_USERNAME,
     password: credentials.MQTT_PASSWORD,
     onSuccess:onConnect,
-    onFailure:doFail
+    onFailure:doFail,
+    reconnect: true
   };
 
 console.log("mqtt connect");
@@ -334,8 +335,6 @@ function doFail(e) {
   console.log(e);
 
 console.log("doFail");
-
-  mqtt_connect(); 
 }
 
 function onConnectionLost(responseObject) {
@@ -343,8 +342,7 @@ function onConnectionLost(responseObject) {
     console.log("onConnectionLost:"+responseObject.errorMessage);
   }
 
-console.log("connection lost");
-  mqtt_connect(); 
+  console.log("connection lost");
 }
 
 // shamelessly taken from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript

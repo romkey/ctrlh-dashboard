@@ -256,7 +256,7 @@ time, #last_updated {
 </div>
 
 <!-- from https://www.cloudmqtt.com/docs/websocket.html -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js' type='text/javascript'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js' type='text/javascript'></script>
 <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js' integrity='sha384-bIExnxLHdrb4/5cUciUyC490hqkTPFw6V1eUbG0gpKQ67B3dsT6KOdXvl5RycCM6' crossorigin='anonymous'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
@@ -270,7 +270,7 @@ time, #last_updated {
 // they should be for an account with read-only access only to the topic used for the hydroponics
 //  var credentials = new CTLHProjectorMQTT();
 
-client = new Paho.MQTT.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());
+client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
 mqtt_connect();
@@ -538,7 +538,8 @@ function onDremel(message) {
   $('#dremel-status').text(msg['status']['state']);
 
   $('#dremel-filename').text(msg['job']['file']); 
-  $('#dremel-progress').text(msg['job']['progress'].toFixed(2)); 
+  if(msg['job']['progress']) 
+    $('#dremel-progress').text(msg['job']['progress'].toFixed(2)); 
   $('#dremel-print-time').text(msg['job']['print_time']); 
   $('#dremel-print-time-remaining').text(msg['job']['print_time_remaining']); 
 
@@ -559,7 +560,8 @@ function onOctoprint(message, id) {
   $('#' + id + ' .status').text(msg['status']['state']);
 
   $('#' + id + ' .filename').text(msg['job']['file']); 
-  $('#' + id + ' .print-progress').text(msg['job']['progress'].toFixed(2)); 
+  if(msg['job']['progress']) 
+    $('#' + id + ' .print-progress').text(msg['job']['progress'].toFixed(2)); 
   $('#' + id + ' .print-time').text(msg['job']['print_time']); 
   $('#' + id + ' .print-time-remaining').text(msg['job']['print_time_remaining']); 
 

@@ -198,6 +198,24 @@ time, #last_updated {
 	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
 	    </div>
 
+	    <div id='olga'>
+	    <h5><a href='graph.html?uuid=ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696'>Olga (translucent Ender3)</a></h5>
+	      <h6 class='status'></h6>
+  	      <div class='job' style='display: none'>
+		<ul>
+		  <li>Filename: <span class='filename'></span></li>
+		  <li>Progress: <span class='print-progress'></span>%</li>
+		  <li>Time Remaining: <span class='print-time'></span> of <span class='print-time-remaining'></span> sec</li>
+                </ul>
+	      </div>
+	      <table class='table'>
+		<tr><th>temp</th><th>actual</th><th>target</th></tr>
+		<tr><td>tool</td><td><span class='tool-temp'></span>°C</td><td><span class='tool-temp-target'></span>°C</td></tr>
+		<tr><td>bed</td><td><span class='bed-temp'></span>°C</td><td><span class='bed-temp-target'></span>°C</td></tr>
+	      </table>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	    </div>
+
           </div><!-- col -->
         </div><!-- row -->
 
@@ -284,7 +302,8 @@ var cameras = [
   { uuid: '03eca981-8a78-467f-868d-2af2159b34dd', container: '#unit-2-camera' },
   { uuid: '6f971443-b685-4a2b-86fb-65522c0ab775', container: '#camera-6' },
   { uuid: 'c0603a32-7817-4922-b661-2a6be57b6bd0', container: '#dremel-cam' },
-  { uuid: 'd5a6e892-f89f-416b-91c4-2953330e5f17', container: '#zoya' }
+  { uuid: 'd5a6e892-f89f-416b-91c4-2953330e5f17', container: '#zoya' },
+  { uuid: '3bbbf6f5-f4d4-4acc-9d65-a4a03ea93762', container: '#olga' }
 ];
 
 function onConnect() {
@@ -308,8 +327,11 @@ function onConnect() {
   // Dremel
   client.subscribe('/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222');
 
-  // Zoya Ender3 printer
-  client.subscribe('/homebus/device/37853276-5ac4-406c-bb66-e012cd360781');
+  // Zoya Ender3 printer 
+  client.subscribe('/homebus/device/37853276-5ac4-406c-bb66-e012cd360781'); 
+
+  // Olga Ender3 printer 
+  client.subscribe('/homebus/device/ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696');
 
   cameras.forEach(function(item, index) {
     client.subscribe('/homebus/device/' + item["uuid"]);
@@ -409,8 +431,11 @@ function onMessageArrived(message) {
   if(message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222')
     onDremel(message);
 
-  if(message.destinationName == '/homebus/device/37853276-5ac4-406c-bb66-e012cd360781')
-    onOctoprint(message, 'zoya');
+  if(message.destinationName == '/homebus/device/37853276-5ac4-406c-bb66-e012cd360781') 
+    onOctoprint(message, 'zoya'); 
+
+  if(message.destinationName == '/homebus/device/ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696') 
+    onOctoprint(message, 'olga'); 
 
   cameras.forEach(function(item, index) {
     if(message.destinationName == '/homebus/device/' + item['uuid'])

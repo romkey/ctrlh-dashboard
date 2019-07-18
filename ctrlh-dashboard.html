@@ -26,6 +26,7 @@ time, #last_updated {
   font-size: small;
   font-style: italic;
 }
+
 </style>
 
 </head>
@@ -34,33 +35,146 @@ time, #last_updated {
     <div class="row">
       <div class="col-lg-12 text-center">
 	<h1>PDX Hackerspace Dashboard</h1>
-	<hr class="star-primary">
+	<hr class="star-primary activity-bar">
         <p id='last_updated'>Last updated: <span id='last_updated_container'></span></p>
       </div>
     </div>
 
     <div class='row'>
+      <div class='col'>
+        <h2>Cameras</h2>
+      </div>
+    </div>
 
-      <div class='col-lg-8'>
+    <div class='row'>
+      <div class='col-sm-3' id='unit-1-window'>
+	<h4><a href='graph.html?uuid=736ec20e-1320-48c2-9a6b-2376f97e3d52'>Unit 1 Window</a></h4>
+	<img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+      </div>
+
+      <div class='col-sm-3' id='interstate-sb-camera'>
+	<h4><a href='graph.html?uuid='>Interstate SB</a></h4>
+	<img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+      </div>
+
+      <div class='col-sm-3' id='unit-2-entry2'>
+	<h4><a href='graph.html?uuid=8401df69-1edf-4ac2-bd70-5076bf84c0be'>Unit 2 Entry</a></h4>
+	<img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+      </div>
+
+      <div class='col-sm-3' id='interstate-nb-camera'>
+	<h4><a href='graph.html?uuid='>Interstate NB</a></h4>
+	<img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+      </div>
+
+
+	<div class='col-sm-3' id='unit-2-camera'>
+	  <h4><a href='graph.html?uuid=03eca981-8a78-467f-868d-2af2159b34dd'>Unit 2</a></h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	</div>
+
+	<div class='col-sm-3' id='electronics-lab-camera'>
+	  <h4><a href='graph.html?uuid=3b22ad64-3439-4e94-971f-13f055878dfb'>Electronics Lab</a></h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	</div>
+
+
+	<div class='col-sm-3' id='slytherin-camera'>
+	  <h4><a href='graph.html?uuid=fc4c1edb-c8e3-4771-9879-290358dbf746'>Slytherin</a></h4>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	</div>
+
+
+	<div class='col-sm-3'>
+	  <h4>Unit 3</h4>
+	  <iframe src='https://video.nest.com/embedded/live/WdeSzuB41b?autoplay=1'>
+	  </iframe>
+	  </li>
+	</div>
+      </div>
+
+	<hr class='hr' />
 
         <div class='row'>
           <div class='col'>
-            <h2><a href='graph.html?uuid=691faad6-bad4-4c87-838b-091ce650e4d4'>Weather</a></h2>
-            <p id='weather'>
-            </p>
-            <p id='aqi'>
-            </p>
-          </div><!-- col -->
-          <div class='col'>
-            <h2>Trimet</h2>
-            <p id='trimet'>
-            </p>
+	    <h4>3D Printers</h4>
+          </div>
+        </div>
+
+
+
+        <div class='row'>
+
+          <div class='col-2' id='dremel'>
+	    <h5><a href='graph.html?uuid=7bfff065-f2e8-406d-b8d1-734a84c4c222'>Dremel</a></h5>
+	      <h6 id='dremel-status'></h6>
+  	      <div id='dremel-job' style='display: none'>
+		<ul>
+		  <li>Filename: <span id='dremel-filename'></span></li>
+		  <li>Progress: <span id='dremel-progress'><span>%</li>
+		  <li>Time Remaining: <span id='dremel-print-time'></span> of <span id='dremel-print-time-remaining'></span> sec</li>
+                </ul>
+	      </div>
+	      <table class='table'>
+		<tr><th>temp</th><th>actual</th><th>target</th></tr>
+		<tr><td>tool</td><td><span id='dremel-tool-temp'></span>°C</td><td><span id='dremel-tool-temp-target'></span>°C</td></tr>
+		<tr><td>bed</td><td><span id='dremel-bed-temp'></span>°C</td><td><span id='dremel-bed-temp-target'></span>°C</td></tr>
+	      </table>
+          </div>
+
+          <div class='col-2' id='dremel-cam'>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+	  </div>
+
+	  
+          <div class='col-2' id='zoya'>
+	    <h5><a href='graph.html?uuid=37853276-5ac4-406c-bb66-e012cd360781'>Zoya (orange Ender3)</a></h5>
+	    <h6 class='status'></h6>
+	    <div class='job' style='display: none'>
+	      <ul>
+		<li>Filename: <span class='filename'></span></li>
+		<li>Progress: <span class='print-progress'></span>%</li>
+		<li>Time Remaining: <span class='print-time'></span> of <span class='print-time-remaining'></span> sec</li>
+	      </ul>
+	    </div>
+	    <table class='table'>
+	      <tr><th>temp</th><th>actual</th><th>target</th></tr>
+	      <tr><td>tool</td><td><span class='tool-temp'></span>°C</td><td><span class='tool-temp-target'></span>°C</td></tr>
+	      <tr><td>bed</td><td><span class='bed-temp'></span>°C</td><td><span class='bed-temp-target'></span>°C</td></tr>
+	    </table>
+          </div>
+
+          <div class='col-2' id='zoya-cam'>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
+          </div>
+
+
+          <div class='col-2' id='olga'>
+	    <h5><a href='graph.html?uuid=ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696'>Olga (translucent Ender3)</a></h5>
+	    <h6 class='status'></h6>
+	    <div class='job' style='display: none'>
+	      <ul>
+		<li>Filename: <span class='filename'></span></li>
+		<li>Progress: <span class='print-progress'></span>%</li>
+		<li>Time Remaining: <span class='print-time'></span> of <span class='print-time-remaining'></span> sec</li>
+	      </ul>
+	    </div>
+	    <table class='table'>
+	      <tr><th>temp</th><th>actual</th><th>target</th></tr>
+	      <tr><td>tool</td><td><span class='tool-temp'></span>°C</td><td><span class='tool-temp-target'></span>°C</td></tr>
+	      <tr><td>bed</td><td><span class='bed-temp'></span>°C</td><td><span class='bed-temp-target'></span>°C</td></tr>
+	    </table>
+          </div>
+          <div class='col-2' id='olga-cam'>
+	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
           </div><!-- col -->
         </div><!-- row -->
 
-        <div class='row'>
-          <div class='col'>
-	    <h2>Rooms</h2>
+	<hr class='hr' />
+
+      <div class='row'>
+      <div class='col'>
+	<h2>Rooms</h2>
 	<table class='table table-striped'>
 	  <tr>
 	    <th>Room</th><th>Temp</th><th>Hum</th><th>Occ?</th><th>Watts</th>
@@ -87,16 +201,16 @@ time, #last_updated {
 	    <td>Garden</td><td></td><td></td><td></td><td></td>
 	  </tr>
 	</table>
-          </div><!-- col -->
-          <div class='col'>
-	    <h2>Facilities</h2>
+      </div><!-- col -->
+      <div class='col'>
+	<h2>Facilities</h2>
 	<table class='table table-striped'>
 	  <tr>
 	    <td rowspan=2><a href='graph.html?uuid=7db061e9-d73a-47a0-a4ab-f3d097da5504'>Network</a></td>
 	    <td>rx: <span id='network_rx'></span>ps</td>
 	    <td>tx: <span id='network_tx'></span>ps</td>
 	  </tr>
-          <tr>
+	  <tr>
 	    <td>active hosts</td><td id='network_active'></td>
 	  </tr>
 	  <tr>
@@ -145,130 +259,40 @@ time, #last_updated {
 	    <td></td>
 	  </tr>
 	</table>
+        </div><!-- col -->
 
-          </div><!-- col -->
-        </div><!-- row -->
-
-        <div class='row'>
-          <div class='col'>
-	    <h2><a href='graph.html?uuid=03bf9198-1fe5-480f-b3c7-efdf628d2b8a'>Access</a></h2>
-            <ul id="access" class="list-group list-group-flush">
-	    </ul>
-          </div><!-- col -->
-          <div class='col'>
-	    <h2><a href='graph.html?uuid=4f265e2c-3c08-4635-8e50-8400d5294c29'>Printers</a></h>
-	    <p>
-              <h5 class='printer-name'></h5>
-	      <p class='printer-status'></p>
-	      <p><span class='pages-printed'></span> pages printed</p>
-            </p>
-	    <div id='dremel-cam'>
-	    <h5><a href='graph.html?uuid=7bfff065-f2e8-406d-b8d1-734a84c4c222'>Dremel</a></h5>
-	      <h6 id='dremel-status'></h6>
-  	      <div id='dremel-job' style='display: none'>
-		<ul>
-		  <li>Filename: <span id='dremel-filename'></span></li>
-		  <li>Progress: <span id='dremel-progress'><span>%</li>
-		  <li>Time Remaining: <span id='dremel-print-time'></span> of <span id='dremel-print-time-remaining'></span> sec</li>
-                </ul>
-	      </div>
-	      <table class='table'>
-		<tr><th>temp</th><th>actual</th><th>target</th></tr>
-		<tr><td>tool</td><td><span id='dremel-tool-temp'></span>°C</td><td><span id='dremel-tool-temp-target'></span>°C</td></tr>
-		<tr><td>bed</td><td><span id='dremel-bed-temp'></span>°C</td><td><span id='dremel-bed-temp-target'></span>°C</td></tr>
-	      </table>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	    </div>
-
-	    <div id='zoya'>
-	    <h5><a href='graph.html?uuid=37853276-5ac4-406c-bb66-e012cd360781'>Zoya (orange Ender3)</a></h5>
-	      <h6 class='status'></h6>
-  	      <div class='job' style='display: none'>
-		<ul>
-		  <li>Filename: <span class='filename'></span></li>
-		  <li>Progress: <span class='print-progress'></span>%</li>
-		  <li>Time Remaining: <span class='print-time'></span> of <span class='print-time-remaining'></span> sec</li>
-                </ul>
-	      </div>
-	      <table class='table'>
-		<tr><th>temp</th><th>actual</th><th>target</th></tr>
-		<tr><td>tool</td><td><span class='tool-temp'></span>°C</td><td><span class='tool-temp-target'></span>°C</td></tr>
-		<tr><td>bed</td><td><span class='bed-temp'></span>°C</td><td><span class='bed-temp-target'></span>°C</td></tr>
-	      </table>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	    </div>
-
-	    <div id='olga'>
-	    <h5><a href='graph.html?uuid=ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696'>Olga (translucent Ender3)</a></h5>
-	      <h6 class='status'></h6>
-  	      <div class='job' style='display: none'>
-		<ul>
-		  <li>Filename: <span class='filename'></span></li>
-		  <li>Progress: <span class='print-progress'></span>%</li>
-		  <li>Time Remaining: <span class='print-time'></span> of <span class='print-time-remaining'></span> sec</li>
-                </ul>
-	      </div>
-	      <table class='table'>
-		<tr><th>temp</th><th>actual</th><th>target</th></tr>
-		<tr><td>tool</td><td><span class='tool-temp'></span>°C</td><td><span class='tool-temp-target'></span>°C</td></tr>
-		<tr><td>bed</td><td><span class='bed-temp'></span>°C</td><td><span class='bed-temp-target'></span>°C</td></tr>
-	      </table>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	    </div>
-
-          </div><!-- col -->
-        </div><!-- row -->
-
-        <div class='row'>
-          <div class='col'>
-	    <h2>Slack</h2>
-          </div><!-- col -->
-          <div class='col'>
-	    <h2><a href='graph.html?uuid=b2dbbde0-40e0-4bc6-80b3-fcd218f8a996'>IRC</a></h2>
-            <ul id='irc' class='list-group list-group-flush'>
-	    </ul>
-          </div><!-- col -->
-        </div><!-- row -->
+        <div class='col'>
+          <h2><a href='graph.html?uuid=03bf9198-1fe5-480f-b3c7-efdf628d2b8a'>Access</a></h2>
+          <ul id="access" class="list-group list-group-flush">
+	  </ul>
+        </div><!-- col -->
+      </div>
 
 
-      </div><!-- col-lg-8 -->
-      <div class='col-lg-4 cameras-col'>
-	<h2>Cameras</h2>
-	<ul class='list-group'>
-	  <li class='list-group-item'id='unit-1-window-container'><h4><a href='graph.html?uuid=736ec20e-1320-48c2-9a6b-2376f97e3d52'>Unit 1 Window</a></h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	  </li>
-	  <li class='list-group-item' id='unit-2-entrance-container'><h4><a href='graph.html?uuid=3b22ad64-3439-4e94-971f-13f055878dfb'>Unit 2 Entry</a></h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	  </li>
-	  <li class='list-group-item' id='unit-2-entry2-container'><h4><a href='graph.html?uuid=8401df69-1edf-4ac2-bd70-5076bf84c0be'>Unit 2 Entry 2</a></h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	  </li>
-	  <li class='list-group-item' id='slytherin-camera'><h4><a href='graph.html?uuid=fc4c1edb-c8e3-4771-9879-290358dbf746'>Slytherin</a></h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	  </li>
-	  <li class='list-group-item' id='unit-2-camera'><h4><a href='graph.html?uuid=03eca981-8a78-467f-868d-2af2159b34dd'>Unit 2</a></h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	  </li>
-	  <li class='list-group-item' id='electronics-lab-camera'><h4><a href='graph.html?uuid=3b22ad64-3439-4e94-971f-13f055878dfb'>Electronics Lab</a></h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	  </li>
-	  <li class='list-group-item'><h4>Unit 3</h4>
-	  <iframe src='https://video.nest.com/embedded/live/WdeSzuB41b?autoplay=1'>
-	  </iframe>
-	  </li>
-	  <li class='list-group-item'><h4>Garden</h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	  </li>
-	  <li class='list-group-item'><h4>Hydroponics</h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	  </li>
-	</ul>
-	</div><!-- cameras-col -->
-      </div><!- row />
+    <div class='row'>
+      <div class='col'>
+        <h2><a href='graph.html?uuid=691faad6-bad4-4c87-838b-091ce650e4d4'>Weather</a></h2>
+        <p id='weather'>
+        </p>
+      </div><!-- col -->
+
+      <div class='col'>
+        <h2>Air Quality</a></h2>
+        <p id='aqi'>
+        </p>
+      </div><!-- col -->
+
+      <div class='col'>
+	<h2><a href='graph.html?uuid=4f265e2c-3c08-4635-8e50-8400d5294c29' class='printer-name'>Brother Printer</a></h>
+	<p class='printer-status'></p>
+	<p><span class='pages-printed'></span> pages printed</p>
+      </div><!-- col -->
+    </div><!-- row -->
 
       <div class='row'>
-        <i>Want to hack this?</i> Source is at <a href='https://github.com/romkey/ctrlh-dashboard'>https://github.com/romkey/ctrlh-dashboard</a>
+	<div class='col'>
+          <i>Want to hack this?</i> Source is at <a href='https://github.com/romkey/ctrlh-dashboard'>https://github.com/romkey/ctrlh-dashboard</a>
+        </div>
       </div>
   </div>
 </div>
@@ -295,15 +319,15 @@ mqtt_connect();
 
 // cameras
 var cameras = [
-  { uuid: '3b22ad64-3439-4e94-971f-13f055878dfb', container: '#unit-2-entrance-container' },
-  { uuid: '736ec20e-1320-48c2-9a6b-2376f97e3d52', container: '#unit-1-window-container' },
-  { uuid: '8401df69-1edf-4ac2-bd70-5076bf84c0be', container: '#unit-2-entry2-container' },
+  { uuid: '3b22ad64-3439-4e94-971f-13f055878dfb', container: '#electronics-lab-camera' },
+  { uuid: '736ec20e-1320-48c2-9a6b-2376f97e3d52', container: '#unit-1-window' },
+  { uuid: '8401df69-1edf-4ac2-bd70-5076bf84c0be', container: '#unit-2-entry2' },
   { uuid: 'fc4c1edb-c8e3-4771-9879-290358dbf746', container: '#slytherin-camera' },
   { uuid: '03eca981-8a78-467f-868d-2af2159b34dd', container: '#unit-2-camera' },
   { uuid: '6f971443-b685-4a2b-86fb-65522c0ab775', container: '#camera-6' },
   { uuid: 'c0603a32-7817-4922-b661-2a6be57b6bd0', container: '#dremel-cam' },
-  { uuid: 'd5a6e892-f89f-416b-91c4-2953330e5f17', container: '#zoya' },
-  { uuid: '3bbbf6f5-f4d4-4acc-9d65-a4a03ea93762', container: '#olga' }
+  { uuid: 'd5a6e892-f89f-416b-91c4-2953330e5f17', container: '#zoya-cam' },
+  { uuid: '3bbbf6f5-f4d4-4acc-9d65-a4a03ea93762', container: '#olga-cam' }
 ];
 
 function onConnect() {
@@ -381,9 +405,9 @@ function formatBytes(bytes, decimals = 2) {
 }
 
 function onMessageArrived(message) {
-  $('hr').addClass('hr-green');
+  $('.activity-bar').addClass('hr-green');
   setTimeout(function () {
-    $('hr').removeClass('hr-green');
+    $('.activity-bar').removeClass('hr-green');
   }, 1000);
 
 //  console.log('onMessageArrived:' + message.payloadString);

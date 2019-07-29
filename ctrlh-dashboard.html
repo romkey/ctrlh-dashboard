@@ -189,7 +189,7 @@ time, #last_updated {
 	    <td>Electronics Lab</td><td><span id='electronics_lab_temperature'></span></td><td><span id='electronics_lab_humidity'></span></td><td><span id='electronics_lab_occupied'></span></td>
 	  </tr>
 	  <tr>
-	    <td>Unit 3</td><td></td><td></td><td></td><td></td>
+	    <td><a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a></td><td><span id='craftlab_temperature'></span>°C</td><td><span id='craftlab_humidity'></span>%</td><td><span id='craftlab_occupied'></span></td>
 	  </tr>
 	  <tr>
 	    <td><a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a></td><td><span id='slytherin_temperature'></span>°C</td><td><span id='slytherin_humidity'></span>%</td><td><span id='slytherin_occupied'></span></td>
@@ -349,7 +349,10 @@ function onConnect() {
   // Unit 2 furball 
   client.subscribe('/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250'); 
   // Slytherin 
-  client.subscribe('/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3');
+  client.subscribe('/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3'); 
+  // Craft Lab
+  client.subscribe('/homebus/device/b3efa04b-dac8-4ddc-bc34-94f1daec3c0a');
+
   // Dremel
   client.subscribe('/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222');
 
@@ -374,7 +377,7 @@ function mqtt_connect() {
     reconnect: true
   };
 
-console.log("mqtt connect");
+  console.log("mqtt connect");
   client.connect(options); 
 }
 
@@ -451,8 +454,11 @@ function onMessageArrived(message) {
   if(message.destinationName == '/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250')
     onFurball(message, "unit2"); 
 
-  if(message.destinationName == '/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3')
+  if(message.destinationName == '/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3') 
     onFurball(message, "slytherin"); 
+
+  if(message.destinationName == '/homebus/device/b3efa04b-dac8-4ddc-bc34-94f1daec3c0a')
+    onFurball(message, "craftlab"); 
 
   if(message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222')
     onDremel(message);

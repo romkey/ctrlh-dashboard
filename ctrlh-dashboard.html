@@ -224,12 +224,17 @@ time, #last_updated {
 	    <td></td>
 	  </tr>
 	  <tr>
-	    <td>Vendo LEDs</td>
+	    <td><a href='http://192.168.15.22' target='_blank'>Vendo LEDs</a></td>
 	    <td></td>
 	    <td></td>
 	  </tr>
 	  <tr>
-	    <td>LED strip</td>
+	    <td><a href='http://192.168.15.23' target='_blank'>LED strip</a></td>
+	    <td></td>
+	    <td></td>
+	  </tr>
+	  <tr>
+	    <td><a href='http://192.168.15.28' target='_blank'>Garden LEDs</a></td>
 	    <td></td>
 	    <td></td>
 	  </tr>
@@ -312,7 +317,8 @@ time, #last_updated {
 // they should be for an account with read-only access only to the topic used for the hydroponics
 //  var credentials = new CTLHProjectorMQTT();
 
-client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());
+// client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());  
+client = new Paho.Client(credentials.MQTT_SERVER, 4569, credentials.MQTT_UUID + new Date().getTime());  
 client.onConnectionLost = onConnectionLost;
 client.onMessageArrived = onMessageArrived;
 mqtt_connect();
@@ -369,7 +375,7 @@ function onConnect() {
 
 function mqtt_connect() {
   var options = {
-    useSSL: false,
+    useSSL: true,
     userName: credentials.MQTT_USERNAME,
     password: credentials.MQTT_PASSWORD,
     onSuccess:onConnect,

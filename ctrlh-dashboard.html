@@ -179,25 +179,25 @@ time, #last_updated {
 	<h2>Rooms</h2>
 	<table class='table table-striped'>
 	  <tr>
-	    <th>Room</th><th>Temp</th><th>Hum</th><th>Occ?</th><th>Watts</th>
+	    <th>Room</th><th>Temp</th><th>Hum</th><th>PM1/PM2.5/PM10</th>
 	  </tr>
-	  <tr>
-	    <td>Unit 1</td><td></td><td></td><td></td><td></td>
+	  <tr id='unit1'>
+	    <td>Unit 1</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='occupied'></span></td>
 	  </tr>
 	  <tr id='laserlab'>
-	    <td><a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='occupied'></span></td>
+	    <td><a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td>
+	  </tr>
+	  <tr id='unit2'>
+	    <td><a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td>
 	  </tr>
 	  <tr>
-	    <td><a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a></td><td><span id='unit2_temperature'></span>°C</td><td><span id='unit2_humidity'></span>%</td><td><span id='unit2_occupied'></span></td>
+	    <td>Electronics Lab</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td>
 	  </tr>
-	  <tr>
-	    <td>Electronics Lab</td><td><span id='electronics_lab_temperature'></span></td><td><span id='electronics_lab_humidity'></span></td><td><span id='electronics_lab_occupied'></span></td>
+	  <tr id='craftlab'>
+	    <td><a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td>
 	  </tr>
-	  <tr>
-	    <td><a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a></td><td><span id='craftlab_temperature'></span>°C</td><td><span id='craftlab_humidity'></span>%</td><td><span id='craftlab_occupied'></span></td>
-	  </tr>
-	  <tr>
-	    <td><a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a></td><td><span id='slytherin_temperature'></span>°C</td><td><span id='slytherin_humidity'></span>%</td><td><span id='slytherin_occupied'></span></td>
+	  <tr id='slytherin'>
+	    <td><a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td>
 	  </tr>
 	  <tr>
 	    <td>Hydroponics</td><td></td><td></td><td></td><td></td>
@@ -465,16 +465,16 @@ function onMessageArrived(message) {
     onVendo(message);
 
   if(message.destinationName == '/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250')
-    onFurball(message, "unit2"); 
+    onFurball(message, "unit2", false); 
 
   if(message.destinationName == '/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3') 
-    onFurball(message, "slytherin"); 
+    onFurball(message, "slytherin", true); 
 
   if(message.destinationName == '/homebus/device/b3efa04b-dac8-4ddc-bc34-94f1daec3c0a')
-    onFurball(message, "craftlab"); 
+    onFurball(message, "craftlab", false); 
 
   if(message.destinationName == '/homebus/device/638a9d78-09f6-4d92-b70a-2b14edb8d84a')
-    onFurballNew(message, 'laserlab');
+    onFurball(message, 'laserlab', true);
 
   if(message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222')
     onDremel(message);
@@ -505,23 +505,13 @@ function onNetworkActive(message) {
   $("#network_active").text(network["active_hosts"]["arp_table_length"]);
 }
 
-function onFurball(message, unit) {
+function onFurball(message, unit, has_pm) {
   var furball = JSON.parse(message.payloadString);
-
-  $("#" + unit + "_temperature").text(furball["environment"]["temperature"]); 
-  $("#" + unit + "_humidity").text(furball["environment"]["humidity"]); 
-  $("#" + unit + "_occupied").text(furball["presence"] ? "y" : "n");
-}
-
-function onFurballNew(message, unit) {
-  var furball = JSON.parse(message.payloadString);
-
-console.log('LASERLAB',furball);
-console.log('#'+unit+'.temperature');
 
   $("#" + unit + " .temperature").text(furball["environment"]["temperature"]); 
   $("#" + unit + " .humidity").text(furball["environment"]["humidity"]); 
-  $("#" + unit + " .occupied").text(furball["presence"] ? "y" : "n");
+  if(has_pm)
+    $("#" + unit + " .pm").text(furball["air"]["pm1"] + '/' + furball["air"]["pm25"] + '/' + furball["air"]["pm10"]);
 }
 
 function onProjectors(message) {

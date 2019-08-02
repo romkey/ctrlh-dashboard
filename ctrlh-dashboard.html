@@ -184,6 +184,9 @@ time, #last_updated {
 	  <tr>
 	    <td>Unit 1</td><td></td><td></td><td></td><td></td>
 	  </tr>
+	  <tr id='laserlab'>
+	    <td><a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='occupied'></span></td>
+	  </tr>
 	  <tr>
 	    <td><a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a></td><td><span id='unit2_temperature'></span>°C</td><td><span id='unit2_humidity'></span>%</td><td><span id='unit2_occupied'></span></td>
 	  </tr>
@@ -354,6 +357,8 @@ function onConnect() {
 
   // vendo
   client.subscribe('/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3');
+  // Laser Lab furball
+  client.subscribe('/homebus/device/638a9d78-09f6-4d92-b70a-2b14edb8d84a');
   // Unit 2 furball 
   client.subscribe('/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250'); 
   // Slytherin 
@@ -468,6 +473,9 @@ function onMessageArrived(message) {
   if(message.destinationName == '/homebus/device/b3efa04b-dac8-4ddc-bc34-94f1daec3c0a')
     onFurball(message, "craftlab"); 
 
+  if(message.destinationName == '/homebus/device/638a9d78-09f6-4d92-b70a-2b14edb8d84a')
+    onFurballNew(message, 'laserlab');
+
   if(message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222')
     onDremel(message);
 
@@ -503,6 +511,17 @@ function onFurball(message, unit) {
   $("#" + unit + "_temperature").text(furball["environment"]["temperature"]); 
   $("#" + unit + "_humidity").text(furball["environment"]["humidity"]); 
   $("#" + unit + "_occupied").text(furball["presence"] ? "y" : "n");
+}
+
+function onFurballNew(message, unit) {
+  var furball = JSON.parse(message.payloadString);
+
+console.log('LASERLAB',furball);
+console.log('#'+unit+'.temperature');
+
+  $("#" + unit + " .temperature").text(furball["environment"]["temperature"]); 
+  $("#" + unit + " .humidity").text(furball["environment"]["humidity"]); 
+  $("#" + unit + " .occupied").text(furball["presence"] ? "y" : "n");
 }
 
 function onProjectors(message) {

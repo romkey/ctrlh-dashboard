@@ -228,20 +228,26 @@ time, #last_updated {
 	    <td></td>
 	    <td></td>
 	  </tr>
-	  <tr>
+	  <tr id='discoball-vendo-leds'>
 	    <td><a href='http://192.168.15.22' target='_blank'>Vendo LEDs</a></td>
-	    <td></td>
-	    <td></td>
+	    <td class='preset'></td>
+	    <td class='animation'></td>
+	    <td class='speed'></td>
+	    <td class='brightness'></td>
 	  </tr>
-	  <tr>
+	  <tr id='discoball-led-strip1'>
 	    <td><a href='http://192.168.15.23' target='_blank'>LED strip</a></td>
-	    <td></td>
-	    <td></td>
+	    <td class='preset'></td>
+	    <td class='animation'></td>
+	    <td class='speed'></td>
+	    <td class='brightness'></td>
 	  </tr>
-	  <tr>
+	  <tr id='discoball-garden-leds'>
 	    <td><a href='http://192.168.15.28' target='_blank'>Garden LEDs</a></td>
-	    <td></td>
-	    <td></td>
+	    <td class='preset'></td>
+	    <td class='animation'></td>
+	    <td class='speed'></td>
+	    <td class='brightness'></td>
 	  </tr>
 	  <tr>
 	    <td>Unit 2 Projector</td>
@@ -343,6 +349,12 @@ var cameras = [
   { uuid: '3bbbf6f5-f4d4-4acc-9d65-a4a03ea93762', container: '#olga-cam' }
 ];
 
+var leds = [
+  { uuid: '4cf5765b-6a1a-4f05-879f-1285e092beb3', container: 'vendo-leds', has_temp: true },
+  { uuid: '52864d8f-62c2-4fe4-867c-c625ff006df5', container: 'led-strip1', has_temp: false },
+  { uuid: '1d14577a-76ab-4d84-8bf8-194ee1b157a9', container: 'garden-leds', has_temp: false }
+];
+
 function onConnect() {
   console.log("onConnect");
   client.subscribe('/network/bandwidth'); 
@@ -355,8 +367,6 @@ function onConnect() {
   client.subscribe('/irc'); 
   client.subscribe('/aqi'); 
 
-  // vendo
-  client.subscribe('/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3');
   // Laser Lab furball
   client.subscribe('/homebus/device/638a9d78-09f6-4d92-b70a-2b14edb8d84a');
   // Unit 2 furball 
@@ -376,6 +386,10 @@ function onConnect() {
   client.subscribe('/homebus/device/ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696');
 
   cameras.forEach(function(item, index) {
+    client.subscribe('/homebus/device/' + item["uuid"]);
+  });
+
+  leds.forEach(function(item, index) {
     client.subscribe('/homebus/device/' + item["uuid"]);
     });
 }
@@ -486,8 +500,13 @@ function onMessageArrived(message) {
     onOctoprint(message, 'olga'); 
 
   cameras.forEach(function(item, index) {
-    if(message.destinationName == '/homebus/device/' + item['uuid'])
-      onCamera(message, item['container']);
+    if(message.destinationName == '/homebus/device/' + item['uuid']) 
+      onCamera(message, item['container']); 
+  });
+
+  leds.forEach(function(item, index) {
+    if(message.destinationName == '/homebus/device/' + item['uuid']) 
+      onDiscoball(message, item['container'], item['has_temp']); 
   });
 }
 
@@ -503,6 +522,20 @@ function onNetworkActive(message) {
   var network = JSON.parse(message.payloadString);
 
   $("#network_active").text(network["active_hosts"]["arp_table_length"]);
+}
+
+function onDiscoball(message, unit, has_temp) {
+  var discoball = JSON.parse(message.payloadString);
+
+  if(discoball["leds"]["state"] == 'off' || (discoball["leds"]["preset"] == 'off' && discoball["leds"]["animation"] == "none")) {
+    $('#discoball-' + unit + ' .preset').text('off');
+    return;
+  }
+
+  $('#discoball-' + unit + ' .preset').text(discoball["leds"]["preset"]); 
+  $('#discoball-' + unit + ' .animation').text(discoball["leds"]["animation"]); 
+  $('#discoball-' + unit + ' .speed').text(discoball["leds"]["speed"]+'x'); 
+  $('#discoball-' + unit + ' .brightness').text(discoball["leds"]["brightness"]+'%'); 
 }
 
 function onFurball(message, unit, has_pm) {

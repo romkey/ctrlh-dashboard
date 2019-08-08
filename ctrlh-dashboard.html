@@ -9,6 +9,8 @@
 
 <meta name="robots" content="noindex">
 
+<script src="https://kit.fontawesome.com/0556c42d44.js"></script>
+
 <link rel="stylesheet" href="https://pdxhackerspace.org/style.css" integrity="sha384-e5tu+wTFdksi4IWd3RtMTgkMMqPJDSauUgAeGK4v+7ng6MPf60XceelTuC1iNnh/" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -509,6 +511,11 @@ function onMessageArrived(message) {
       onFurball(message, item['container']); 
   });
 
+  onAccess.last_timestamps = {}; 
+  access.forEach(function(item, index) {
+    onAccess.last_timestamps[item['uuid']] = 0;
+    });
+
   access.forEach(function(item, index) {
     if(message.destinationName == '/homebus/device/' + item['uuid']) 
       onAccess(message, item['container']); 
@@ -589,12 +596,24 @@ function activateTimeago() {
 function onAccess(message, container) {
   var access = JSON.parse(message.payloadString);
 
+  // try to avoid repeated old messages
+  // this is not a great way to do that as timestamps can drift
+  // and messages could potentially be held up
+  if(access['timestamp'] < onAccess.last_timestamps[access['id']] - 15) {
+    console.log("ignoring repeated Access message", access);
+    return;
+  }
+
+  onAccess.last_timestamps[access['id']] = access['timestamp'];
+
   var id = '#' + container;
 
   if(access['action'] == 'unlocked')
-    $(id + ' .door-locked').text('U'); 
+//    $(id + ' .door-locked').text('U');
+    $(id + ' .door-locked'). html('<i class="fas fa-lock-open" style="color: red;"></i>');
   else
-    $(id + ' .door-locked').text('L'); 
+//    $(id + ' .door-locked').text('L'); 
+    $(id + ' .door-locked'). html('<i class="fas fa-lock" style="color: green;"></i>');
 
 
   $("#access-list").prepend("<li class='list-group-item'>" + access["door"] + " " + access["person"] + " " + access["action"] + "<br/>" + getTimeagostamp(access["timestamp"]) + "</li>");

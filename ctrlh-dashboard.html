@@ -179,31 +179,34 @@ time, #last_updated {
 	<h2>Rooms</h2>
 	<table class='table table-striped'>
 	  <tr>
-	    <th>Room</th><th>Temp</th><th>Hum</th><th>PM1/2.5/10</th><th>VOC</th>
+	    <th></th><th>Room</th><th>Temp</th><th>Hum</th><th>PM1/2.5/10</th><th>VOC</th>
 	  </tr>
 	  <tr id='unit1'>
-	    <td>Unit 1</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='occupied'></span></td><td class='voc'></td>
+	    <td class='door-locked'></td><td>Unit 1</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='occupied'></span></td><td class='voc'></td>
 	  </tr>
 	  <tr id='laserlab'>
-	    <td><a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
+	    <td class='door-locked'></td><td><a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
 	  <tr id='unit2'>
-	    <td><a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
+	    <td class='door-locked'></td><td><a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
 	  <tr>
-	    <td>Electronics Lab</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
+	    <td class='door-locked'></td><td>Electronics Lab</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
 	  <tr id='craftlab'>
-	    <td><a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
+	    <td class='door-locked'></td><td><a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
+	  </tr>
+	  <tr id='unit3'>
+	    <td class='door-locked'></td><td>Unit 3</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
 	  <tr id='slytherin'>
-	    <td><a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
+	    <td class='door-locked'></td><td><a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
 	  <tr>
-	    <td>Hydroponics</td><td></td><td></td><td></td><td></td>
+	    <td></td><td>Hydroponics</td><td></td><td></td><td></td><td></td>
 	  </tr>
 	  <tr>
-	    <td>Garden</td><td></td><td></td><td></td><td></td>
+	    <td></td><td>Garden</td><td></td><td></td><td></td><td></td>
 	  </tr>
 	</table>
       </div><!-- col -->
@@ -279,7 +282,7 @@ time, #last_updated {
 
         <div class='col'>
           <h2><a href='graph.html?uuid=03bf9198-1fe5-480f-b3c7-efdf628d2b8a'>Access</a></h2>
-          <ul id="access" class="list-group list-group-flush">
+          <ul id="access-list" class="list-group list-group-flush">
 	  </ul>
         </div><!-- col -->
       </div>
@@ -355,35 +358,43 @@ var leds = [
   { uuid: '1d14577a-76ab-4d84-8bf8-194ee1b157a9', container: 'garden-leds', has_temp: false }
 ];
 
+var access = [
+{ uuid: '4cec18dd-0ecc-4d27-bb91-cabd053ae088', door: 'front craft lab', container: 'craftlab' },
+{ uuid: '3cebd358-63bf-42b3-a694-8bd016b86968', door: 'unit 2 front door', container: 'unit2' },
+{ uuid: '2b2b257a-b846-41f2-b29b-fedb096f59b1', door: 'unit 3 back door', container: 'unit3' }
+];
+
+var furballs = [
+{ uuid: '638a9d78-09f6-4d92-b70a-2b14edb8d84a', name: 'Laser Lab', container: 'furball-laser-lab' },
+{ uuid: '04001f9a-122b-4045-84f4-69b7c7318250', name: 'Unit 2', container: 'furball-unit-2' },
+{ uuid: '067746e8-7a2f-4f6e-bb59-e1b2043b37f3', name: 'Slytherin', container: 'furball-slytherin' },
+{ uuid: 'b3efa04b-dac8-4ddc-bc34-94f1daec3c0a', name: 'Craft Lab', container: 'furball-craft-lab' }
+];
+
+var printers = [
+{ uuid: '7bfff065-f2e8-406d-b8d1-734a84c4c222', name: 'Dremel', container: 'printer-dremel' },
+{ uuid: '37853276-5ac4-406c-bb66-e012cd360781', name: 'Zoya', container: 'printer-zoya' },
+{ uuid: 'ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696', name: 'Olga', container: 'printer-olga' }
+];
+
 function onConnect() {
-  console.log("onConnect");
-  client.subscribe('/network/bandwidth'); 
-  client.subscribe('/network/active_hosts');
-//  client.subscribe('/furball');
+  client.subscribe('/network/activity');
   client.subscribe('/projectors'); 
-  client.subscribe('/door'); 
   client.subscribe('/weather/current'); 
   client.subscribe('/printer'); 
-  client.subscribe('/irc'); 
   client.subscribe('/aqi'); 
 
-  // Laser Lab furball
-  client.subscribe('/homebus/device/638a9d78-09f6-4d92-b70a-2b14edb8d84a');
-  // Unit 2 furball 
-  client.subscribe('/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250'); 
-  // Slytherin 
-  client.subscribe('/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3'); 
-  // Craft Lab
-  client.subscribe('/homebus/device/b3efa04b-dac8-4ddc-bc34-94f1daec3c0a');
+  access.forEach(function(item, index) {
+    client.subscribe('/homebus/device/' + item["uuid"]);
+  });
 
-  // Dremel
-  client.subscribe('/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222');
+  furballs.forEach(function(item, index) {
+    client.subscribe('/homebus/device/' + item["uuid"]);
+  });
 
-  // Zoya Ender3 printer 
-  client.subscribe('/homebus/device/37853276-5ac4-406c-bb66-e012cd360781'); 
-
-  // Olga Ender3 printer 
-  client.subscribe('/homebus/device/ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696');
+  printers.forEach(function(item, index) {
+    client.subscribe('/homebus/device/' + item["uuid"]);
+  });
 
   cameras.forEach(function(item, index) {
     client.subscribe('/homebus/device/' + item["uuid"]);
@@ -451,26 +462,20 @@ function onMessageArrived(message) {
     activateTimeago();
   }
 
-  if(message.destinationName == '/network/bandwidth') 
-    onNetworkBandwidth(message); 
-
-  if(message.destinationName == '/network/active_hosts')
+  if(message.destinationName == '/network/activity')
     onNetworkActive(message);
 
  if(message.destinationName == '/projectors') 
     onProjectors(message); 
 
- if(message.destinationName == '/door') 
-    onDoor(message); 
+// if(message.destinationName == '/door') 
+//    onDoor(message); 
 
  if(message.destinationName == '/weather/current') 
     onWeather(message); 
 
  if(message.destinationName == '/printer') 
     onPrinter(message); 
-
- if(message.destinationName == '/irc') 
-    onIRC(message); 
 
  if(message.destinationName == '/aqi') 
     onAQI(message); 
@@ -499,6 +504,16 @@ function onMessageArrived(message) {
   if(message.destinationName == '/homebus/device/ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696') 
     onOctoprint(message, 'olga'); 
 
+  furballs.forEach(function(item, index) {
+    if(message.destinationName == '/homebus/device/' + item['uuid']) 
+      onFurball(message, item['container']); 
+  });
+
+  access.forEach(function(item, index) {
+    if(message.destinationName == '/homebus/device/' + item['uuid']) 
+      onAccess(message, item['container']); 
+  });
+
   cameras.forEach(function(item, index) {
     if(message.destinationName == '/homebus/device/' + item['uuid']) 
       onCamera(message, item['container']); 
@@ -514,14 +529,15 @@ function onMessageArrived(message) {
 function onNetworkBandwidth(message) {
   var network = JSON.parse(message.payloadString);
 
-  $("#network_rx").text(formatBytes(Number(network["bandwidth"]["rx_bps"])));
-  $("#network_tx").text(formatBytes(Number(network["bandwidth"]["tx_bps"])));
 }
 
 function onNetworkActive(message) {
   var network = JSON.parse(message.payloadString);
 
   $("#network_active").text(network["active_hosts"]["arp_table_length"]);
+
+  $("#network_rx").text(formatBytes(Number(network["bandwidth"]["rx_bps"]))); 
+  $("#network_tx").text(formatBytes(Number(network["bandwidth"]["tx_bps"]))); 
 }
 
 function onDiscoball(message, unit, has_temp) {
@@ -545,8 +561,6 @@ function onFurball(message, unit, has_pm) {
   $("#" + unit + " .humidity").text(furball["environment"]["humidity"]); 
   if(has_pm)
     $("#" + unit + " .pm").text(furball["air"]["pm1"] + '/' + furball["air"]["pm25"] + '/' + furball["air"]["pm10"]);
-
-console.log(furball["air"]["voc"]); 
 
   $("#" + unit + " .voc").text(furball["air"]["tvoc"]); 
 }
@@ -572,17 +586,18 @@ function activateTimeago() {
   $('.timeago').timeago(); 
 }
 
-function onDoor(message) {
-  var door = JSON.parse(message.payloadString);
-  var access = door["access"];
+function onAccess(message, container) {
+  var access = JSON.parse(message.payloadString);
 
-  if(!access || access["message"] ||onDoor.last_door_msg == message.payloadString)
-    return;
+  var id = '#' + container;
 
-console.log(onDoor.last_door_msg, message);
-  onDoor.last_door_msg = message.payloadString;
+  if(access['action'] == 'unlocked')
+    $(id + ' .door-locked').text('U'); 
+  else
+    $(id + ' .door-locked').text('L'); 
 
-  $("#access").prepend("<li class='list-group-item'>" + access["person"] + " " + access["action"] + " " + access["unit"] + " " + access["door"] + "<br/>" + getTimeagostamp(door["timestamp"]) + "</li>");
+
+  $("#access-list").prepend("<li class='list-group-item'>" + access["door"] + " " + access["person"] + " " + access["action"] + "<br/>" + getTimeagostamp(access["timestamp"]) + "</li>");
   activateTimeago(); 
 }
 
@@ -603,17 +618,6 @@ function onPrinter(message) {
   $(".pages-printed").text(status["total_page_count"]);
 }
 
-function onIRC(message) {
-  var msg = JSON.parse(message.payloadString);
-
-  if(onIRC.last_irc_msg == message.payloadString)
-    return;
-
-  onIRC.last_irc_msg = message.payloadString; 
-
-  $('#irc').prepend("<li class='list-group-item'>" + msg["message"]["nick"] +  ": " + msg["message"]["message"] + "<br/>" + getTimeagostamp(msg["timestamp"]) + "</li>");
-  activateTimeago(); 
-}
 
 function onAQI(message) {
   var msg = JSON.parse(message.payloadString); 
@@ -665,8 +669,6 @@ function onDremel(message) {
 
 function onOctoprint(message, id) {
   var msg = JSON.parse(message.payloadString);
-
-  console.log('onOctoprint');
 
   $('#' + id + ' .status').text(msg['status']['state']);
 

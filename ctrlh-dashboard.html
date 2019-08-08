@@ -508,9 +508,9 @@ function onMessageArrived(message) {
       onFurball(message, item['container']); 
   });
 
-  onAccess.last_timestamps = {}; 
+  onAccess.last_messages = {}; 
   access.forEach(function(item, index) {
-    onAccess.last_timestamps[item['uuid']] = 0;
+    onAccess.last_messages[item['uuid']] = '';
     });
 
   access.forEach(function(item, index) {
@@ -596,12 +596,12 @@ function onAccess(message, container) {
   // try to avoid repeated old messages
   // this is not a great way to do that as timestamps can drift
   // and messages could potentially be held up
-  if(access['timestamp'] < onAccess.last_timestamps[access['id']] - 15) {
+  if(onAccess.last_messages[access['id']] == message.payloadString) {
     console.log("ignoring repeated Access message", access);
     return;
   }
 
-  onAccess.last_timestamps[access['id']] = access['timestamp'];
+  onAccess.last_messages[access['id']] = message.payloadString;
 
   var id = '#' + container;
 

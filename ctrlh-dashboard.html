@@ -601,6 +601,7 @@ function onAccess(message, container) {
     return;
   }
 
+  console.log(onAccess.last_messages[access['id']], message.payloadString);
   onAccess.last_messages[access['id']] = message.payloadString;
 
   var id = '#' + container;

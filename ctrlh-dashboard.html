@@ -605,7 +605,7 @@ function onAccess(message, container) {
 
   var id = '#' + container;
 
-  if(access['action'] == 'unlocked')
+  if(access['action'] == 'unlocked' || access['action'] == 'already unlocked')
 //    $(id + ' .door-locked').text('U');
     $(id + ' .door-locked'). html('<i class="fas fa-lock-open" style="color: red;"></i>');
   else

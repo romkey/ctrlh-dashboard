@@ -330,11 +330,6 @@ time, #last_updated {
 // they should be for an account with read-only access only to the topic used for the hydroponics
 //  var credentials = new CTLHProjectorMQTT();
 
-// client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());  
-client = new Paho.Client(credentials.MQTT_SERVER, 4569, credentials.MQTT_UUID + new Date().getTime());  
-client.onConnectionLost = onConnectionLost;
-client.onMessageArrived = onMessageArrived;
-mqtt_connect();
 
 // cameras
 var cameras = [
@@ -375,6 +370,21 @@ var printers = [
 { uuid: '37853276-5ac4-406c-bb66-e012cd360781', name: 'Zoya', container: 'printer-zoya' },
 { uuid: 'ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696', name: 'Olga', container: 'printer-olga' }
 ];
+
+
+
+// client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());  
+client = new Paho.Client(credentials.MQTT_SERVER, 4569, credentials.MQTT_UUID + new Date().getTime());  
+client.onConnectionLost = onConnectionLost;
+client.onMessageArrived = onMessageArrived;
+mqtt_connect();
+
+onAccess.last_messages = {}; 
+access.forEach(function(item, index) {
+  onAccess.last_messages[item['uuid']] = '';
+});
+
+
 
 function onConnect() {
   client.subscribe('/network/activity');
@@ -508,11 +518,6 @@ function onMessageArrived(message) {
       onFurball(message, item['container']); 
   });
 
-  onAccess.last_messages = {}; 
-  access.forEach(function(item, index) {
-    onAccess.last_messages[item['uuid']] = '';
-    });
-
   access.forEach(function(item, index) {
     if(message.destinationName == '/homebus/device/' + item['uuid']) 
       onAccess(message, item['container']); 
@@ -601,7 +606,7 @@ function onAccess(message, container) {
     return;
   }
 
-  console.log(onAccess.last_messages[access['id']], message.payloadString);
+  console.log("stored", onAccess.last_messages[access['id']], "new", message.payloadString);
   onAccess.last_messages[access['id']] = message.payloadString;
 
   var id = '#' + container;

@@ -183,22 +183,25 @@ time, #last_updated {
 	  <tr id='unit1'>
 	    <td class='door-locked'></td><td>Unit 1</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='occupied'></span></td><td class='voc'></td>
 	  </tr>
-	  <tr id='laserlab'>
+	  <tr id='furball-laser-lab'>
 	    <td class='door-locked'></td><td><a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
-	  <tr id='unit2'>
+	  <tr id='furball-unit2'>
 	    <td class='door-locked'></td><td><a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
+	  </tr>
+	  <tr id='ws-unit2-2'>
+	    <td class='door-locked'></td><td><a href='graph.html?uuid=1955b27e-17fd-429a-b1ce-293879149e42'>Unit 2 (ws)</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
 	  <tr>
 	    <td class='door-locked'></td><td>Electronics Lab</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
-	  <tr id='craftlab'>
+	  <tr id='furball-craft-lab'>
 	    <td class='door-locked'></td><td><a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
-	  <tr id='unit3'>
+	  <tr id='furball-unit3'>
 	    <td class='door-locked'></td><td>Unit 3</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
-	  <tr id='slytherin'>
+	  <tr id='furball-slytherin'>
 	    <td class='door-locked'></td><td><a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
 	  <tr>
@@ -289,8 +292,12 @@ time, #last_updated {
 
     <div class='row'>
       <div class='col'>
-        <h2><a href='graph.html?uuid=691faad6-bad4-4c87-838b-091ce650e4d4'>Weather</a></h2>
-        <p id='weather'>
+        <h2>Weather</h2>
+        <h3><a href='graph.html?uuid=691faad6-bad4-4c87-838b-091ce650e4d4'>OpenWeatherMap</a></h3>
+        <p id='weather-1'>
+        </p>
+        <h3><a href='graph.html?uuid=ea52198c-6162-4ea8-9e19-2f99bcfb4462'>^H Weather Station</a></h3>
+        <p id='weather-2'>
         </p>
       </div><!-- col -->
 
@@ -359,10 +366,11 @@ var access = [
 ];
 
 var furballs = [
-{ uuid: '638a9d78-09f6-4d92-b70a-2b14edb8d84a', name: 'Laser Lab', container: 'furball-laser-lab' },
-{ uuid: '04001f9a-122b-4045-84f4-69b7c7318250', name: 'Unit 2', container: 'furball-unit-2' },
-{ uuid: '067746e8-7a2f-4f6e-bb59-e1b2043b37f3', name: 'Slytherin', container: 'furball-slytherin' },
-{ uuid: 'b3efa04b-dac8-4ddc-bc34-94f1daec3c0a', name: 'Craft Lab', container: 'furball-craft-lab' }
+{ uuid: '638a9d78-09f6-4d92-b70a-2b14edb8d84a', name: 'Laser Lab', container: 'furball-laser-lab',  has_pm: true },
+{ uuid: '04001f9a-122b-4045-84f4-69b7c7318250', name: 'Unit 2', container: 'furball-unit2', has_pm: false },
+{ uuid: '067746e8-7a2f-4f6e-bb59-e1b2043b37f3', name: 'Slytherin', container: 'furball-slytherin',  has_pm: true },
+{ uuid: 'b3efa04b-dac8-4ddc-bc34-94f1daec3c0a', name: 'Craft Lab', container: 'furball-craft-lab', has_pm: false },
+{ uuid: '1955b27e-17fd-429a-b1ce-293879149e42', name: 'Unit 2 (ws)', container: 'ws-unit2-2', has_pm: false }
 ];
 
 var printers = [
@@ -389,7 +397,13 @@ access.forEach(function(item, index) {
 function onConnect() {
   client.subscribe('/network/activity');
   client.subscribe('/projectors'); 
+
+
+  // openweathermap
   client.subscribe('/weather/current'); 
+  // ^H weather station
+  client.subscribe('/homebus/device/ea52198c-6162-4ea8-9e19-2f99bcfb4462');
+
   client.subscribe('/printer'); 
   client.subscribe('/aqi'); 
 
@@ -481,7 +495,10 @@ function onMessageArrived(message) {
 //    onDoor(message); 
 
  if(message.destinationName == '/weather/current') 
-    onWeather(message); 
+    onWeather(message, '1'); 
+
+ if(message.destinationName == '/homebus/device/ea52198c-6162-4ea8-9e19-2f99bcfb4462')
+    onWeather(message, '2'); 
 
  if(message.destinationName == '/printer') 
     onPrinter(message); 
@@ -492,17 +509,17 @@ function onMessageArrived(message) {
   if(message.destinationName == '/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3')
     onVendo(message);
 
-  if(message.destinationName == '/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250')
-    onFurball(message, "unit2", false); 
+//  if(message.destinationName == '/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250')
+//    onFurball(message, "unit2", false); 
 
-  if(message.destinationName == '/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3') 
-    onFurball(message, "slytherin", true); 
+//  if(message.destinationName == '/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3') 
+//    onFurball(message, "slytherin", true); 
 
-  if(message.destinationName == '/homebus/device/b3efa04b-dac8-4ddc-bc34-94f1daec3c0a')
-    onFurball(message, "craftlab", false); 
+//  if(message.destinationName == '/homebus/device/b3efa04b-dac8-4ddc-bc34-94f1daec3c0a')
+//    onFurball(message, "craftlab", false); 
 
-  if(message.destinationName == '/homebus/device/638a9d78-09f6-4d92-b70a-2b14edb8d84a')
-    onFurball(message, 'laserlab', true);
+//  if(message.destinationName == '/homebus/device/638a9d78-09f6-4d92-b70a-2b14edb8d84a')
+//    onFurball(message, 'laserlab', true);
 
   if(message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222')
     onDremel(message);
@@ -515,7 +532,7 @@ function onMessageArrived(message) {
 
   furballs.forEach(function(item, index) {
     if(message.destinationName == '/homebus/device/' + item['uuid']) 
-      onFurball(message, item['container']); 
+      onFurball(message, item['container'], item['has_pm']); 
   });
 
   access.forEach(function(item, index) {
@@ -566,12 +583,15 @@ function onDiscoball(message, unit, has_temp) {
 function onFurball(message, unit, has_pm) {
   var furball = JSON.parse(message.payloadString);
 
+console.log('furball', furball);
+
   $("#" + unit + " .temperature").text(furball["environment"]["temperature"]); 
   $("#" + unit + " .humidity").text(furball["environment"]["humidity"]); 
-  if(has_pm)
+  if(has_pm) 
     $("#" + unit + " .pm").text(furball["air"]["pm1"] + '/' + furball["air"]["pm25"] + '/' + furball["air"]["pm10"]);
 
-  $("#" + unit + " .voc").text(furball["air"]["tvoc"]); 
+  if(furball["air"])
+    $("#" + unit + " .voc").text(furball["air"]["tvoc"]); 
 }
 
 function onProjectors(message) {
@@ -606,16 +626,13 @@ function onAccess(message, container) {
     return;
   }
 
-  console.log("stored", onAccess.last_messages[access['id']], "new", message.payloadString);
   onAccess.last_messages[access['id']] = message.payloadString;
 
   var id = '#' + container;
 
   if(access['action'] == 'unlocked' || access['action'] == 'already unlocked')
-//    $(id + ' .door-locked').text('U');
     $(id + ' .door-locked'). html('<i class="fas fa-lock-open" style="color: red;"></i>');
   else
-//    $(id + ' .door-locked').text('L'); 
     $(id + ' .door-locked'). html('<i class="fas fa-lock" style="color: green;"></i>');
 
 
@@ -623,10 +640,22 @@ function onAccess(message, container) {
   activateTimeago(); 
 }
 
-function onWeather(message) {
+function onWeather(message, index) {
   var w = JSON.parse(message.payloadString);
+  var id = '#weather-' + index;
 
-  $("#weather").html(w["weather"]["conditions_short"] + ": " + w["weather"]["temperature"] + "°C, " + w["weather"]["humidity"] + "%, " + w["weather"]["conditions_long"] + "<br/>" + getTimeagostamp(w["timestamp"]));
+  $(id).text('');
+
+  if(w["weather"]["conditions_short"])
+    $(id).append(w["weather"]["conditions_short"] + ': ');
+
+  $(id).append(w["weather"]["temperature"] + "°C, " + w["weather"]["humidity"] + "%");
+  
+  if(w["weather"]["conditions_long"])
+    $(id).append(", " + w["weather"]["conditions_long"]);
+
+  $(id).append("<br/>" + getTimeagostamp(w["timestamp"]));
+
   activateTimeago(); 
 }
 

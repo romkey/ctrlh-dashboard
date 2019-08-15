@@ -360,9 +360,9 @@ var leds = [
 ];
 
 var access = [
-{ uuid: '4cec18dd-0ecc-4d27-bb91-cabd053ae088', door: 'front craft lab', container: 'craftlab' },
-{ uuid: '3cebd358-63bf-42b3-a694-8bd016b86968', door: 'unit 2 front door', container: 'unit2' },
-{ uuid: '2b2b257a-b846-41f2-b29b-fedb096f59b1', door: 'unit 3 back door', container: 'unit3' }
+{ uuid: '4cec18dd-0ecc-4d27-bb91-cabd053ae088', door: 'front craft lab', container: 'furball-craft-lab' },
+{ uuid: '3cebd358-63bf-42b3-a694-8bd016b86968', door: 'unit 2 front door', container: 'furball-unit2' },
+{ uuid: '2b2b257a-b846-41f2-b29b-fedb096f59b1', door: 'unit 3 back door', container: 'furball-unit3' }
 ];
 
 var furballs = [
@@ -491,9 +491,6 @@ function onMessageArrived(message) {
  if(message.destinationName == '/projectors') 
     onProjectors(message); 
 
-// if(message.destinationName == '/door') 
-//    onDoor(message); 
-
  if(message.destinationName == '/weather/current') 
     onWeather(message, '1'); 
 
@@ -508,18 +505,6 @@ function onMessageArrived(message) {
 
   if(message.destinationName == '/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3')
     onVendo(message);
-
-//  if(message.destinationName == '/homebus/device/04001f9a-122b-4045-84f4-69b7c7318250')
-//    onFurball(message, "unit2", false); 
-
-//  if(message.destinationName == '/homebus/device/067746e8-7a2f-4f6e-bb59-e1b2043b37f3') 
-//    onFurball(message, "slytherin", true); 
-
-//  if(message.destinationName == '/homebus/device/b3efa04b-dac8-4ddc-bc34-94f1daec3c0a')
-//    onFurball(message, "craftlab", false); 
-
-//  if(message.destinationName == '/homebus/device/638a9d78-09f6-4d92-b70a-2b14edb8d84a')
-//    onFurball(message, 'laserlab', true);
 
   if(message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222')
     onDremel(message);
@@ -583,8 +568,6 @@ function onDiscoball(message, unit, has_temp) {
 function onFurball(message, unit, has_pm) {
   var furball = JSON.parse(message.payloadString);
 
-console.log('furball', furball);
-
   $("#" + unit + " .temperature").text(furball["environment"]["temperature"]); 
   $("#" + unit + " .humidity").text(furball["environment"]["humidity"]); 
   if(has_pm) 
@@ -634,7 +617,6 @@ function onAccess(message, container) {
     $(id + ' .door-locked'). html('<i class="fas fa-lock-open" style="color: red;"></i>');
   else
     $(id + ' .door-locked'). html('<i class="fas fa-lock" style="color: green;"></i>');
-
 
   $("#access-list").prepend("<li class='list-group-item'>" + access["door"] + " " + access["person"] + " " + access["action"] + "<br/>" + getTimeagostamp(access["timestamp"]) + "</li>");
   activateTimeago(); 

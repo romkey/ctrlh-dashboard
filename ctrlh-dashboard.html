@@ -192,8 +192,8 @@ time, #last_updated {
 	  <tr id='ws-unit2-2'>
 	    <td class='door-locked'></td><td><a href='graph.html?uuid=1955b27e-17fd-429a-b1ce-293879149e42'>Unit 2 (ws)</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
-	  <tr>
-	    <td class='door-locked'></td><td>Electronics Lab</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
+	  <tr id='furball-electronics-lab'>
+	    <td class='door-locked'></td><td><a href='graph.html?uuid=ae1dd9a7-b55c-4255-8f16-7e5c69fd678b'>Electronics Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
 	  </tr>
 	  <tr id='furball-craft-lab'>
 	    <td class='door-locked'></td><td><a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
@@ -370,7 +370,8 @@ var furballs = [
 { uuid: '04001f9a-122b-4045-84f4-69b7c7318250', name: 'Unit 2', container: 'furball-unit2', has_pm: false },
 { uuid: '067746e8-7a2f-4f6e-bb59-e1b2043b37f3', name: 'Slytherin', container: 'furball-slytherin',  has_pm: true },
 { uuid: 'b3efa04b-dac8-4ddc-bc34-94f1daec3c0a', name: 'Craft Lab', container: 'furball-craft-lab', has_pm: false },
-{ uuid: '1955b27e-17fd-429a-b1ce-293879149e42', name: 'Unit 2 (ws)', container: 'ws-unit2-2', has_pm: false }
+{ uuid: '1955b27e-17fd-429a-b1ce-293879149e42', name: 'Unit 2 (ws)', container: 'ws-unit2-2', has_pm: false },
+{ uuid: 'ae1dd9a7-b55c-4255-8f16-7e5c69fd678b', name: 'Electronics Lab', container: 'furball-electronics-lab', has_pm: true }
 ];
 
 var printers = [

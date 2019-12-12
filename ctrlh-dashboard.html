@@ -1,726 +1,1002 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>PDX Hackerspace Dashboard</title>
-<meta name="viewport" content="width=device-width">
-<meta name="description" content="Portland's Hackerspace. Check out our website calendar for our weekly open house and all other events open to the public.">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PDX Hackerspace Dashboard</title>
+        <meta name="viewport" content="width=device-width">
+        <meta name="description" content="Portland's Hackerspace. Check out our website calendar for our weekly open house and all other events open to the public.">
+        <meta name="robots" content="noindex">
+        <script src="https://kit.fontawesome.com/0556c42d44.js"></script>
+        <link rel="stylesheet" href="https://pdxhackerspace.org/style.css" integrity="sha384-e5tu+wTFdksi4IWd3RtMTgkMMqPJDSauUgAeGK4v+7ng6MPf60XceelTuC1iNnh/" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <style>
+            html {
+                font-size: 16px;
+            }
+            .hr-green {
+                border-color: green !important;
+            }
+            time,
+            #last_updated {
+                font-size: small;
+                font-style: italic;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1>PDX Hackerspace Dashboard</h1>
+                    <hr class="star-primary activity-bar">
+                    <p id='last_updated'>Last updated:
+                        <span id='last_updated_container'></span>
+                    </p>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col'>
+                    <h2>Camera Stills</h2>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-sm-3' id='russet-camera'>
+                    <h4>
+                        <a href='graph.html?uuid=736ec20e-1320-48c2-9a6b-2376f97e3d52'>Russet St</a>
+                    </h4>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+                <div class='col-sm-3' id='interstate-sb-camera'>
+                    <h4>
+                        <a href='graph.html?uuid='>Interstate SB</a>
+                    </h4>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+                <div class='col-sm-3' id='unit-2-entry2'>
+                    <h4>
+                        <a href='graph.html?uuid=8401df69-1edf-4ac2-bd70-5076bf84c0be'>Unit 2 Entry</a>
+                    </h4>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+                <div class='col-sm-3' id='interstate-nb-camera'>
+                    <h4>
+                        <a href='graph.html?uuid='>Interstate NB</a>
+                    </h4>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+                <div class='col-sm-3' id='unit-2-camera'>
+                    <h4>
+                        <a href='graph.html?uuid=03eca981-8a78-467f-868d-2af2159b34dd'>Unit 2</a>
+                    </h4>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+                <div class='col-sm-3' id='electronics-lab-camera'>
+                    <h4>
+                        <a href='graph.html?uuid=3b22ad64-3439-4e94-971f-13f055878dfb'>Electronics Lab</a>
+                    </h4>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+                <div class='col-sm-3' id='slytherin-camera'>
+                    <h4>
+                        <a href='graph.html?uuid=fc4c1edb-c8e3-4771-9879-290358dbf746'>Slytherin</a>
+                    </h4>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+                <div class='col-sm-3' id='camera-6'>
+                    <h4>
+                        <a href='graph.html?uuid=6f971443-b685-4a2b-86fb-65522c0ab775'>Camera 6</a>
+                    </h4>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
 
-<meta name="robots" content="noindex">
+            </div>
+            <hr class='hr'/>
 
-<script src="https://kit.fontawesome.com/0556c42d44.js"></script>
+            <div class='row'>
+                <div class='col'>
+                    <h2>Live video feeds</h2>
+                </div>
+            </div>
 
-<link rel="stylesheet" href="https://pdxhackerspace.org/style.css" integrity="sha384-e5tu+wTFdksi4IWd3RtMTgkMMqPJDSauUgAeGK4v+7ng6MPf60XceelTuC1iNnh/" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <div class='row'>
+                <div class='col-sm-3'>
+                    <h4>Unit 3</h4>
+                    <iframe src='https://video.nest.com/embedded/live/WdeSzuB41b?autoplay=1'></iframe>
+                </div>
+            </div>
 
-<style>
-html {
-  font-size: 16px;
-}
+            <hr class='hr'/>
+            <div class='row'>
+                <div class='col'>
+                    <h2>3D Printers</h2>
+                </div>
+            </div>
 
-.hr-green {
-  border-color: green !important;
-}
+            <div class='row'>
+                <div class='col-sm-3' id='dremel-cam'>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+                <div class='col-sm-3' id='zoya-cam'>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+                <div class='col-sm-3' id='olga-cam'>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+            </div>
 
-time, #last_updated {
-  font-size: small;
-  font-style: italic;
-}
+            <div class='row'>
+                <div class='col-sm-3' id='dremel'>
+                    <h5>
+                        <a href='graph.html?uuid=7bfff065-f2e8-406d-b8d1-734a84c4c222'>Dremel</a>
+                    </h5>
+                    <h6 id='dremel-status'></h6>
+                    <div id='dremel-job' style='display: none'>
+                        <ul>
+                            <li>Filename:
+                                <span id='dremel-filename'></span>
+                            </li>
+                            <li>Progress:
+                                <span id='dremel-progress'></span>%</li>
+                            <li>Time Remaining:
+                                <span id='dremel-print-time'></span>
+                                of
+                                <span id='dremel-print-time-remaining'></span>
+                                sec
+                            </li>
+                        </ul>
+                        <table class='table'>
+                            <tr>
+                                <th>temp</th>
+                                <th>actual</th>
+                                <th>target</th>
+                            </tr>
+                            <tr>
+                                <td>tool</td>
+                                <td>
+                                    <span id='dremel-tool-temp'></span>°C</td>
+                                <td>
+                                    <span id='dremel-tool-temp-target'></span>°C</td>
+                            </tr>
+                            <tr>
+                                <td>bed</td>
+                                <td>
+                                    <span id='dremel-bed-temp'></span>°C</td>
+                                <td>
+                                    <span id='dremel-bed-temp-target'></span>°C</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- #dremel-job -->
+                </div>
+                <!-- .col #dremel -->
+                <div class='col-sm-3' id='zoya'>
+                    <h5>
+                        <a href='graph.html?uuid=37853276-5ac4-406c-bb66-e012cd360781'>Zoya (orange Ender3)</a>
+                    </h5>
+                    <h6 class='status'></h6>
+                    <div class='job' style='display: none'>
+                        <ul>
+                            <li>Filename:
+                                <span class='filename text-truncate'></span>
+                            </li>
+                            <li>Progress:
+                                <span class='print-progress'></span>%</li>
+                            <li>Time Remaining:
+                                <span class='print-time'></span>
+                                of
+                                <span class='print-time-remaining'></span>
+                                sec</li>
+                        </ul>
+                    </div>
+                    <table class='table'>
+                        <tr>
+                            <th>temp</th>
+                            <th>actual</th>
+                            <th>target</th>
+                        </tr>
+                        <tr>
+                            <td>tool</td>
+                            <td>
+                                <span class='tool-temp'></span>°C</td>
+                            <td>
+                                <span class='tool-temp-target'></span>°C</td>
+                        </tr>
+                        <tr>
+                            <td>bed</td>
+                            <td>
+                                <span class='bed-temp'></span>°C</td>
+                            <td>
+                                <span class='bed-temp-target'></span>°C</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class='col-sm-3' id='olga'>
+                    <h5>
+                        <a href='graph.html?uuid=ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696'>Olga (translucent Ender3)</a>
+                    </h5>
+                    <h6 class='status'></h6>
+                    <div class='job' style='display: none'>
+                        <ul>
+                            <li>Filename:
+                                <span class='filename'></span>
+                            </li>
+                            <li>Progress:
+                                <span class='print-progress'></span>%</li>
+                            <li>Time Remaining:
+                                <span class='print-time'></span>
+                                of
+                                <span class='print-time-remaining'></span>
+                                sec</li>
+                        </ul>
+                    </div>
+                    <table class='table'>
+                        <tr>
+                            <th>temp</th>
+                            <th>actual</th>
+                            <th>target</th>
+                        </tr>
+                        <tr>
+                            <td>tool</td>
+                            <td>
+                                <span class='tool-temp'></span>°C</td>
+                            <td>
+                                <span class='tool-temp-target'></span>°C</td>
+                        </tr>
+                        <tr>
+                            <td>bed</td>
+                            <td>
+                                <span class='bed-temp'></span>°C</td>
+                            <td>
+                                <span class='bed-temp-target'></span>°C</td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- col -->
+            </div>
+            <!-- row -->
 
-</style>
+            <hr class='hr'/>
+            <div class='row'>
+                <div class='col'>
+                    <h2>CNC</h2>
+                </div>
+            </div>
 
-</head>
-<body>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-	<h1>PDX Hackerspace Dashboard</h1>
-	<hr class="star-primary activity-bar">
-        <p id='last_updated'>Last updated: <span id='last_updated_container'></span></p>
-      </div>
-    </div>
-
-    <div class='row'>
-      <div class='col'>
-        <h2>Cameras</h2>
-      </div>
-    </div>
-
-    <div class='row'>
-      <div class='col-sm-3' id='russet-camera'>
-	<h4><a href='graph.html?uuid=736ec20e-1320-48c2-9a6b-2376f97e3d52'>Russet St</a></h4>
-	<img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-      </div>
-
-      <div class='col-sm-3' id='interstate-sb-camera'>
-	<h4><a href='graph.html?uuid='>Interstate SB</a></h4>
-	<img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-      </div>
-
-      <div class='col-sm-3' id='unit-2-entry2'>
-	<h4><a href='graph.html?uuid=8401df69-1edf-4ac2-bd70-5076bf84c0be'>Unit 2 Entry</a></h4>
-	<img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-      </div>
-
-      <div class='col-sm-3' id='interstate-nb-camera'>
-	<h4><a href='graph.html?uuid='>Interstate NB</a></h4>
-	<img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-      </div>
-
-
-	<div class='col-sm-3' id='unit-2-camera'>
-	  <h4><a href='graph.html?uuid=03eca981-8a78-467f-868d-2af2159b34dd'>Unit 2</a></h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	</div>
-
-	<div class='col-sm-3' id='electronics-lab-camera'>
-	  <h4><a href='graph.html?uuid=3b22ad64-3439-4e94-971f-13f055878dfb'>Electronics Lab</a></h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	</div>
-
-
-	<div class='col-sm-3' id='slytherin-camera'>
-	  <h4><a href='graph.html?uuid=fc4c1edb-c8e3-4771-9879-290358dbf746'>Slytherin</a></h4>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	</div>
-
-
-	<div class='col-sm-3'>
-	  <h4>Unit 3</h4>
-	  <iframe src='https://video.nest.com/embedded/live/WdeSzuB41b?autoplay=1'>
-	  </iframe>
-	  </li>
-	</div>
-      </div>
-
-	<hr class='hr' />
-
-        <div class='row'>
-          <div class='col'>
-	    <h4>3D Printers</h4>
-          </div>
+            <div class='row'>
+                <div class='col' id='mpcnc'>
+                    <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+                </div>
+                <div class='col' id='mpcnc2'>
+                </div>
+                <div class='col' id='mpcnc3'>
+                </div>
+                <div class='col' id='mpcnc4'>
+                </div>
+            </div>
+            <!-- row -->
+            <hr class='hr'/>
+            <div class='row'>
+                <div class='col'>
+                    <h2>Rooms</h2>
+                    <table class='table table-striped'>
+                        <tr>
+                            <th></th>
+                            <th>Room</th>
+                            <th>Temp</th>
+                            <th>Hum</th>
+                            <th>PM1/2.5/10</th>
+                            <th>VOC</th>
+                        </tr>
+                        <tr id='unit1'>
+                            <td class='door-locked'></td>
+                            <td>Unit 1</td>
+                            <td>
+                                <span class='temperature'></span>°C</td>
+                            <td>
+                                <span class='humidity'></span>%</td>
+                            <td>
+                                <span class='occupied'></span>
+                            </td>
+                            <td class='voc'></td>
+                        </tr>
+                        <tr id='furball-laser-lab'>
+                            <td class='door-locked'></td>
+                            <td>
+                                <a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a>
+                            </td>
+                            <td>
+                                <span class='temperature'></span>°C</td>
+                            <td>
+                                <span class='humidity'></span>%</td>
+                            <td>
+                                <span class='pm'></span>
+                            </td>
+                            <td class='voc'></td>
+                        </tr>
+                        <tr id='furball-unit2'>
+                            <td class='door-locked'></td>
+                            <td>
+                                <a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a>
+                            </td>
+                            <td>
+                                <span class='temperature'></span>°C</td>
+                            <td>
+                                <span class='humidity'></span>%</td>
+                            <td>
+                                <span class='pm'></span>
+                            </td>
+                            <td class='voc'></td>
+                        </tr>
+                        <tr id='ws-unit2-2'>
+                            <td class='door-locked'></td>
+                            <td>
+                                <a href='graph.html?uuid=1955b27e-17fd-429a-b1ce-293879149e42'>Unit 2 (ws)</a>
+                            </td>
+                            <td>
+                                <span class='temperature'></span>°C</td>
+                            <td>
+                                <span class='humidity'></span>%</td>
+                            <td>
+                                <span class='pm'></span>
+                            </td>
+                            <td class='voc'></td>
+                        </tr>
+                        <tr id='furball-electronics-lab'>
+                            <td class='door-locked'></td>
+                            <td>
+                                <a href='graph.html?uuid=ae1dd9a7-b55c-4255-8f16-7e5c69fd678b'>Electronics Lab</a>
+                            </td>
+                            <td>
+                                <span class='temperature'></span>°C</td>
+                            <td>
+                                <span class='humidity'></span>%</td>
+                            <td>
+                                <span class='pm'></span>
+                            </td>
+                            <td class='voc'></td>
+                        </tr>
+                        <tr id='furball-craft-lab'>
+                            <td class='door-locked'></td>
+                            <td>
+                                <a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a>
+                            </td>
+                            <td>
+                                <span class='temperature'></span>°C</td>
+                            <td>
+                                <span class='humidity'></span>%</td>
+                            <td>
+                                <span class='pm'></span>
+                            </td>
+                            <td class='voc'></td>
+                        </tr>
+                        <tr id='furball-unit3'>
+                            <td class='door-locked'></td>
+                            <td>Unit 3</td>
+                            <td>
+                                <span class='temperature'></span>°C</td>
+                            <td>
+                                <span class='humidity'></span>%</td>
+                            <td>
+                                <span class='pm'></span>
+                            </td>
+                            <td class='voc'></td>
+                        </tr>
+                        <tr id='furball-slytherin'>
+                            <td class='door-locked'></td>
+                            <td>
+                                <a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a>
+                            </td>
+                            <td>
+                                <span class='temperature'></span>°C</td>
+                            <td>
+                                <span class='humidity'></span>%</td>
+                            <td>
+                                <span class='pm'></span>
+                            </td>
+                            <td class='voc'></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Hydroponics</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Garden</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- col -->
+                <div class='col'>
+                    <h2>Facilities</h2>
+                    <table class='table table-striped'>
+                        <tr>
+                            <td rowspan="2">
+                                <a href='graph.html?uuid=7db061e9-d73a-47a0-a4ab-f3d097da5504'>Network</a>
+                            </td>
+                            <td>rx:
+                                <span id='network_rx'></span>ps</td>
+                            <td>tx:
+                                <span id='network_tx'></span>ps</td>
+                        </tr>
+                        <tr>
+                            <td>active hosts</td>
+                            <td id='network_active'></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href='http://192.168.15.99/'>^H Sign</a>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Buckets</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr id='discoball-vendo-leds'>
+                            <td>
+                                <a href='http://192.168.15.22' target='_blank'>Vendo LEDs</a>
+                            </td>
+                            <td class='preset'></td>
+                            <td class='animation'></td>
+                            <td class='speed'></td>
+                            <td class='brightness'></td>
+                        </tr>
+                        <tr id='discoball-led-strip1'>
+                            <td>
+                                <a href='http://192.168.15.23' target='_blank'>LED strip</a>
+                            </td>
+                            <td class='preset'></td>
+                            <td class='animation'></td>
+                            <td class='speed'></td>
+                            <td class='brightness'></td>
+                        </tr>
+                        <tr id='discoball-garden-leds'>
+                            <td>
+                                <a href='http://192.168.15.28' target='_blank'>Garden LEDs</a>
+                            </td>
+                            <td class='preset'></td>
+                            <td class='animation'></td>
+                            <td class='speed'></td>
+                            <td class='brightness'></td>
+                        </tr>
+                        <tr>
+                            <td>Unit 2 Projector</td>
+                            <td id="unit2_projector_status"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Unit 3 Projector</td>
+                            <td id="unit3_projector_status"></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href='graph.html?uuid=4cf5765b-6a1a-4f05-879f-1285e092beb3'>Vendo</a>
+                            </td>
+                            <td>
+                                <span id='vendo-temperature'></span>°C</td>
+                            <td>
+                                <span id='vendo-humidity'></span>%</td>
+                        </tr>
+                        <tr>
+                            <td>Grill</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Freezer</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- col -->
+                <div class='col'>
+                    <h2>
+                        <a href='graph.html?uuid=03bf9198-1fe5-480f-b3c7-efdf628d2b8a'>Access</a>
+                    </h2>
+                    <ul id="access-list" class="list-group list-group-flush"></ul>
+                </div>
+                <!-- col -->
+            </div>
+            <div class='row'>
+                <div class='col'>
+                    <h2>Weather</h2>
+                    <h3>
+                        <a href='graph.html?uuid=691faad6-bad4-4c87-838b-091ce650e4d4'>OpenWeatherMap</a>
+                    </h3>
+                    <p id='weather-1'></p>
+                    <h3>
+                        <a href='graph.html?uuid=ea52198c-6162-4ea8-9e19-2f99bcfb4462'>^H Weather Station</a>
+                    </h3>
+                    <p id='weather-2'></p>
+                </div>
+                <!-- col -->
+                <div class='col'>
+                    <h2>Air Quality
+                    </h2>
+                    <p id='aqi'></p>
+                </div>
+                <!-- col -->
+                <div class='col'>
+                    <h2>
+                        <a href='graph.html?uuid=4f265e2c-3c08-4635-8e50-8400d5294c29' class='printer-name'>Brother Printer</a>
+                    </h2>
+                    <p class='printer-status'></p>
+                    <p>
+                        <span class='pages-printed'></span>
+                        pages printed</p>
+                </div>
+                <!-- col -->
+            </div>
+            <!-- row -->
+            <div class='row'>
+                <div class='col'>
+                    <i>Want to hack this?</i>
+                    Source is at
+                    <a href='https://github.com/romkey/ctrlh-dashboard'>https://github.com/romkey/ctrlh-dashboard</a>
+                </div>
+            </div>
         </div>
-
-
-
-        <div class='row'>
-
-          <div class='col' id='dremel'>
-	    <h5><a href='graph.html?uuid=7bfff065-f2e8-406d-b8d1-734a84c4c222'>Dremel</a></h5>
-	      <h6 id='dremel-status'></h6>
-  	      <div id='dremel-job' style='display: none'>
-		<ul>
-		  <li>Filename: <span id='dremel-filename'></span></li>
-		  <li>Progress: <span id='dremel-progress'><span>%</li>
-		  <li>Time Remaining: <span id='dremel-print-time'></span> of <span id='dremel-print-time-remaining'></span> sec</li>
-                </ul>
-	      </div>
-	      <table class='table'>
-		<tr><th>temp</th><th>actual</th><th>target</th></tr>
-		<tr><td>tool</td><td><span id='dremel-tool-temp'></span>°C</td><td><span id='dremel-tool-temp-target'></span>°C</td></tr>
-		<tr><td>bed</td><td><span id='dremel-bed-temp'></span>°C</td><td><span id='dremel-bed-temp-target'></span>°C</td></tr>
-	      </table>
-          </div>
-
-          <div class='col' id='dremel-cam'>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-	  </div>
-
-	  
-          <div class='col' id='zoya'>
-	    <h5><a href='graph.html?uuid=37853276-5ac4-406c-bb66-e012cd360781'>Zoya (orange Ender3)</a></h5>
-	    <h6 class='status'></h6>
-	    <div class='job' style='display: none'>
-	      <ul>
-		<li>Filename: <span class='filename text-truncate'></span></li>
-		<li>Progress: <span class='print-progress'></span>%</li>
-		<li>Time Remaining: <span class='print-time'></span> of <span class='print-time-remaining'></span> sec</li>
-	      </ul>
-	    </div>
-	    <table class='table'>
-	      <tr><th>temp</th><th>actual</th><th>target</th></tr>
-	      <tr><td>tool</td><td><span class='tool-temp'></span>°C</td><td><span class='tool-temp-target'></span>°C</td></tr>
-	      <tr><td>bed</td><td><span class='bed-temp'></span>°C</td><td><span class='bed-temp-target'></span>°C</td></tr>
-	    </table>
-          </div>
-
-          <div class='col' id='zoya-cam'>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-          </div>
-
-
-          <div class='col' id='olga'>
-	    <h5><a href='graph.html?uuid=ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696'>Olga (translucent Ender3)</a></h5>
-	    <h6 class='status'></h6>
-	    <div class='job' style='display: none'>
-	      <ul>
-		<li>Filename: <span class='filename'></span></li>
-		<li>Progress: <span class='print-progress'></span>%</li>
-		<li>Time Remaining: <span class='print-time'></span> of <span class='print-time-remaining'></span> sec</li>
-	      </ul>
-	    </div>
-	    <table class='table'>
-	      <tr><th>temp</th><th>actual</th><th>target</th></tr>
-	      <tr><td>tool</td><td><span class='tool-temp'></span>°C</td><td><span class='tool-temp-target'></span>°C</td></tr>
-	      <tr><td>bed</td><td><span class='bed-temp'></span>°C</td><td><span class='bed-temp-target'></span>°C</td></tr>
-	    </table>
-          </div>
-          <div class='col' id='olga-cam'>
-	    <img src='test-pattern.jpg' class='img-fluid img-thumbnail'>
-          </div><!-- col -->
-        </div><!-- row -->
-
-	<hr class='hr' />
-
-      <div class='row'>
-      <div class='col'>
-	<h2>Rooms</h2>
-	<table class='table table-striped'>
-	  <tr>
-	    <th></th><th>Room</th><th>Temp</th><th>Hum</th><th>PM1/2.5/10</th><th>VOC</th>
-	  </tr>
-	  <tr id='unit1'>
-	    <td class='door-locked'></td><td>Unit 1</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='occupied'></span></td><td class='voc'></td>
-	  </tr>
-	  <tr id='furball-laser-lab'>
-	    <td class='door-locked'></td><td><a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
-	  </tr>
-	  <tr id='furball-unit2'>
-	    <td class='door-locked'></td><td><a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
-	  </tr>
-	  <tr id='ws-unit2-2'>
-	    <td class='door-locked'></td><td><a href='graph.html?uuid=1955b27e-17fd-429a-b1ce-293879149e42'>Unit 2 (ws)</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
-	  </tr>
-	  <tr id='furball-electronics-lab'>
-	    <td class='door-locked'></td><td><a href='graph.html?uuid=ae1dd9a7-b55c-4255-8f16-7e5c69fd678b'>Electronics Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
-	  </tr>
-	  <tr id='furball-craft-lab'>
-	    <td class='door-locked'></td><td><a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
-	  </tr>
-	  <tr id='furball-unit3'>
-	    <td class='door-locked'></td><td>Unit 3</td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
-	  </tr>
-	  <tr id='furball-slytherin'>
-	    <td class='door-locked'></td><td><a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a></td><td><span class='temperature'></span>°C</td><td><span class='humidity'></span>%</td><td><span class='pm'></span></td><td class='voc'></td>
-	  </tr>
-	  <tr>
-	    <td></td><td>Hydroponics</td><td></td><td></td><td></td><td></td>
-	  </tr>
-	  <tr>
-	    <td></td><td>Garden</td><td></td><td></td><td></td><td></td>
-	  </tr>
-	</table>
-      </div><!-- col -->
-      <div class='col'>
-	<h2>Facilities</h2>
-	<table class='table table-striped'>
-	  <tr>
-	    <td rowspan=2><a href='graph.html?uuid=7db061e9-d73a-47a0-a4ab-f3d097da5504'>Network</a></td>
-	    <td>rx: <span id='network_rx'></span>ps</td>
-	    <td>tx: <span id='network_tx'></span>ps</td>
-	  </tr>
-	  <tr>
-	    <td>active hosts</td><td id='network_active'></td>
-	  </tr>
-	  <tr>
-	    <td><a href='http://192.168.15.99/'>^H Sign</a></td>
-	    <td></td>
-	    <td></td>
-	  </tr>
-	  <tr>
-	    <td>Buckets</td>
-	    <td></td>
-	    <td></td>
-	  </tr>
-	  <tr id='discoball-vendo-leds'>
-	    <td><a href='http://192.168.15.22' target='_blank'>Vendo LEDs</a></td>
-	    <td class='preset'></td>
-	    <td class='animation'></td>
-	    <td class='speed'></td>
-	    <td class='brightness'></td>
-	  </tr>
-	  <tr id='discoball-led-strip1'>
-	    <td><a href='http://192.168.15.23' target='_blank'>LED strip</a></td>
-	    <td class='preset'></td>
-	    <td class='animation'></td>
-	    <td class='speed'></td>
-	    <td class='brightness'></td>
-	  </tr>
-	  <tr id='discoball-garden-leds'>
-	    <td><a href='http://192.168.15.28' target='_blank'>Garden LEDs</a></td>
-	    <td class='preset'></td>
-	    <td class='animation'></td>
-	    <td class='speed'></td>
-	    <td class='brightness'></td>
-	  </tr>
-	  <tr>
-	    <td>Unit 2 Projector</td>
-	    <td id="unit2_projector_status"></td>
-	    <td></td>
-	  </tr>
-	  <tr>
-	    <td>Unit 3 Projector</td>
-	    <td id="unit3_projector_status"></td>
-	    <td></td>
-	  </tr>
-	  <tr>
-	    <td><a href='graph.html?uuid=4cf5765b-6a1a-4f05-879f-1285e092beb3'>Vendo</a></td>
-	    <td><span id='vendo-temperature'></span>°C</td>
-	    <td><span id='vendo-humidity'></span>%</td>
-	  </tr>
-	  <tr>
-	    <td>Grill</td>
-	    <td></td>
-	    <td></td>
-	  </tr>
-	  <tr>
-	    <td>Freezer</td>
-	    <td></td>
-	    <td></td>
-	  </tr>
-	</table>
-        </div><!-- col -->
-
-        <div class='col'>
-          <h2><a href='graph.html?uuid=03bf9198-1fe5-480f-b3c7-efdf628d2b8a'>Access</a></h2>
-          <ul id="access-list" class="list-group list-group-flush">
-	  </ul>
-        </div><!-- col -->
-      </div>
-
-
-    <div class='row'>
-      <div class='col'>
-        <h2>Weather</h2>
-        <h3><a href='graph.html?uuid=691faad6-bad4-4c87-838b-091ce650e4d4'>OpenWeatherMap</a></h3>
-        <p id='weather-1'>
-        </p>
-        <h3><a href='graph.html?uuid=ea52198c-6162-4ea8-9e19-2f99bcfb4462'>^H Weather Station</a></h3>
-        <p id='weather-2'>
-        </p>
-      </div><!-- col -->
-
-      <div class='col'>
-        <h2>Air Quality</a></h2>
-        <p id='aqi'>
-        </p>
-      </div><!-- col -->
-
-      <div class='col'>
-	<h2><a href='graph.html?uuid=4f265e2c-3c08-4635-8e50-8400d5294c29' class='printer-name'>Brother Printer</a></h>
-	<p class='printer-status'></p>
-	<p><span class='pages-printed'></span> pages printed</p>
-      </div><!-- col -->
-    </div><!-- row -->
-
-      <div class='row'>
-	<div class='col'>
-          <i>Want to hack this?</i> Source is at <a href='https://github.com/romkey/ctrlh-dashboard'>https://github.com/romkey/ctrlh-dashboard</a>
-        </div>
-      </div>
-  </div>
-</div>
-
-<!-- from https://www.cloudmqtt.com/docs/websocket.html -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js' type='text/javascript'></script>
-<script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js' integrity='sha384-bIExnxLHdrb4/5cUciUyC490hqkTPFw6V1eUbG0gpKQ67B3dsT6KOdXvl5RycCM6' crossorigin='anonymous'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
-<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous'></script>
-<script src='https://ctrlh.romkey.com/credentials.js'></script>
-<script type='text/javascript'>
-// we loaded the credentials in separate JS
-// this is still not at all secure but it allows us to decouple management of this page and its content	    
-// from management of the credentials, and lets us not check them into Github
-// (despite the fact that they're flapping in the window here on the web)
-// they should be for an account with read-only access only to the topic used for the hydroponics
-//  var credentials = new CTLHProjectorMQTT();
-
-
-// cameras
-var cameras = [
-  { uuid: '3b22ad64-3439-4e94-971f-13f055878dfb', container: '#electronics-lab-camera' },
-  { uuid: '736ec20e-1320-48c2-9a6b-2376f97e3d52', container: '#russet-camera' },
-  { uuid: '8401df69-1edf-4ac2-bd70-5076bf84c0be', container: '#unit-2-entry2' },
-  { uuid: 'fc4c1edb-c8e3-4771-9879-290358dbf746', container: '#slytherin-camera' },
-  { uuid: '03eca981-8a78-467f-868d-2af2159b34dd', container: '#unit-2-camera' },
-  { uuid: '6f971443-b685-4a2b-86fb-65522c0ab775', container: '#camera-6' }, 
-  { uuid: 'af1fd463-145b-427d-ba90-2234c0283489', container: '#interstate-sb-camera' }, 
-  { uuid: 'aa4526dc-7459-47a6-a788-44e08262728c', container: '#interstate-nb-camera' }, 
-  { uuid: 'c0603a32-7817-4922-b661-2a6be57b6bd0', container: '#dremel-cam' },
-  { uuid: 'd5a6e892-f89f-416b-91c4-2953330e5f17', container: '#zoya-cam' },
-  { uuid: '3bbbf6f5-f4d4-4acc-9d65-a4a03ea93762', container: '#olga-cam' }
-];
-
-var leds = [
-  { uuid: '4cf5765b-6a1a-4f05-879f-1285e092beb3', container: 'vendo-leds', has_temp: true },
-  { uuid: '52864d8f-62c2-4fe4-867c-c625ff006df5', container: 'led-strip1', has_temp: false },
-  { uuid: '1d14577a-76ab-4d84-8bf8-194ee1b157a9', container: 'garden-leds', has_temp: false }
-];
-
-var access = [
-{ uuid: '4cec18dd-0ecc-4d27-bb91-cabd053ae088', door: 'front craft lab', container: 'furball-craft-lab' },
-{ uuid: '3cebd358-63bf-42b3-a694-8bd016b86968', door: 'unit 2 front door', container: 'furball-unit2' },
-{ uuid: '2b2b257a-b846-41f2-b29b-fedb096f59b1', door: 'unit 3 back door', container: 'furball-unit3' }
-];
-
-var furballs = [
-{ uuid: '638a9d78-09f6-4d92-b70a-2b14edb8d84a', name: 'Laser Lab', container: 'furball-laser-lab',  has_pm: true },
-{ uuid: '04001f9a-122b-4045-84f4-69b7c7318250', name: 'Unit 2', container: 'furball-unit2', has_pm: false },
-{ uuid: '067746e8-7a2f-4f6e-bb59-e1b2043b37f3', name: 'Slytherin', container: 'furball-slytherin',  has_pm: true },
-{ uuid: 'b3efa04b-dac8-4ddc-bc34-94f1daec3c0a', name: 'Craft Lab', container: 'furball-craft-lab', has_pm: false },
-{ uuid: '1955b27e-17fd-429a-b1ce-293879149e42', name: 'Unit 2 (ws)', container: 'ws-unit2-2', has_pm: false },
-{ uuid: 'ae1dd9a7-b55c-4255-8f16-7e5c69fd678b', name: 'Electronics Lab', container: 'furball-electronics-lab', has_pm: true }
-];
-
-var printers = [
-{ uuid: '7bfff065-f2e8-406d-b8d1-734a84c4c222', name: 'Dremel', container: 'printer-dremel' },
-{ uuid: '37853276-5ac4-406c-bb66-e012cd360781', name: 'Zoya', container: 'printer-zoya' },
-{ uuid: 'ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696', name: 'Olga', container: 'printer-olga' }
-];
-
-
-
-// client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());  
-client = new Paho.Client(credentials.MQTT_SERVER, 4569, credentials.MQTT_UUID + new Date().getTime());  
-client.onConnectionLost = onConnectionLost;
-client.onMessageArrived = onMessageArrived;
-mqtt_connect();
-
-onAccess.last_messages = {}; 
-access.forEach(function(item, index) {
-  onAccess.last_messages[item['uuid']] = '';
-});
-
-
-
-function onConnect() {
-  client.subscribe('/network/activity');
-  client.subscribe('/projectors'); 
-
-
-  // openweathermap
-  client.subscribe('/weather/current'); 
-  // ^H weather station
-  client.subscribe('/homebus/device/ea52198c-6162-4ea8-9e19-2f99bcfb4462');
-
-  client.subscribe('/printer'); 
-  client.subscribe('/aqi'); 
-
-  access.forEach(function(item, index) {
-    client.subscribe('/homebus/device/' + item["uuid"]);
-  });
-
-  furballs.forEach(function(item, index) {
-    client.subscribe('/homebus/device/' + item["uuid"]);
-  });
-
-  printers.forEach(function(item, index) {
-    client.subscribe('/homebus/device/' + item["uuid"]);
-  });
-
-  cameras.forEach(function(item, index) {
-    client.subscribe('/homebus/device/' + item["uuid"]);
-  });
-
-  leds.forEach(function(item, index) {
-    client.subscribe('/homebus/device/' + item["uuid"]);
-    });
-}
-
-function mqtt_connect() {
-  var options = {
-    useSSL: true,
-    userName: credentials.MQTT_USERNAME,
-    password: credentials.MQTT_PASSWORD,
-    onSuccess:onConnect,
-    onFailure:doFail,
-    reconnect: true
-  };
-
-  console.log("mqtt connect");
-  client.connect(options); 
-}
-
-
-function doFail(e) {
-  console.log(e);
-
-console.log("doFail");
-}
-
-function onConnectionLost(responseObject) {
-  if(responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:"+responseObject.errorMessage);
-  }
-
-  console.log("connection lost");
-}
-
-// shamelessly taken from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
-function formatBytes(bytes, decimals = 2) {
-  if (bytes === 0) return '0 Bytes';
-
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-}
-
-function onMessageArrived(message) {
-  $('.activity-bar').addClass('hr-green');
-  setTimeout(function () {
-    $('.activity-bar').removeClass('hr-green');
-  }, 1000);
-
-//  console.log('onMessageArrived:' + message.payloadString);
-  console.log('topic is ' + message.destinationName);
-
-  data = JSON.parse(message.payloadString);
-  if(data["timestamp"])  {
-    $('#last_updated_container').html(getTimeagostamp(data["timestamp"]));
-    activateTimeago();
-  }
-
-  if(message.destinationName == '/network/activity')
-    onNetworkActive(message);
-
- if(message.destinationName == '/projectors') 
-    onProjectors(message); 
-
- if(message.destinationName == '/weather/current') 
-    onWeather(message, '1'); 
-
- if(message.destinationName == '/homebus/device/ea52198c-6162-4ea8-9e19-2f99bcfb4462')
-    onWeather(message, '2'); 
-
- if(message.destinationName == '/printer') 
-    onPrinter(message); 
-
- if(message.destinationName == '/aqi') 
-    onAQI(message); 
-
-  if(message.destinationName == '/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3')
-    onVendo(message);
-
-  if(message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222')
-    onDremel(message);
-
-  if(message.destinationName == '/homebus/device/37853276-5ac4-406c-bb66-e012cd360781') 
-    onOctoprint(message, 'zoya'); 
-
-  if(message.destinationName == '/homebus/device/ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696') 
-    onOctoprint(message, 'olga'); 
-
-  furballs.forEach(function(item, index) {
-    if(message.destinationName == '/homebus/device/' + item['uuid']) 
-      onFurball(message, item['container'], item['has_pm']); 
-  });
-
-  access.forEach(function(item, index) {
-    if(message.destinationName == '/homebus/device/' + item['uuid']) 
-      onAccess(message, item['container']); 
-  });
-
-  cameras.forEach(function(item, index) {
-    if(message.destinationName == '/homebus/device/' + item['uuid']) 
-      onCamera(message, item['container']); 
-  });
-
-  leds.forEach(function(item, index) {
-    if(message.destinationName == '/homebus/device/' + item['uuid']) 
-      onDiscoball(message, item['container'], item['has_temp']); 
-  });
-}
-
-
-function onNetworkBandwidth(message) {
-  var network = JSON.parse(message.payloadString);
-
-}
-
-function onNetworkActive(message) {
-  var network = JSON.parse(message.payloadString);
-
-  $("#network_active").text(network["active_hosts"]["arp_table_length"]);
-
-  $("#network_rx").text(formatBytes(Number(network["bandwidth"]["rx_bps"]))); 
-  $("#network_tx").text(formatBytes(Number(network["bandwidth"]["tx_bps"]))); 
-}
-
-function onDiscoball(message, unit, has_temp) {
-  var discoball = JSON.parse(message.payloadString);
-
-  if(discoball["leds"]["state"] == 'off' || (discoball["leds"]["preset"] == 'off' && discoball["leds"]["animation"] == "none")) {
-    $('#discoball-' + unit + ' .preset').text('off');
-    return;
-  }
-
-  $('#discoball-' + unit + ' .preset').text(discoball["leds"]["preset"]); 
-  $('#discoball-' + unit + ' .animation').text(discoball["leds"]["animation"]); 
-  $('#discoball-' + unit + ' .speed').text(discoball["leds"]["speed"]+'x'); 
-  $('#discoball-' + unit + ' .brightness').text(discoball["leds"]["brightness"]+'%'); 
-}
-
-function onFurball(message, unit, has_pm) {
-  var furball = JSON.parse(message.payloadString);
-
-  $("#" + unit + " .temperature").text(furball["environment"]["temperature"]); 
-  $("#" + unit + " .humidity").text(furball["environment"]["humidity"]); 
-  if(has_pm) 
-    $("#" + unit + " .pm").text(furball["air"]["pm1"] + '/' + furball["air"]["pm25"] + '/' + furball["air"]["pm10"]);
-
-  if(furball["air"])
-    $("#" + unit + " .voc").text(furball["air"]["tvoc"]); 
-}
-
-function onProjectors(message) {
-  var projectors = JSON.parse(message.payloadString); 
-
-  if(projectors["name"] == "Unit 2")
-    id = "#unit2_projector_status";
-
-  if(projectors["name"] == "Unit 3")
-    id = "#unit3_projector_status";
-
-  $(id).text(projectors["status"]);
-}
-
-function getTimeagostamp(timestamp) {
-  var d = new Date(Number(timestamp)*1000); 
-  return "<time class='timeago' datetime='" + d.toISOString() + "' title='" + d.toLocaleString() + "'></time>";
-}
-
-function activateTimeago() {
-  $('.timeago').timeago(); 
-}
-
-function onAccess(message, container) {
-  var access = JSON.parse(message.payloadString);
-
-  // try to avoid repeated old messages
-  // this is not a great way to do that as timestamps can drift
-  // and messages could potentially be held up
-  if(onAccess.last_messages[access['id']] == message.payloadString) {
-    console.log("ignoring repeated Access message", access);
-    return;
-  }
-
-  onAccess.last_messages[access['id']] = message.payloadString;
-
-  var id = '#' + container;
-
-  if(access['action'] == 'unlocked' || access['action'] == 'already unlocked')
-    $(id + ' .door-locked'). html('<i class="fas fa-lock-open" style="color: red;"></i>');
-  else
-    $(id + ' .door-locked'). html('<i class="fas fa-lock" style="color: green;"></i>');
-
-  $("#access-list").prepend("<li class='list-group-item'>" + access["door"] + " " + access["person"] + " " + access["action"] + "<br/>" + getTimeagostamp(access["timestamp"]) + "</li>");
-  activateTimeago(); 
-}
-
-function onWeather(message, index) {
-  var w = JSON.parse(message.payloadString);
-  var id = '#weather-' + index;
-
-  $(id).text('');
-
-  if(w["weather"]["conditions_short"])
-    $(id).append(w["weather"]["conditions_short"] + ': ');
-
-  $(id).append(w["weather"]["temperature"] + "°C, " + w["weather"]["humidity"] + "%");
-  
-  if(w["weather"]["conditions_long"])
-    $(id).append(", " + w["weather"]["conditions_long"]);
-
-  $(id).append("<br/>" + getTimeagostamp(w["timestamp"]));
-
-  activateTimeago(); 
-}
-
-function onPrinter(message) {
-  var printer = JSON.parse(message.payloadString);
-  var system = printer["system"];
-  var status = printer["status"];
-
-  $(".printer-name").text(system["model"]); 
-  $(".printer-status").text(status["status"]); 
-  $(".pages-printed").text(status["total_page_count"]);
-}
-
-
-function onAQI(message) {
-  var msg = JSON.parse(message.payloadString); 
-  var text = "";
-
-  msg["observations"].forEach(function(item, index) {
-  text += item["name"] + " AQI is " + item["aqi"] + " (" + item["condition"]  + ")<br />";
-  });
-  text +=  getTimeagostamp(msg["timestamp"]);
-  $('#aqi').html(text);
-  activateTimeago(); 
-}
-
-function onCamera(message, container) {
-  var msg = JSON.parse(message.payloadString); 
-
-  $(container + ' img').attr('src', 'data:' + msg['image']['mime_type'] + ';base64,' + msg['image']['data']);
-  $(container + ' time').remove();
-  $(container).append(getTimeagostamp(msg['timestamp']));
-  activateTimeago();
-}
-
-function onVendo(message) {
-  var msg = JSON.parse(message.payloadString); 
-
-  $('#vendo-temperature').text(msg['environment']['temperature']); 
-  $('#vendo-humidity').text(msg['environment']['humidity']); 
-}
-
-function onDremel(message) {
-  var msg = JSON.parse(message.payloadString);
-
-  $('#dremel-status').text(msg['status']['state']);
-
-  $('#dremel-filename').text(msg['job']['file']); 
-  if(msg['job']['progress']) 
-    $('#dremel-progress').text(msg['job']['progress'].toFixed(2)); 
-  $('#dremel-print-time').text(msg['job']['print_time']); 
-  $('#dremel-print-time-remaining').text(msg['job']['print_time_remaining']); 
-
-  if(msg['status']['state'] != 'idle')
-    $('#dremel-job').show();
-
-  $('#dremel-tool-temp').text(msg['temperatures']['tool0_actual']); 
-  $('#dremel-tool-temp-target').text(msg['temperatures']['tool0_target']); 
-  $('#dremel-bed-temp').text(msg['temperatures']['bed_actual']); 
-  $('#dremel-bed-temp-target').text(msg['temperatures']['bed_target']); 
-}
-
-function onOctoprint(message, id) {
-  var msg = JSON.parse(message.payloadString);
-
-  $('#' + id + ' .status').text(msg['status']['state']);
-
-  $('#' + id + ' .filename').text(msg['job']['file']); 
-  if(msg['job']['progress']) 
-    $('#' + id + ' .print-progress').text(msg['job']['progress'].toFixed(2)); 
-  $('#' + id + ' .print-time').text(msg['job']['print_time']); 
-  $('#' + id + ' .print-time-remaining').text(msg['job']['print_time_remaining']); 
-
-  if(msg['status']['state'] != 'idle')
-    $('#' + id + ' .job').show();
-
-  $('#' + id + ' .tool-temp').text(msg['temperatures']['tool0_actual']); 
-  $('#' + id + ' .tool-temp-target').text(msg['temperatures']['tool0_target']); 
-  $('#' + id + ' .bed-temp').text(msg['temperatures']['bed_actual']); 
-  $('#' + id + ' .bed-temp-target').text(msg['temperatures']['bed_target']); 
-}
-</script>
-
-</body>
+        <!-- from https://www.cloudmqtt.com/docs/websocket.html -->
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js' type='text/javascript'></script>
+        <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js' integrity='sha384-bIExnxLHdrb4/5cUciUyC490hqkTPFw6V1eUbG0gpKQ67B3dsT6KOdXvl5RycCM6' crossorigin='anonymous'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
+        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous'></script>
+        <script src='https://ctrlh.romkey.com/credentials.js'></script>
+        <script type='text/javascript'>
+            // we loaded the credentials in separate JS
+            // this is still not at all secure but it allows us to decouple management of this page and its content
+            // from management of the credentials, and lets us not check them into Github
+            // (despite the fact that they're flapping in the window here on the web)
+            // they should be for an account with read-only access only to the topic used for the hydroponics
+            // var credentials = new CTLHProjectorMQTT();
+            // cameras
+            var cameras = [
+                {
+                    uuid: '3b22ad64-3439-4e94-971f-13f055878dfb',
+                    container: '#electronics-lab-camera'
+                },
+                {
+                    uuid: '736ec20e-1320-48c2-9a6b-2376f97e3d52',
+                    container: '#russet-camera'
+                },
+                {
+                    uuid: '8401df69-1edf-4ac2-bd70-5076bf84c0be',
+                    container: '#unit-2-entry2'
+                },
+                {
+                    uuid: 'fc4c1edb-c8e3-4771-9879-290358dbf746',
+                    container: '#slytherin-camera'
+                }, {
+                    uuid: '03eca981-8a78-467f-868d-2af2159b34dd',
+                    container: '#unit-2-camera'
+                }, {
+                    uuid: '6f971443-b685-4a2b-86fb-65522c0ab775', 
+                    container: '#camera-6'
+                }, {
+                    uuid: 'af1fd463-145b-427d-ba90-2234c0283489',
+                    container: '#interstate-sb-camera'
+                }, {
+                    uuid: 'aa4526dc-7459-47a6-a788-44e08262728c',
+                    container: '#interstate-nb-camera'
+                }, {
+                    uuid: '1973ad68-9ea0-4cbe-91d3-b7ea2f7f6e23',
+                    container: '#mpcnc'
+                }, {
+                    uuid: 'c0603a32-7817-4922-b661-2a6be57b6bd0',
+                    container: '#dremel-cam'
+                }, {
+                    uuid: 'd5a6e892-f89f-416b-91c4-2953330e5f17',
+                    container: '#zoya-cam'
+                }, {
+                    uuid: '3bbbf6f5-f4d4-4acc-9d65-a4a03ea93762',
+                    container: '#olga-cam'
+                }
+            ];
+            var leds = [
+                {
+                    uuid: '4cf5765b-6a1a-4f05-879f-1285e092beb3',
+                    container: 'vendo-leds',
+                    has_temp: true
+                }, {
+                    uuid: '52864d8f-62c2-4fe4-867c-c625ff006df5',
+                    container: 'led-strip1',
+                    has_temp: false
+                }, {
+                    uuid: '1d14577a-76ab-4d84-8bf8-194ee1b157a9',
+                    container: 'garden-leds',
+                    has_temp: false
+                }
+            ];
+            var access = [
+                {
+                    uuid: '4cec18dd-0ecc-4d27-bb91-cabd053ae088',
+                    door: 'front craft lab',
+                    container: 'furball-craft-lab'
+                }, {
+                    uuid: '3cebd358-63bf-42b3-a694-8bd016b86968',
+                    door: 'unit 2 front door',
+                    container: 'furball-unit2'
+                }, {
+                    uuid: '2b2b257a-b846-41f2-b29b-fedb096f59b1',
+                    door: 'unit 3 back door',
+                    container: 'furball-unit3'
+                }
+            ];
+            var furballs = [
+                {
+                    uuid: '638a9d78-09f6-4d92-b70a-2b14edb8d84a',
+                    name: 'Laser Lab',
+                    container: 'furball-laser-lab',
+                    has_pm: true
+                },
+                {
+                    uuid: '04001f9a-122b-4045-84f4-69b7c7318250',
+                    name: 'Unit 2',
+                    container: 'furball-unit2',
+                    has_pm: false
+                },
+                {
+                    uuid: '067746e8-7a2f-4f6e-bb59-e1b2043b37f3',
+                    name: 'Slytherin',
+                    container: 'furball-slytherin',
+                    has_pm: true
+                },
+                {
+                    uuid: 'b3efa04b-dac8-4ddc-bc34-94f1daec3c0a',
+                    name: 'Craft Lab',
+                    container: 'furball-craft-lab',
+                    has_pm: false
+                }, {
+                    uuid: '1955b27e-17fd-429a-b1ce-293879149e42',
+                    name: 'Unit 2 (ws)',
+                    container: 'ws-unit2-2',
+                    has_pm: false
+                }, {
+                    uuid: 'ae1dd9a7-b55c-4255-8f16-7e5c69fd678b',
+                    name: 'Electronics Lab',
+                    container: 'furball-electronics-lab',
+                    has_pm: true
+                }
+            ];
+            var printers = [
+                {
+                    uuid: '7bfff065-f2e8-406d-b8d1-734a84c4c222',
+                    name: 'Dremel',
+                    container: 'printer-dremel'
+                }, {
+                    uuid: '37853276-5ac4-406c-bb66-e012cd360781',
+                    name: 'Zoya',
+                    container: 'printer-zoya'
+                }, {
+                    uuid: 'ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696',
+                    name: 'Olga',
+                    container: 'printer-olga'
+                }
+            ];
+            // client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());
+            client = new Paho.Client(credentials.MQTT_SERVER, 4569, credentials.MQTT_UUID + new Date().getTime());
+            client.onConnectionLost = onConnectionLost;
+            client.onMessageArrived = onMessageArrived;
+            mqtt_connect();
+            onAccess.last_messages = {};
+            access.forEach(function (item, index) {
+                onAccess.last_messages[item['uuid']] = '';
+            });
+            function onConnect() {
+                client.subscribe('/network/activity');
+                client.subscribe('/projectors');
+                // openweathermap
+                client.subscribe('/weather/current');
+                // ^H weather station
+                client.subscribe('/homebus/device/ea52198c-6162-4ea8-9e19-2f99bcfb4462');
+                client.subscribe('/printer');
+                client.subscribe('/aqi');
+                access.forEach(function (item, index) {
+                    client.subscribe('/homebus/device/' + item["uuid"]);
+                });
+                furballs.forEach(function (item, index) {
+                    client.subscribe('/homebus/device/' + item["uuid"]);
+                });
+                printers.forEach(function (item, index) {
+                    client.subscribe('/homebus/device/' + item["uuid"]);
+                });
+                cameras.forEach(function (item, index) {
+                    client.subscribe('/homebus/device/' + item["uuid"]);
+                });
+                leds.forEach(function (item, index) {
+                    client.subscribe('/homebus/device/' + item["uuid"]);
+                });
+            }
+            function mqtt_connect() {
+                var options = {
+                    useSSL: true,
+                    userName: credentials.MQTT_USERNAME,
+                    password: credentials.MQTT_PASSWORD,
+                    onSuccess: onConnect,
+                    onFailure: doFail,
+                    reconnect: true
+                };
+                console.log("mqtt connect");
+                client.connect(options);
+            }
+            function doFail(e) {
+                console.log(e);
+                console.log("doFail");
+            }
+            function onConnectionLost(responseObject) {
+                if (responseObject.errorCode !== 0) {
+                    console.log("onConnectionLost:" + responseObject.errorMessage);
+                }
+                console.log("connection lost");
+            }
+            // shamelessly taken from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
+            function formatBytes(bytes, decimals = 2) {
+                if (bytes === 0) {
+                    return '0 Bytes';
+                }
+                const k = 1024;
+                const dm = decimals < 0
+                    ? 0
+                    : decimals;
+                const sizes = [
+                    'Bytes',
+                    'KB',
+                    'MB',
+                    'GB',
+                    'TB',
+                    'PB',
+                    'EB',
+                    'ZB',
+                    'YB'
+                ];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+            }
+            function onMessageArrived(message) {
+                $('.activity-bar').addClass('hr-green');
+                setTimeout(function () {
+                    $('.activity-bar').removeClass('hr-green');
+                }, 1000);
+                // console.log('onMessageArrived:' + message.payloadString);
+                console.log('topic is ' + message.destinationName);
+                data = JSON.parse(message.payloadString);
+                if (data["timestamp"]) {
+                    $('#last_updated_container').html(getTimeagostamp(data["timestamp"]));
+                    activateTimeago();
+                }
+                if (message.destinationName == '/network/activity') {
+                    onNetworkActive(message);
+                }
+                if (message.destinationName == '/projectors') {
+                    onProjectors(message);
+                }
+                if (message.destinationName == '/weather/current') {
+                    onWeather(message, '1');
+                }
+                if (message.destinationName == '/homebus/device/ea52198c-6162-4ea8-9e19-2f99bcfb4462') {
+                    onWeather(message, '2');
+                }
+                if (message.destinationName == '/printer') {
+                    onPrinter(message);
+                }
+                if (message.destinationName == '/aqi') {
+                    onAQI(message);
+                }
+                if (message.destinationName == '/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3') {
+                    onVendo(message);
+                }
+                if (message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222') {
+                    onDremel(message);
+                }
+                if (message.destinationName == '/homebus/device/37853276-5ac4-406c-bb66-e012cd360781') {
+                    onOctoprint(message, 'zoya');
+                }
+                if (message.destinationName == '/homebus/device/ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696') {
+                    onOctoprint(message, 'olga');
+                }
+                furballs.forEach(function (item, index) {
+                    if (message.destinationName == '/homebus/device/' + item['uuid']) {
+                        onFurball(message, item['container'], item['has_pm']);
+                    }
+                });
+                access.forEach(function (item, index) {
+                    if (message.destinationName == '/homebus/device/' + item['uuid']) {
+                        onAccess(message, item['container']);
+                    }
+                });
+                cameras.forEach(function (item, index) {
+                    if (message.destinationName == '/homebus/device/' + item['uuid']) {
+                        onCamera(message, item['container']);
+                    }
+                });
+                leds.forEach(function (item, index) {
+                    if (message.destinationName == '/homebus/device/' + item['uuid']) {
+                        onDiscoball(message, item['container'], item['has_temp']);
+                    }
+                });
+            }
+            function onNetworkBandwidth(message) {
+                var network = JSON.parse(message.payloadString);
+            }
+            function onNetworkActive(message) {
+                var network = JSON.parse(message.payloadString);
+                $("#network_active").text(network["active_hosts"]["arp_table_length"]);
+                $("#network_rx").text(formatBytes(Number(network["bandwidth"]["rx_bps"])));
+                $("#network_tx").text(formatBytes(Number(network["bandwidth"]["tx_bps"])));
+            }
+            function onDiscoball(message, unit, has_temp) {
+                var discoball = JSON.parse(message.payloadString);
+                if (discoball["leds"]["state"] == 'off' || (discoball["leds"]["preset"] == 'off' && discoball["leds"]["animation"] == "none")) {
+                    $('#discoball-' + unit + ' .preset').text('off');
+                    return;
+                }
+                $('#discoball-' + unit + ' .preset').text(discoball["leds"]["preset"]);
+                $('#discoball-' + unit + ' .animation').text(discoball["leds"]["animation"]);
+                $('#discoball-' + unit + ' .speed').text(discoball["leds"]["speed"] + 'x');
+                $('#discoball-' + unit + ' .brightness').text(discoball["leds"]["brightness"] + '%');
+            }
+            function onFurball(message, unit, has_pm) {
+                var furball = JSON.parse(message.payloadString);
+                $("#" + unit + " .temperature").text(furball["environment"]["temperature"]);
+                $("#" + unit + " .humidity").text(furball["environment"]["humidity"]);
+                if (has_pm) {
+                    $("#" + unit + " .pm").text(furball["air"]["pm1"] + '/' + furball["air"]["pm25"] + '/' + furball["air"]["pm10"]);
+                }
+                if (furball["air"]) {
+                    $("#" + unit + " .voc").text(furball["air"]["tvoc"]);
+                }
+            }
+            function onProjectors(message) {
+                var projectors = JSON.parse(message.payloadString);
+                if (projectors["name"] == "Unit 2") {
+                    id = "#unit2_projector_status";
+                }
+                if (projectors["name"] == "Unit 3") {
+                    id = "#unit3_projector_status";
+                }
+                $(id).text(projectors["status"]);
+            }
+            function getTimeagostamp(timestamp) {
+                var d = new Date(Number(timestamp) * 1000);
+                return "<time class='timeago' datetime='" + d.toISOString() + "' title='" + d.toLocaleString() + "'></time>";
+            }
+            function activateTimeago() {
+                $('.timeago').timeago();
+            }
+            function onAccess(message, container) {
+                var access = JSON.parse(message.payloadString);
+                // try to avoid repeated old messages
+                // this is not a great way to do that as timestamps can drift
+                // and messages could potentially be held up
+                if (onAccess.last_messages[access['id']] == message.payloadString) {
+                    console.log("ignoring repeated Access message", access);
+                    return;
+                }
+                onAccess.last_messages[access['id']] = message.payloadString;
+                var id = '#' + container;
+                if (access['action'] == 'unlocked' || access['action'] == 'already unlocked') {
+                    $(id + ' .door-locked').html('<i class="fas fa-lock-open" style="color: red;"></i>');
+                } else {
+                    $(id + ' .door-locked').html('<i class="fas fa-lock" style="color: green;"></i>');
+                }
+                $("#access-list").prepend("<li class='list-group-item'>" + access["door"] + " " + access["person"] + " " + access["action"] + "<br/>" + getTimeagostamp(access["timestamp"]) + "</li>");
+                activateTimeago();
+            }
+            function onWeather(message, index) {
+                var w = JSON.parse(message.payloadString);
+                var id = '#weather-' + index;
+                $(id).text('');
+                if (w["weather"]["conditions_short"]) {
+                    $(id).append(w["weather"]["conditions_short"] + ': ');
+                }
+                $(id).append(w["weather"]["temperature"] + "°C, " + w["weather"]["humidity"] + "%");
+                if (w["weather"]["conditions_long"]) {
+                    $(id).append(", " + w["weather"]["conditions_long"]);
+                }
+                $(id).append("<br/>" + getTimeagostamp(w["timestamp"]));
+                activateTimeago();
+            }
+            function onPrinter(message) {
+                var printer = JSON.parse(message.payloadString);
+                var system = printer["system"];
+                var status = printer["status"];
+                $(".printer-name").text(system["model"]);
+                $(".printer-status").text(status["status"]);
+                $(".pages-printed").text(status["total_page_count"]);
+            }
+            function onAQI(message) {
+                var msg = JSON.parse(message.payloadString);
+                var text = "";
+                msg["observations"].forEach(function (item, index) {
+                    text += item["name"] + " AQI is " + item["aqi"] + " (" + item["condition"] + ")<br />";
+                });
+                text += getTimeagostamp(msg["timestamp"]);
+                $('#aqi').html(text);
+                activateTimeago();
+            }
+            // functions from https://stackoverflow.com/questions/20958078/resize-a-base-64-image-in-javascript-without-using-canvas
+            // resize an image using an off-page canvas
+            function resizeImage() {
+                var newDataUri = imageToDataUri(this, width, height);
+            }
+            function imageToDataUri(base4_image, width, height) {
+                var img = new Image;
+                img.onload = resizeImage;
+                img.src = 'data:image/jpeg;base64,' + base64_image;
+                // create an off-screen canvas
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+                // set its dimension to target size
+                canvas.width = width;
+                canvas.height = height;
+                // draw source image into the off-screen canvas:
+                ctx.drawImage(img, 0, 0, width, height);
+                // encode image to data-uri with base64 version of compressed image
+                return canvas.toDataURL();
+            }
+            function onCamera(message, container) {
+                var msg = JSON.parse(message.payloadString);
+                console.log("got camera data from " + container + ": " + msg['image']['data'].length + " bytes long");
+                data = 'data:' + msg['image']['mime_type'] + ';base64,' + msg['image']['data'];
+                console.log(data.length);
+                $(container + ' img').attr('src', data);
+                $(container + ' time').remove();
+                $(container).append(getTimeagostamp(msg['timestamp']));
+                activateTimeago();
+            }
+            function onVendo(message) {
+                var msg = JSON.parse(message.payloadString);
+                $('#vendo-temperature').text(msg['environment']['temperature']);
+                $('#vendo-humidity').text(msg['environment']['humidity']);
+            }
+            function onDremel(message) {
+                var msg = JSON.parse(message.payloadString);
+                $('#dremel-status').text(msg['status']['state']);
+                $('#dremel-filename').text(msg['job']['file']);
+                if (msg['job']['progress']) {
+                    $('#dremel-progress').text(msg['job']['progress'].toFixed(2));
+                }
+                $('#dremel-print-time').text(msg['job']['print_time']);
+                $('#dremel-print-time-remaining').text(msg['job']['print_time_remaining']);
+                if (msg['status']['state'] != 'idle') {
+                    $('#dremel-job').show();
+                }
+                $('#dremel-tool-temp').text(msg['temperatures']['tool0_actual']);
+                $('#dremel-tool-temp-target').text(msg['temperatures']['tool0_target']);
+                $('#dremel-bed-temp').text(msg['temperatures']['bed_actual']);
+                $('#dremel-bed-temp-target').text(msg['temperatures']['bed_target']);
+            }
+            function onOctoprint(message, id) {
+                var msg = JSON.parse(message.payloadString);
+                $('#' + id + ' .status').text(msg['status']['state']);
+                $('#' + id + ' .filename').text(msg['job']['file']);
+                if (msg['job']['progress']) {
+                    $('#' + id + ' .print-progress').text(msg['job']['progress'].toFixed(2));
+                }
+                $('#' + id + ' .print-time').text(msg['job']['print_time']);
+                $('#' + id + ' .print-time-remaining').text(msg['job']['print_time_remaining']);
+                if (msg['status']['state'] != 'idle') {
+                    $('#' + id + ' .job').show();
+                }
+                $('#' + id + ' .tool-temp').text(msg['temperatures']['tool0_actual']);
+                $('#' + id + ' .tool-temp-target').text(msg['temperatures']['tool0_target']);
+                $('#' + id + ' .bed-temp').text(msg['temperatures']['bed_actual']);
+                $('#' + id + ' .bed-temp-target').text(msg['temperatures']['bed_target']);
+            }
+        </script>
+    </body>
 </html>

@@ -16,31 +16,85 @@
                 font-size: 16px;
             }
             .hr-green {
-                border-color: green !important;
+                color: green !important;
             }
             time,
             #last_updated {
                 font-size: small;
                 font-style: italic;
             }
+            body { 
+                padding-top: 65px;
+            }
         </style>
     </head>
     <body>
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h1>PDX Hackerspace Dashboard</h1>
-                    <hr class="star-primary activity-bar">
-                    <p id='last_updated'>Last updated:
-                        <span id='last_updated_container'></span>
-                    </p>
-                </div>
-            </div>
-            <div class='row'>
+
+	      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	          <span class="navbar-toggler-icon"></span>
+	        </button>
+	        <a class="navbar-brand activity-bar" href="#">PDX Hackerspace</a>
+	        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		  <ul class="navbar-nav mr-auto">
+		    <li class="nav-item">
+		      <a href="#cameras" class='nav-link'>Cameras</a>
+		    </li>
+		    <li class="nav-item">
+		      <a href="#video" class='nav-link'>Video</a>
+		    </li>
+		    <li class="nav-item">
+		      <a href="#3d-printers" class='nav-link'>3D Printers</a>
+		    </li>
+		    <li class="nav-item">
+		      <a href="#cnc" class='nav-link'>CNC</a>
+		    </li>
+		    <li class="nav-item">
+		      <a href="#rooms" class='nav-link'>Rooms</a>
+		    </li>
+		    <li class="nav-item">
+		      <a href="#facilities" class='nav-link'>Facilities</a>
+		    </li>
+		    <li class="nav-item">
+		      <a href="#access" class='nav-link'>Access</a>
+		    </li>
+		    <li class="nav-item">
+		      <a href="#weather" class='nav-link'>Weather</a>
+		    </li>
+		    <li class="nav-item">
+		      <a href="#air-quality" class='nav-link'>Air Quality</a>
+		    </li>
+		    <li class="nav-item">
+		      <a href="#printer" class='nav-link'>Printer</a>
+		    </li>
+		    <li class="nav-item">
+		      <a href="#servers" class='nav-link'>Servers</a>
+		    </li>
+		    <li class="nav-item">
+		      |
+		    </li>
+		    <li class="nav-item">
+		      <a href="graph.html" class='nav-link'>Graphs</a>
+		    </li>
+		  </ul>
+
+                  <span id='last_updated' class='navbar-text'>
+		    Last updated: <span id='last_updated_container'></span>
+		  </span>
+
+	        </div>
+	      </nav>
+
+	</div>
+        <div class="container-fluid">
+
+	      <div class='row'>
                 <div class='col'>
-                    <h2>Camera Stills</h2>
+                    <h2 id='cameras'>Camera Stills</h2>
                 </div>
-            </div>
+	      </div>
+
             <div class='row'>
                 <div class='col-sm-3' id='russet-camera'>
                     <h4>
@@ -112,7 +166,7 @@
 
             <div class='row'>
                 <div class='col'>
-                    <h2>Live video feeds</h2>
+                    <h2 id='video'>Live video feeds</h2>
                 </div>
             </div>
 
@@ -126,7 +180,7 @@
             <hr class='hr'/>
             <div class='row'>
                 <div class='col'>
-                    <h2>3D Printers</h2>
+                    <h2 id='3d-printers'>3D Printers</h2>
                 </div>
             </div>
 
@@ -282,22 +336,64 @@
             <hr class='hr'/>
             <div class='row'>
                 <div class='col-sm-3'>
-                    <h2>CNC</h2>
+                    <h2 id='cnc'>CNC</h2>
                 </div>
             </div>
 
             <div class='row'>
-                <div class='col-sm-3' id='mpcnc'>
+              <div class='col-sm-3' id='mpcnc'>
 		    <a href='' data-toggle='lightbox'>
                       <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
   		    </a>
+
+                  <div>
+                    <h5>
+                        <a href='graph.html?uuid='>CNC Octoprint</a>
+                    </h5>
+                    <h6 class='status'></h6>
+                    <div class='job' style='display: none'>
+                        <ul>
+                            <li>Filename:
+                                <span class='filename'></span>
+                            </li>
+                            <li>Progress:
+                                <span class='print-progress'></span>%</li>
+                            <li>Time Remaining:
+                                <span class='print-time'></span>
+                                of
+                                <span class='print-time-remaining'></span>
+                                sec</li>
+                        </ul>
+                    </div>
+                    <table class='table'>
+                        <tr>
+                            <th>temp</th>
+                            <th>actual</th>
+                            <th>target</th>
+                        </tr>
+                        <tr>
+                            <td>tool</td>
+                            <td>
+                                <span class='tool-temp'></span>°C</td>
+                            <td>
+                                <span class='tool-temp-target'></span>°C</td>
+                        </tr>
+                        <tr>
+                            <td>bed</td>
+                            <td>
+                                <span class='bed-temp'></span>°C</td>
+                            <td>
+                                <span class='bed-temp-target'></span>°C</td>
+                        </tr>
+                    </table>
+                  </div>
               </div>
             </div>
             <!-- row -->
             <hr class='hr'/>
             <div class='row'>
                 <div class='col'>
-                    <h2>Rooms</h2>
+                    <h2 id='rooms'>Rooms</h2>
                     <table class='table table-striped'>
                         <tr>
                             <th></th>
@@ -435,7 +531,7 @@
                 </div>
                 <!-- col -->
                 <div class='col'>
-                    <h2>Facilities</h2>
+                    <h2 id='facilities'>Facilities</h2>
                     <table class='table table-striped'>
                         <tr>
                             <td rowspan="2">
@@ -522,16 +618,19 @@
                 </div>
                 <!-- col -->
                 <div class='col'>
-                    <h2>
+                    <h2 id='access'>
                         <a href='graph.html?uuid=03bf9198-1fe5-480f-b3c7-efdf628d2b8a'>Access</a>
                     </h2>
                     <ul id="access-list" class="list-group list-group-flush"></ul>
                 </div>
                 <!-- col -->
             </div>
+
+            <hr class='hr'/>
+
             <div class='row'>
                 <div class='col'>
-                    <h2>Weather</h2>
+                    <h2 id='weather'>Weather</h2>
                     <h3>
                         <a href='graph.html?uuid=691faad6-bad4-4c87-838b-091ce650e4d4'>OpenWeatherMap</a>
                     </h3>
@@ -543,13 +642,13 @@
                 </div>
                 <!-- col -->
                 <div class='col'>
-                    <h2>Air Quality
+                    <h2 id='air-quality'>Air Quality
                     </h2>
                     <p id='aqi'></p>
                 </div>
                 <!-- col -->
                 <div class='col'>
-                    <h2>
+                    <h2 id='printer'>
                         <a href='graph.html?uuid=4f265e2c-3c08-4635-8e50-8400d5294c29' class='printer-name'>Brother Printer</a>
                     </h2>
                     <p class='printer-status'></p>
@@ -560,6 +659,150 @@
                 <!-- col -->
             </div>
             <!-- row -->
+
+            <hr class='hr'/>
+
+	    <div class='row'>
+	        <div class='col'>
+ 	            <h2 id='servers'>Servers</h2>
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class='row'>
+	      <div class='col' id='8cb9e03e-1bfe-4ad7-b96e-e9186956b746'>
+	        <h3>
+	          <a href='graph.html?uuid=8cb9e03e-1bfe-4ad7-b96e-e9186956b746' class='server-name'>Name</a>
+	        </h3>
+	        <table>
+		  <tr>
+		    <td>
+		      Uptime:
+		    </td>
+		    <td class='server-uptime'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>
+		      Load average:
+		    </td>
+		    <td class='server-load-average'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>
+		      Memory:
+		    </td>
+		    <td class='server-memory'>
+		      
+		    </td>
+		  </tr>
+	        </table>
+              </div>
+
+	      <div class='col' id='59905e56-b683-4b22-bc66-345705a3f27e'>
+	        <h3>
+	          <a href='graph.html?uuid=59905e56-b683-4b22-bc66-345705a3f27e' class='server-name'>Name</a>
+	        </h3>
+	        <table>
+		  <tr>
+		    <td>
+		      Uptime:
+		    </td>
+		    <td class='server-uptime'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>
+		      Load average:
+		    </td>
+		    <td class='server-load-average'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>
+		      Memory:
+		    </td>
+		    <td class='server-memory'>
+		      
+		    </td>
+		  </tr>
+	        </table>
+              </div>
+
+	      <div class='col' id='9fb914b1-1c5a-40b0-8c6d-eac29bb1ea3d'>
+	        <h3>
+	          <a href='graph.html?uuid=9fb914b1-1c5a-40b0-8c6d-eac29bb1ea3d' class='server-name'>Name</a>
+	        </h3>
+	        <table>
+		  <tr>
+		    <td>
+		      Uptime:
+		    </td>
+		    <td class='server-uptime'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>
+		      Load average:
+		    </td>
+		    <td class='server-load-average'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>
+		      Memory:
+		    </td>
+		    <td class='server-memory'>
+		      
+		    </td>
+		  </tr>
+	        </table>
+              </div>
+
+	       <div class='col' id='0d1fd497-8cf7-47b2-b0fc-baab52c52301'>
+	        <h3>
+	          <a href='graph.html?uuid=0d1fd497-8cf7-47b2-b0fc-baab52c52301' class='server-name'>Name</a>
+	        </h3>
+	        <table>
+		  <tr>
+		    <td>
+		      Uptime:
+		    </td>
+		    <td class='server-uptime'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>
+		      Load average:
+		    </td>
+		    <td class='server-load-average'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>
+		      Memory:
+		    </td>
+		    <td class='server-memory'>
+		      
+		    </td>
+		  </tr>
+	        </table>
+              </div>
+
+            </div>
+            <!-- row -->
+
+            <hr class='hr'/>
+
             <div class='row'>
                 <div class='col'>
                     <i>Want to hack this?</i>
@@ -712,7 +955,15 @@
                     name: 'Olga',
                     container: 'printer-olga'
                 }
-            ];
+            ]; 
+            var servers = [
+                '8cb9e03e-1bfe-4ad7-b96e-e9186956b746',
+                '59905e56-b683-4b22-bc66-345705a3f27e',
+                '9fb914b1-1c5a-40b0-8c6d-eac29bb1ea3d',
+                '0d1fd497-8cf7-47b2-b0fc-baab52c52301'
+            ]; 
+
+
             // client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());
             client = new Paho.Client(credentials.MQTT_SERVER, 4569, credentials.MQTT_UUID + new Date().getTime());
             client.onConnectionLost = onConnectionLost;
@@ -745,6 +996,10 @@
                 });
                 leds.forEach(function (item, index) {
                     client.subscribe('/homebus/device/' + item["uuid"]);
+                });
+                servers.forEach(function (item, index) {
+                    console.log(' SERVER /homebus/device/' + item); 
+                    client.subscribe('/homebus/device/' + item); 
                 });
             }
             function mqtt_connect() {
@@ -854,6 +1109,11 @@
                         onDiscoball(message, item['container'], item['has_temp']);
                     }
                 });
+               servers.forEach(function (item, index) {
+                    if(message.destinationName == '/homebus/device/' + item)
+                        onServer(message);
+                    }
+                );
             }
             function onNetworkBandwidth(message) {
                 var network = JSON.parse(message.payloadString);
@@ -983,6 +1243,33 @@
                 $(container + ' a').attr('href', data);
                 $(container + ' time').remove();
                 $(container).append(getTimeagostamp(msg['timestamp']));
+                activateTimeago();
+            }
+            function secondsToDhms(seconds) {
+                seconds = Number(seconds);
+                var d = Math.floor(seconds / (3600*24));
+                var h = Math.floor(seconds % (3600*24) / 3600);
+                var m = Math.floor(seconds % 3600 / 60);
+                var s = Math.floor(seconds % 60);
+
+                var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
+                var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+                var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+                var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+                return dDisplay + hDisplay + mDisplay + sDisplay;
+            }
+
+            function onServer(message) {
+                var msg = JSON.parse(message.payloadString);
+                console.log('ONSERVER', msg);
+                var id = '#'+msg['id'];
+
+                $(id + ' .server-name').text(msg['system']['hostname']); 
+                $(id + ' .server-uptime').text(secondsToDhms(msg['system']['uptime'])); 
+                $(id + ' .server-load-average').text(msg['load']['one_minute'] + '/' + msg['load']['five_minutes'] + '/' + msg['load']['fifteen_minutes']);
+                $(id + ' .server-memory').text(formatBytes(msg['memory']['free']*1024) + ' free/' + formatBytes(msg['memory']['total']*1024) + ' total');
+                $(id + ' time').remove();
+                $(id).append(getTimeagostamp(msg['timestamp']));
                 activateTimeago();
             }
             function onVendo(message) {

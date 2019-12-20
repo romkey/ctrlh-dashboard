@@ -1390,7 +1390,11 @@ console.log('DREMEL DREMEL DREMEL');
             }
             function onSunriseSunset(message) {
                 var msg = JSON.parse(message.payloadString);
-                $('.sunrise') = 
+                var sunrise_date = new Date(msg['solar_times']['sunrise']*1000); 
+                var sunset_date = new Date(msg['solar_times']['sunset']*1000); 
+
+                $('.sunrise').text(sunrise_date.getHours() + ':' + sunrise_date.getMinutes()); 
+                $('.sunset').text(sunset_date.getHours() + ':' + sunset_date.getMinutes()); 
             }
         </script>
     </body>

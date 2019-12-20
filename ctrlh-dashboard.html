@@ -88,6 +88,11 @@
 
 	</div>
         <div class="container-fluid">
+	      <div class='row'>
+                <div class='col'>
+		  Sunrise: <span class='sunrise'></span> Sunset: <span class='sunset'></span>
+                </div>
+	      </div>
 
 	      <div class='row'>
                 <div class='col'>
@@ -1036,6 +1041,8 @@
                 client.subscribe('/aqi');
                 // dremel
                 client.subscribe('/homebus/device/7bfff065-f2e8-406d-b8d1-734a84c4c222');
+                // sunrise sunset
+                client.subscribe('homebus/device/c7a1e762-9fa8-41c2-9311-81543c69f4ed');
                 access.forEach(function (item, index) {
                     client.subscribe('/homebus/device/' + item["uuid"]);
                 });
@@ -1142,6 +1149,10 @@
                 }
                 if (message.destinationName == '/homebus/device/ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696') {
                     onOctoprint(message, 'olga');
+                }
+
+                if (message.destinationName == 'homebus/device/c7a1e762-9fa8-41c2-9311-81543c69f4ed') {
+                    onSunriseSunset(message);
                 }
                 furballs.forEach(function (item, index) {
                     if (message.destinationName == '/homebus/device/' + item['uuid']) {
@@ -1376,6 +1387,10 @@ console.log('DREMEL DREMEL DREMEL');
                 $('#' + id + ' .tool-temp-target').text(msg['temperatures']['tool0_target']);
                 $('#' + id + ' .bed-temp').text(msg['temperatures']['bed_actual']);
                 $('#' + id + ' .bed-temp-target').text(msg['temperatures']['bed_target']);
+            }
+            function onSunriseSunset(message) {
+                var msg = JSON.parse(message.payloadString);
+                $('.sunrise') = 
             }
         </script>
     </body>

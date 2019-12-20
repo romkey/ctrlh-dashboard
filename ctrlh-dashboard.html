@@ -103,7 +103,7 @@
             <div class='row'>
                 <div class='col-sm-3' id='camera-6'>
                     <h4>
-                        <a href='graph.html?uuid=6f971443-b685-4a2b-86fb-65522c0ab775'>Russet EB</a>
+                        <a href='graph.html?uuid=a0f8e5ec-d5dc-4b7b-8c78-aa00575227f7'>Russet EB</a>
                     </h4>
 		    <a href='' data-toggle='lightbox'>
                       <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
@@ -908,7 +908,7 @@
                     uuid: '03eca981-8a78-467f-868d-2af2159b34dd',
                     container: '#unit-2-camera'
                 }, {
-                    uuid: '6f971443-b685-4a2b-86fb-65522c0ab775', 
+                    uuid: 'a0f8e5ec-d5dc-4b7b-8c78-aa00575227f7',
                     container: '#camera-6'
                 }, {
                     uuid: 'af1fd463-145b-427d-ba90-2234c0283489',
@@ -1393,8 +1393,8 @@ console.log('DREMEL DREMEL DREMEL');
                 var sunrise_date = new Date(msg['solar_times']['sunrise']*1000); 
                 var sunset_date = new Date(msg['solar_times']['sunset']*1000); 
 
-                $('.sunrise').text(sunrise_date.getHours() + ':' + sunrise_date.getMinutes()); 
-                $('.sunset').text(sunset_date.getHours() + ':' + sunset_date.getMinutes()); 
+                $('.sunrise').text(sunrise_date.getHours() + ':' + sunrise_date.getMinutes() + 'AM'); 
+                $('.sunset').text(sunset_date.getHours() + ':' + sunset_date.getMinutes() + 'PM'); 
             }
         </script>
     </body>

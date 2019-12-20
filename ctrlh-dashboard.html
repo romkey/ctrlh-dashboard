@@ -670,7 +670,7 @@
             <!-- row -->
 
             <div class='row'>
-	      <div class='col' id='8cb9e03e-1bfe-4ad7-b96e-e9186956b746'>
+	      <div class='col-sm-4' id='8cb9e03e-1bfe-4ad7-b96e-e9186956b746'>
 	        <h3>
 	          <a href='graph.html?uuid=8cb9e03e-1bfe-4ad7-b96e-e9186956b746' class='server-name'>Name</a>
 	        </h3>
@@ -679,7 +679,7 @@
 		    <td>
 		      Uptime:
 		    </td>
-		    <td class='server-uptime'>
+		    <td class='server-uptime' colspan='2'>
 		      
 		    </td>
 		  </tr>
@@ -687,7 +687,7 @@
 		    <td>
 		      Load average:
 		    </td>
-		    <td class='server-load-average'>
+		    <td class='server-load-average' colspan='2'>
 		      
 		    </td>
 		  </tr>
@@ -695,14 +695,19 @@
 		    <td>
 		      Memory:
 		    </td>
-		    <td class='server-memory'>
+		    <td class='server-memory' colspan='2'>
 		      
 		    </td>
+		  </tr>
+		  <tr>
+		    <td>Filesystems:</td>
+		  </tr>
+		  <tr class='server-filesystems'>
 		  </tr>
 	        </table>
               </div>
 
-	      <div class='col' id='59905e56-b683-4b22-bc66-345705a3f27e'>
+	      <div class='col-sm-4' id='59905e56-b683-4b22-bc66-345705a3f27e'>
 	        <h3>
 	          <a href='graph.html?uuid=59905e56-b683-4b22-bc66-345705a3f27e' class='server-name'>Name</a>
 	        </h3>
@@ -711,7 +716,7 @@
 		    <td>
 		      Uptime:
 		    </td>
-		    <td class='server-uptime'>
+		    <td class='server-uptime' colspan='2'>
 		      
 		    </td>
 		  </tr>
@@ -719,7 +724,7 @@
 		    <td>
 		      Load average:
 		    </td>
-		    <td class='server-load-average'>
+		    <td class='server-load-average' colspan='2'>
 		      
 		    </td>
 		  </tr>
@@ -727,16 +732,62 @@
 		    <td>
 		      Memory:
 		    </td>
-		    <td class='server-memory'>
+		    <td class='server-memory' colspan='2'>
 		      
 		    </td>
 		  </tr>
+		  <tr>
+		    <td>Filesystems:</td>
+		  </tr>
+		  <tr class='server-filesystems'>
+		  </tr>
 	        </table>
+
               </div>
 
-	      <div class='col' id='9fb914b1-1c5a-40b0-8c6d-eac29bb1ea3d'>
+	      <div class='col-sm-4' id='9fb914b1-1c5a-40b0-8c6d-eac29bb1ea3d'>
 	        <h3>
 	          <a href='graph.html?uuid=9fb914b1-1c5a-40b0-8c6d-eac29bb1ea3d' class='server-name'>Name</a>
+	        </h3>
+	        <table>
+		  <tr>
+		    <td>
+		      Uptime:
+		    </td>
+		    <td class='server-uptime' colspan='2'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>
+		      Load average:
+		    </td>
+		    <td class='server-load-average' colspan='2'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>
+		      Memory:
+		    </td>
+		    <td class='server-memory' colspan='2'>
+		      
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>Filesystems:</td>
+		  </tr>
+		  <tr class='server-filesystems'>
+		  </tr>
+	        </table>
+              </div>
+            </div>
+            <!-- row -->
+
+            <div class='row'>
+	       <div class='col-sm-4' id='7f9ee46e-355e-4b7c-a2c1-fe24e733796a'>
+	        <h3>
+	          <a href='graph.html?uuid=7f9ee46e-355e-4b7c-a2c1-fe24e733796a' class='server-name'>Name</a>
 	        </h3>
 	        <table>
 		  <tr>
@@ -766,7 +817,7 @@
 	        </table>
               </div>
 
-	       <div class='col' id='0d1fd497-8cf7-47b2-b0fc-baab52c52301'>
+	       <div class='col-sm-4' id='0d1fd497-8cf7-47b2-b0fc-baab52c52301'>
 	        <h3>
 	          <a href='graph.html?uuid=0d1fd497-8cf7-47b2-b0fc-baab52c52301' class='server-name'>Name</a>
 	        </h3>
@@ -942,11 +993,12 @@
                 }
             ];
             var printers = [
-                {
-                    uuid: '7bfff065-f2e8-406d-b8d1-734a84c4c222',
-                    name: 'Dremel',
-                    container: 'printer-dremel'
-                }, {
+//                {
+//                    uuid: '7bfff065-f2e8-406d-b8d1-734a84c4c222',
+//                    name: 'Dremel',
+//                    container: 'dremel'
+//                }, {
+                  {
                     uuid: '37853276-5ac4-406c-bb66-e012cd360781',
                     name: 'Zoya',
                     container: 'printer-zoya'
@@ -960,7 +1012,8 @@
                 '8cb9e03e-1bfe-4ad7-b96e-e9186956b746',
                 '59905e56-b683-4b22-bc66-345705a3f27e',
                 '9fb914b1-1c5a-40b0-8c6d-eac29bb1ea3d',
-                '0d1fd497-8cf7-47b2-b0fc-baab52c52301'
+                '0d1fd497-8cf7-47b2-b0fc-baab52c52301',
+                '7f9ee46e-355e-4b7c-a2c1-fe24e733796a'
             ]; 
 
 
@@ -982,6 +1035,8 @@
                 client.subscribe('/homebus/device/ea52198c-6162-4ea8-9e19-2f99bcfb4462');
                 client.subscribe('/printer');
                 client.subscribe('/aqi');
+                // dremel
+                client.subscribe('/homebus/device/7bfff065-f2e8-406d-b8d1-734a84c4c222');
                 access.forEach(function (item, index) {
                     client.subscribe('/homebus/device/' + item["uuid"]);
                 });
@@ -1080,7 +1135,7 @@
                 if (message.destinationName == '/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3') {
                     onVendo(message);
                 }
-                if (message.destinationName == '/homebus/devices/7bfff065-f2e8-406d-b8d1-734a84c4c222') {
+                if (message.destinationName == '/homebus/device/7bfff065-f2e8-406d-b8d1-734a84c4c222') {
                     onDremel(message);
                 }
                 if (message.destinationName == '/homebus/device/37853276-5ac4-406c-bb66-e012cd360781') {
@@ -1268,6 +1323,16 @@
                 $(id + ' .server-uptime').text(secondsToDhms(msg['system']['uptime'])); 
                 $(id + ' .server-load-average').text(msg['load']['one_minute'] + '/' + msg['load']['five_minutes'] + '/' + msg['load']['fifteen_minutes']);
                 $(id + ' .server-memory').text(formatBytes(msg['memory']['free']*1024) + ' free/' + formatBytes(msg['memory']['total']*1024) + ' total');
+
+                filesystems = ''
+                msg['filesystems'].forEach(function(item, index) {
+console.log(item);
+                                               filesystems += '<td></td><td>' + item['mount_point'] + '</td><td>' + (100 - Number(item['used_percentage'])) + '% free</td>';
+                                            });
+console.log(filesystems);
+
+                $(id + ' .server-filesystems').html(filesystems);
+
                 $(id + ' time').remove();
                 $(id).append(getTimeagostamp(msg['timestamp']));
                 activateTimeago();
@@ -1278,6 +1343,7 @@
                 $('#vendo-humidity').text(msg['environment']['humidity']);
             }
             function onDremel(message) {
+console.log('DREMEL DREMEL DREMEL');
                 var msg = JSON.parse(message.payloadString);
                 $('#dremel-status').text(msg['status']['state']);
                 $('#dremel-filename').text(msg['job']['file']);

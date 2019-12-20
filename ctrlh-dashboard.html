@@ -699,10 +699,8 @@
 		      
 		    </td>
 		  </tr>
-		  <tr>
-		    <td>Filesystems:</td>
-		  </tr>
 		  <tr class='server-filesystems'>
+		    <td>Filesystems:</td>
 		  </tr>
 	        </table>
               </div>
@@ -733,13 +731,10 @@
 		      Memory:
 		    </td>
 		    <td class='server-memory' colspan='2'>
-		      
 		    </td>
 		  </tr>
-		  <tr>
-		    <td>Filesystems:</td>
-		  </tr>
 		  <tr class='server-filesystems'>
+		    <td>Filesystems:</td>
 		  </tr>
 	        </table>
 
@@ -774,10 +769,8 @@
 		      
 		    </td>
 		  </tr>
-		  <tr>
-		    <td>Filesystems:</td>
-		  </tr>
 		  <tr class='server-filesystems'>
+		    <td>Filesystems:</td>
 		  </tr>
 	        </table>
               </div>
@@ -794,7 +787,7 @@
 		    <td>
 		      Uptime:
 		    </td>
-		    <td class='server-uptime'>
+		    <td class='server-uptime' colspan='2'>
 		      
 		    </td>
 		  </tr>
@@ -802,7 +795,7 @@
 		    <td>
 		      Load average:
 		    </td>
-		    <td class='server-load-average'>
+		    <td class='server-load-average' colspan='2'>
 		      
 		    </td>
 		  </tr>
@@ -810,9 +803,12 @@
 		    <td>
 		      Memory:
 		    </td>
-		    <td class='server-memory'>
+		    <td class='server-memory' colspan='2'>
 		      
 		    </td>
+		  </tr>
+		  <tr class='server-filesystems'>
+		    <td>Filesystems:</td>
 		  </tr>
 	        </table>
               </div>
@@ -826,7 +822,7 @@
 		    <td>
 		      Uptime:
 		    </td>
-		    <td class='server-uptime'>
+		    <td class='server-uptime' colspan='2'>
 		      
 		    </td>
 		  </tr>
@@ -834,7 +830,7 @@
 		    <td>
 		      Load average:
 		    </td>
-		    <td class='server-load-average'>
+		    <td class='server-load-average' colspan='2'>
 		      
 		    </td>
 		  </tr>
@@ -842,9 +838,12 @@
 		    <td>
 		      Memory:
 		    </td>
-		    <td class='server-memory'>
+		    <td class='server-memory' colspan='2'>
 		      
 		    </td>
+		  </tr>
+		  <tr class='server-filesystems'>
+		    <td>Filesystems:</td>
 		  </tr>
 	        </table>
               </div>
@@ -1324,14 +1323,15 @@
                 $(id + ' .server-load-average').text(msg['load']['one_minute'] + '/' + msg['load']['five_minutes'] + '/' + msg['load']['fifteen_minutes']);
                 $(id + ' .server-memory').text(formatBytes(msg['memory']['free']*1024) + ' free/' + formatBytes(msg['memory']['total']*1024) + ' total');
 
+                $(id + ' .server-filesystem-info').remove();
                 filesystems = ''
                 msg['filesystems'].forEach(function(item, index) {
 console.log(item);
-                                               filesystems += '<td></td><td>' + item['mount_point'] + '</td><td>' + (100 - Number(item['used_percentage'])) + '% free</td>';
+                                               filesystems += '<tr class="server-filesystem-info"><td></td><td>' + item['mount_point'] + '</td><td>' + (100 - Number(item['used_percentage'])) + '% free</td></tr>';
                                             });
 console.log(filesystems);
 
-                $(id + ' .server-filesystems').html(filesystems);
+                $(id + ' .server-filesystems').after(filesystems);
 
                 $(id + ' time').remove();
                 $(id).append(getTimeagostamp(msg['timestamp']));

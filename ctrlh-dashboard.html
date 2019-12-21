@@ -165,6 +165,22 @@
                       <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
 		    </a>
                 </div>
+                <div class='col-sm-3' id='hydroponics-cam'>
+                    <h4>
+                        <a href='graph.html?uuid=14ed7234-01a6-40dd-8284-20e51e96153f'>Hydroponics</a>
+                    </h4>
+		    <a href='' data-toggle='lightbox'>
+                      <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+		    </a>
+                </div>
+                <div class='col-sm-3' id='garden-cam'>
+                    <h4>
+                        <a href='graph.html?uuid=dc4ed7f9-b263-4288-9e9c-6d58deec48fb'>Garden</a>
+                    </h4>
+		    <a href='' data-toggle='lightbox'>
+                      <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+		    </a>
+                </div>
 
             </div>
             <hr class='hr'/>
@@ -928,6 +944,12 @@
                 }, {
                     uuid: '3bbbf6f5-f4d4-4acc-9d65-a4a03ea93762',
                     container: '#olga-cam'
+                }, {
+                    uuid: '14ed7234-01a6-40dd-8284-20e51e96153f',
+                    container: '#hydroponics-cam'
+                }, {
+                    uuid: 'dc4ed7f9-b263-4288-9e9c-6d58deec48fb',
+                    container: '#garden-cam'
                 }
             ];
             var leds = [
@@ -1310,6 +1332,7 @@
                 $(container).append(getTimeagostamp(msg['timestamp']));
                 activateTimeago();
             }
+            // from https://stackoverflow.com/questions/36098913/convert-seconds-to-days-hours-minutes-and-seconds
             function secondsToDhms(seconds) {
                 seconds = Number(seconds);
                 var d = Math.floor(seconds / (3600*24));

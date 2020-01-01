@@ -206,7 +206,7 @@
             </div>
 
             <div class='row'>
-                <div class='col-sm-3' id='dremel-cam'>
+                <div class='col-sm-4' id='dremel-cam'>
 		    <a href='' data-toggle='lightbox'>
                       <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
 		    </a>
@@ -255,7 +255,7 @@
                   </div>
                 </div><!-- dremel -->
 
-                <div class='col-sm-3' id='zoya-cam'>
+                <div class='col-sm-4' id='zoya-cam'>
 		    <a href='' data-toggle='lightbox'>
                       <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
 		    </a>
@@ -305,7 +305,7 @@
                 </div><!-- zoya -->
 
 
-                <div class='col-sm-3' id='olga-cam'>
+                <div class='col-sm-4' id='olga-cam'>
 		    <a href='' data-toggle='lightbox'>
                       <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
 		    </a>
@@ -354,15 +354,68 @@
                 </div><!-- olga-cam -->
             </div><!-- row -->
 
+            <div class='row'>
+                <div class='col-sm-4' id='prusa-1-cam'>
+		    <a href='' data-toggle='lightbox'>
+                      <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+		    </a>
+
+                  <div id='prusa-1'>
+                    <h5>
+                        <a href='graph.html?uuid=6ab73b55-006b-4a95-adaa-1b9e34c85d46'>Prusa 1</a>
+                    </h5>
+                    <h6 class='status'></h6>
+                    <div class='job' style='display: none'>
+                        <ul>
+                            <li>Filename:
+                                <span class='filename text-truncate'></span>
+                            </li>
+                            <li>Progress:
+                                <span class='print-progress'></span>%</li>
+                            <li>Time Remaining:
+                                <span class='print-time'></span>
+                                of
+                                <span class='print-time-remaining'></span>
+                                sec</li>
+                        </ul>
+                    </div>
+                    <table class='table'>
+                        <tr>
+                            <th>temp</th>
+                            <th>actual</th>
+                            <th>target</th>
+                        </tr>
+                        <tr>
+                            <td>tool</td>
+                            <td>
+                                <span class='tool-temp'></span>°C</td>
+                            <td>
+                                <span class='tool-temp-target'></span>°C</td>
+                        </tr>
+                        <tr>
+                            <td>bed</td>
+                            <td>
+                                <span class='bed-temp'></span>°C</td>
+                            <td>
+                                <span class='bed-temp-target'></span>°C</td>
+                        </tr>
+                    </table>
+                  </div>
+
+                </div><!-- prusa-1 -->
+
+            </div><!-- row -->
+
+
             <hr class='hr'/>
             <div class='row'>
-                <div class='col-sm-3'>
+                <div class='col-sm-4'>
                     <h2 id='cnc'>CNC</h2>
                 </div>
             </div>
 
             <div class='row'>
-              <div class='col-sm-3' id='mpcnc'>
+              <div class='col-sm-4' id='mpcnc'>
 		    <a href='' data-toggle='lightbox'>
                       <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
   		    </a>
@@ -948,8 +1001,11 @@
                     uuid: '14ed7234-01a6-40dd-8284-20e51e96153f',
                     container: '#hydroponics-cam'
                 }, {
-                    uuid: 'dc4ed7f9-b263-4288-9e9c-6d58deec48fb',
+                    uuid: 'dc4ed7f9-b263-4288-9e9c-6d58deec48fb', 
                     container: '#garden-cam'
+                },  {
+                    uuid: 'ad543d04-871f-4fde-9e0c-e05ca4cff288',
+                    container: '#prusa-1-cam'
                 }
             ];
             var leds = [
@@ -1027,11 +1083,15 @@
                   {
                     uuid: '37853276-5ac4-406c-bb66-e012cd360781',
                     name: 'Zoya',
-                    container: 'printer-zoya'
+                    container: 'zoya'
                 }, {
                     uuid: 'ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696',
                     name: 'Olga',
-                    container: 'printer-olga'
+                    container: 'olga'
+                }, {
+                    uuid: '6ab73b55-006b-4a95-adaa-1b9e34c85d46',
+                    name: 'Prusa 1',
+                    container: 'prusa-1'
                 }
             ]; 
             var servers = [
@@ -1166,12 +1226,12 @@
                 if (message.destinationName == '/homebus/device/7bfff065-f2e8-406d-b8d1-734a84c4c222') {
                     onDremel(message);
                 }
-                if (message.destinationName == '/homebus/device/37853276-5ac4-406c-bb66-e012cd360781') {
-                    onOctoprint(message, 'zoya');
-                }
-                if (message.destinationName == '/homebus/device/ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696') {
-                    onOctoprint(message, 'olga');
-                }
+
+                printers.forEach(function(item, index) {
+                  if(message.destinationName == '/homebus/device/' + item['uuid'])
+                    onOctoprint(message, item['container']);
+                });
+
 
                 if (message.destinationName == 'homebus/device/c7a1e762-9fa8-41c2-9311-81543c69f4ed') {
                     onSunriseSunset(message);

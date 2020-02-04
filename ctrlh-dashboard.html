@@ -8,7 +8,6 @@
         <meta name="description" content="Portland's Hackerspace. Check out our website calendar for our weekly open house and all other events open to the public.">
         <meta name="robots" content="noindex">
         <script src="https://kit.fontawesome.com/0556c42d44.js"></script>
-        <link rel="stylesheet" href="https://pdxhackerspace.org/style.css" integrity="sha384-e5tu+wTFdksi4IWd3RtMTgkMMqPJDSauUgAeGK4v+7ng6MPf60XceelTuC1iNnh/" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" integrity="sha384-degZUV6f5Qw/AGD0Kq6kEC7j8V6h+IWPfm+AJ+2q3gaTFa9U4fu/9u3Egh7xOYE4" crossorigin="anonymous">
         <style>
@@ -25,6 +24,23 @@
             }
             body { 
                 padding-top: 65px;
+            }
+            body, .list-group-item {
+                background-color: white; 
+                color: black; 
+            }
+            @media screen and (prefers-color-scheme: dark) {
+                img {
+                    opacity: .75;
+                    transition: opacity .5s ease-in-out;
+                }
+                img:hover {
+                    opacity: 1;
+                }
+                body, .list-group-item {
+                    background-color: black; 
+                    color: white; 
+                }
             }
         </style>
     </head>
@@ -510,6 +526,29 @@
                     </table>
                   </div>
               </div>
+
+
+              <div class='col-sm-4' id='laser-cutter-access'>
+                  <div>
+                    <h2>
+                        <a href='graph.html?uuid='>Laser Cutter Access</a>
+                    </h2>
+		    <ul class='list-group list-group-flush'>
+		    </ul>
+                  </div>
+              </div>
+
+              <div class='col-sm-4' id='smoke-o-stat'>
+                  <div>
+                    <h2>
+                        <a href='graph.html?uuid='>Smoke-o-stat</a>
+		    </h2>
+		    <ul class='list-group list-group-flush'>
+		    </ul>
+                  </div>
+              </div>
+
+
             </div>
             <!-- row -->
             <hr class='hr'/>
@@ -520,6 +559,7 @@
                         <tr>
                             <th></th>
                             <th>Room</th>
+			    <th><i class="fas fa-lightbulb"></i></th>
                             <th>Temp</th>
                             <th>Hum</th>
                             <th>PM1/2.5/10</th>
@@ -528,6 +568,8 @@
                         <tr id='unit1'>
                             <td class='door-locked'></td>
                             <td>Unit 1</td>
+			    <td>
+			    </td>
                             <td>
                                 <span class='temperature'></span>°C</td>
                             <td>
@@ -542,6 +584,8 @@
                             <td>
                                 <a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a>
                             </td>
+			    <td>
+			    </td>
                             <td>
                                 <span class='temperature'></span>°C</td>
                             <td>
@@ -556,6 +600,8 @@
                             <td>
                                 <a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a>
                             </td>
+			    <td>
+			    </td>
                             <td>
                                 <span class='temperature'></span>°C</td>
                             <td>
@@ -570,6 +616,8 @@
                             <td>
                                 <a href='graph.html?uuid=1955b27e-17fd-429a-b1ce-293879149e42'>Unit 2 (ws)</a>
                             </td>
+			    <td>
+			    </td>
                             <td>
                                 <span class='temperature'></span>°C</td>
                             <td>
@@ -584,7 +632,9 @@
                             <td>
                                 <a href='graph.html?uuid=ae1dd9a7-b55c-4255-8f16-7e5c69fd678b'>Electronics Lab</a>
                             </td>
-                            <td>
+			    <td>
+			    </td>
+			    <td>
                                 <span class='temperature'></span>°C</td>
                             <td>
                                 <span class='humidity'></span>%</td>
@@ -598,6 +648,7 @@
                             <td>
                                 <a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a>
                             </td>
+			    <td class='brightness'></td>
                             <td>
                                 <span class='temperature'></span>°C</td>
                             <td>
@@ -610,6 +661,8 @@
                         <tr id='furball-unit3'>
                             <td class='door-locked'></td>
                             <td>Unit 3</td>
+			    <td>
+			    </td>
                             <td>
                                 <span class='temperature'></span>°C</td>
                             <td>
@@ -624,6 +677,8 @@
                             <td>
                                 <a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a>
                             </td>
+			    <td>
+			    </td>
                             <td>
                                 <span class='temperature'></span>°C</td>
                             <td>
@@ -675,11 +730,6 @@
                             <td></td>
                             <td></td>
                         </tr>
-                        <tr>
-                            <td>Buckets</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
                         <tr id='discoball-vendo-leds'>
                             <td>
                                 <a href='http://192.168.15.22' target='_blank'>Vendo LEDs</a>
@@ -725,16 +775,6 @@
                                 <span id='vendo-temperature'></span>°C</td>
                             <td>
                                 <span id='vendo-humidity'></span>%</td>
-                        </tr>
-                        <tr>
-                            <td>Grill</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Freezer</td>
-                            <td></td>
-                            <td></td>
                         </tr>
                     </table>
                 </div>
@@ -1133,6 +1173,13 @@
                     container: '#prusa-2-cam'
                 }
             ];
+            var lights = [
+                {
+                    uuid: 'b64f813e-75e2-4f52-a723-7bbfc003c221',
+                    container: 'furball-craft-lab'
+                }
+            ];
+
             var leds = [
                 {
                     uuid: '4cf5765b-6a1a-4f05-879f-1285e092beb3',
@@ -1255,7 +1302,12 @@
                 // dremel
                 client.subscribe('/homebus/device/7bfff065-f2e8-406d-b8d1-734a84c4c222');
                 // sunrise sunset
-                client.subscribe('homebus/device/c7a1e762-9fa8-41c2-9311-81543c69f4ed');
+                client.subscribe('homebus/device/c7a1e762-9fa8-41c2-9311-81543c69f4ed'); 
+                // laser access 
+                client.subscribe('/homebus/device/8a6f30c2-7adc-44aa-bf0b-aeea197a02c0');
+                // smoke-o-stat
+                client.subscribe('homebus/device/4ec1b516-f090-4967-82c2-ff3dfe45ffd7');
+
                 access.forEach(function (item, index) {
                     client.subscribe('/homebus/device/' + item["uuid"]);
                 });
@@ -1272,8 +1324,10 @@
                     client.subscribe('/homebus/device/' + item["uuid"]);
                 });
                 servers.forEach(function (item, index) {
-                    console.log(' SERVER /homebus/device/' + item); 
                     client.subscribe('/homebus/device/' + item); 
+                });
+                lights.forEach(function (item, index) {
+                    client.subscribe('homebus/device/' + item['uuid']); 
                 });
             }
             function mqtt_connect() {
@@ -1358,6 +1412,14 @@
                     onDremel(message);
                 }
 
+                if (message.destinationName == '/homebus/device/8a6f30c2-7adc-44aa-bf0b-aeea197a02c0') {
+                    onLaserCutterAccess(message); 
+                }
+
+                if (message.destinationName == 'homebus/device/4ec1b516-f090-4967-82c2-ff3dfe45ffd7') {
+                    onSmokeOStat(message); 
+                }
+
                 printers.forEach(function(item, index) {
                   if(message.destinationName == '/homebus/device/' + item['uuid'])
                     onOctoprint(message, item['container']);
@@ -1390,6 +1452,11 @@
                servers.forEach(function (item, index) {
                     if(message.destinationName == '/homebus/device/' + item)
                         onServer(message);
+                    }
+                );
+               lights.forEach(function (item, index) {
+                    if(message.destinationName == 'homebus/device/' + item['uuid'])
+                        onLight(message, item['container']);
                     }
                 );
             }
@@ -1460,6 +1527,33 @@
                 $("#access-list").prepend("<li class='list-group-item'>" + access["door"] + " " + access["person"] + " " + access["action"] + "<br/>" + getTimeagostamp(access["timestamp"]) + "</li>");
                 activateTimeago();
             }
+
+            function onLaserCutterAccess(message) {
+		var access = JSON.parse(message.payloadString); 
+
+		if(onLaserCutterAccess.last_access == message.payloadString) 
+		    return;
+
+		onLaserCutterAccess.last_access = message.payloadString;
+
+		$('#laser-cutter-access ul').prepend("<li class='list-group-item'>" + access["action"] + " by " + access["person"] + "<br/>" +  getTimeagostamp(access["timestamp"]) + "</li>");
+                activateTimeago();
+            }
+
+            function onSmokeOStat(message) {
+		var msg = JSON.parse(message.payloadString);
+		console.log('>>> SMOKE-O-STAT', msg);
+
+		if(onSmokeOStat.last_update == message.payloadString) 
+		    return;
+
+		onSmokeOStat.last_update = message.payloadString;
+
+		$('#smoke-o-stat ul').prepend("<li class='list-group-item'>" + msg['org.pdxhackerspace.smokeostat']['state'] + "<br/>" + msg['org.pdxhackerspace.smokeostat']['triggers'].join('<br/>') + '<br/>' +  getTimeagostamp(msg["timestamp"]) + "</li>");
+                activateTimeago();
+
+            }
+
             function onWeather(message, index) {
                 var w = JSON.parse(message.payloadString);
                 var id = '#weather-' + index;
@@ -1492,6 +1586,19 @@
                 $('#aqi').html(text);
                 activateTimeago();
             }
+
+            function onLight(message, container) {
+                var msg = JSON.parse(message.payloadString);
+		console.log('>>>LIGHT', msg['org.homebus.light-switch']);
+
+//		$('#' + container + ' .fa-lightbulb').attr('style', 'color: yellow; opacity: ' + Number(msg['org.homebus.light-switch']['brightness'])/100.0 + ''); 
+
+                if(msg['org.homebus.light-switch']['state'] == 'on') 
+    		    $('#' + container + ' .brightness').text(msg['org.homebus.light-switch']['brightness'] + '%'); 
+                else
+    		    $('#' + container + ' .brightness').text('off');
+            }
+
             // functions from https://stackoverflow.com/questions/20958078/resize-a-base-64-image-in-javascript-without-using-canvas
             // resize an image using an off-page canvas
             function resizeImage() {
@@ -1514,9 +1621,9 @@
             }
             function onCamera(message, container) {
                 var msg = JSON.parse(message.payloadString);
-                console.log("got camera data from " + container + ": " + msg['image']['data'].length + " bytes long");
+//                console.log("got camera data from " + container + ": " + msg['image']['data'].length + " bytes long"); 
                 data = 'data:' + msg['image']['mime_type'] + ';base64,' + msg['image']['data'];
-                console.log(data.length);
+//                console.log(data.length);
                 $(container + ' img').attr('src', data);
                 $(container + ' a').attr('href', data);
                 $(container + ' time').remove();
@@ -1540,7 +1647,6 @@
 
             function onServer(message) {
                 var msg = JSON.parse(message.payloadString);
-                console.log('ONSERVER', msg);
                 var id = '#'+msg['id'];
 
                 $(id + ' .server-name').text(msg['system']['hostname']); 
@@ -1551,10 +1657,8 @@
                 $(id + ' .server-filesystem-info').remove();
                 filesystems = ''
                 msg['filesystems'].forEach(function(item, index) {
-console.log(item);
                                                filesystems += '<tr class="server-filesystem-info"><td></td><td>' + item['mount_point'] + '</td><td>' + (100 - Number(item['used_percentage'])) + '% free</td></tr>';
                                             });
-console.log(filesystems);
 
                 $(id + ' .server-filesystems').after(filesystems);
 
@@ -1568,7 +1672,6 @@ console.log(filesystems);
                 $('#vendo-humidity').text(msg['environment']['humidity']);
             }
             function onDremel(message) {
-console.log('DREMEL DREMEL DREMEL');
                 var msg = JSON.parse(message.payloadString);
                 $('#dremel-status').text(msg['status']['state']);
                 $('#dremel-filename').text(msg['job']['file']);

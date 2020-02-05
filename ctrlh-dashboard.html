@@ -549,6 +549,8 @@
                     <h2>
                         <a href='graph.html?uuid='>Smoke-o-stat</a>
 		    </h2>
+		    <p id='smoke-o-stat-status'>
+		    </p>
 		    <ul class='list-group list-group-flush'>
 		    </ul>
                   </div>
@@ -1311,8 +1313,10 @@
                 client.subscribe('homebus/device/c7a1e762-9fa8-41c2-9311-81543c69f4ed'); 
                 // laser access 
                 client.subscribe('/homebus/device/8a6f30c2-7adc-44aa-bf0b-aeea197a02c0');
-                // smoke-o-stat
-                client.subscribe('homebus/device/4ec1b516-f090-4967-82c2-ff3dfe45ffd7');
+                // smoke-o-stat 
+                client.subscribe('homebus/device/4ec1b516-f090-4967-82c2-ff3dfe45ffd7'); 
+                // smoke-o-stat fan
+                client.subscribe('homebus/device/29f5bad9-09a1-4580-8a93-3ed1dfeacd12');
 
                 access.forEach(function (item, index) {
                     client.subscribe('/homebus/device/' + item["uuid"]);
@@ -1424,6 +1428,10 @@
 
                 if (message.destinationName == 'homebus/device/4ec1b516-f090-4967-82c2-ff3dfe45ffd7') {
                     onSmokeOStat(message); 
+                }
+
+                if (message.destinationName == 'homebus/device/29f5bad9-09a1-4580-8a93-3ed1dfeacd12') {
+                    onSmokeOStatFan(message); 
                 }
 
                 printers.forEach(function(item, index) {
@@ -1558,6 +1566,14 @@
 		$('#smoke-o-stat ul').prepend("<li class='list-group-item'>" + msg['org.pdxhackerspace.smokeostat']['state'] + "<br/>" + msg['org.pdxhackerspace.smokeostat']['triggers'].join('<br/>') + '<br/>' +  getTimeagostamp(msg["timestamp"]) + "</li>");
                 activateTimeago();
 
+            }
+
+            function onSmokeOStatFan(message) {
+		var msg = JSON.parse(message.payloadString);
+		console.log('>>> SMOKE-O-STAT FAN', msg);
+
+		$('#smoke-o-stat-status').html('Smoke-o-stat fan is ' + msg['org.homebus.light-switch']['state'] + '</br>' + getTimeagostamp(msg["timestamp"]));
+                activateTimeago();
             }
 
             function onWeather(message, index) {

@@ -549,7 +549,11 @@
                     <h2>
                         <a href='graph.html?uuid='>Smoke-o-stat</a>
 		    </h2>
-		    <p id='smoke-o-stat-status'>
+		    <p id='smoke-o-stat-fan-status'>
+		    </p>
+		    <p id='smoke-o-stat-smoke-status'>
+		    </p>
+		    <p id='smoke-o-stat-light-status'>
 		    </p>
 		    <ul class='list-group list-group-flush'>
 		    </ul>
@@ -1318,9 +1322,12 @@
                 // smoke-o-stat fan
                 client.subscribe('homebus/device/29f5bad9-09a1-4580-8a93-3ed1dfeacd12');
 
-                access.forEach(function (item, index) {
-                    client.subscribe('/homebus/device/' + item["uuid"]);
-                });
+//                access.forEach(function (item, index) {
+//                    client.subscribe('/homebus/device/' + item["uuid"]);
+//                });
+
+                client.subscribe('homebus/device/551ddc38-d11f-40dc-8162-440e3fceea40');
+
                 furballs.forEach(function (item, index) {
                     client.subscribe('/homebus/device/' + item["uuid"]);
                 });
@@ -1448,11 +1455,14 @@
                         onFurball(message, item['container'], item['has_pm']);
                     }
                 });
-                access.forEach(function (item, index) {
-                    if (message.destinationName == '/homebus/device/' + item['uuid']) {
-                        onAccess(message, item['container']);
-                    }
-                });
+//                access.forEach(function (item, index) {
+//                    if (message.destinationName == '/homebus/device/' + item['uuid']) {
+//                        onAccess(message, item['container']);
+//                    }
+//                });
+
+                if(message.destinationName == 'homebus/device/551ddc38-d11f-40dc-8162-440e3fceea40')
+                    onAccessLastN(message);
                 cameras.forEach(function (item, index) {
                     if (message.destinationName == '/homebus/device/' + item['uuid']) {
                         onCamera(message, item['container']);
@@ -1504,6 +1514,12 @@
                 if (furball["air"]) {
                     $("#" + unit + " .voc").text(furball["air"]["tvoc"]);
                 }
+
+
+                if(furball["id"] == '638a9d78-09f6-4d92-b70a-2b14edb8d84a') {
+    		    $('#smoke-o-stat-light-status').html('<i class="fas fa-lightbulb"></i> ' + furball['light']['lux']); 
+    		    $('#smoke-o-stat-smoke-status').html('<i class="fas fa-smoke"></i> ' + furball["air"]["pm1"] + '/' + furball["air"]["pm25"] + '/' + furball["air"]["pm10"]);
+                }
             }
             function onProjectors(message) {
                 var projectors = JSON.parse(message.payloadString);
@@ -1522,8 +1538,23 @@
             function activateTimeago() {
                 $('.timeago').timeago();
             }
+            function onAccessLastN(message) {
+console.log('onAccessLastN', message);
+                var access_items = JSON.parse(message.payloadString); 
+console.log(access_items);
+
+                access_items.forEach(function(item, index) {
+                    access.forEach(function(item2, index) {
+                        if(item['id'] == item2['uuid'])
+                            onAccess({payloadString: JSON.stringify(item)}, item2['container']);
+                });
+            });
+            }
+
             function onAccess(message, container) {
-                var access = JSON.parse(message.payloadString);
+console.log('onAccess', message);
+                var access = JSON.parse(message.payloadString); 
+
                 // try to avoid repeated old messages
                 // this is not a great way to do that as timestamps can drift
                 // and messages could potentially be held up
@@ -1572,7 +1603,7 @@
 		var msg = JSON.parse(message.payloadString);
 		console.log('>>> SMOKE-O-STAT FAN', msg);
 
-		$('#smoke-o-stat-status').html('Smoke-o-stat fan is ' + msg['org.homebus.light-switch']['state'] + '</br>' + getTimeagostamp(msg["timestamp"]));
+		$('#smoke-o-stat-fan-status').html('<i class="fas fa-fan"></i> ' + msg['org.homebus.light-switch']['state'] + '</br>' + getTimeagostamp(msg["timestamp"]));
                 activateTimeago();
             }
 

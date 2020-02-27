@@ -204,6 +204,14 @@
                       <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
 		    </a>
                 </div>
+                <div class='col-sm-3' id='47e5a8cc-c699-4194-9d58-ff11b1425dd3'>
+                    <h2>
+                        <a href='graph.html?uuid=47e5a8cc-c699-4194-9d58-ff11b1425dd3'>Unifi G3 Cam</a>
+                    </h2>
+		    <a href='' data-toggle='lightbox'>
+                      <img src='test-pattern.jpg' class='img-fluid img-thumbnail' style='object-fit: contain'>
+		    </a>
+                </div>
 
             </div>
             <hr class='hr'/>
@@ -604,7 +612,7 @@
                             </td>
                             <td class='voc'></td>
                         </tr>
-                        <tr id='furball-laser-lab'>
+                        <tr id='638a9d78-09f6-4d92-b70a-2b14edb8d84a'>
                             <td class='door-locked'></td>
                             <td>
                                 <a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a>
@@ -620,7 +628,7 @@
                             </td>
                             <td class='voc'></td>
                         </tr>
-                        <tr id='furball-unit2'>
+                        <tr id='04001f9a-122b-4045-84f4-69b7c7318250'>
                             <td class='door-locked'></td>
                             <td>
                                 <a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a>
@@ -652,7 +660,7 @@
                             </td>
                             <td class='voc'></td>
                         </tr>
-                        <tr id='furball-electronics-lab'>
+                        <tr id='ae1dd9a7-b55c-4255-8f16-7e5c69fd678b'>
                             <td class='door-locked'></td>
                             <td>
                                 <a href='graph.html?uuid=ae1dd9a7-b55c-4255-8f16-7e5c69fd678b'>Electronics Lab</a>
@@ -668,7 +676,7 @@
                             </td>
                             <td class='voc'></td>
                         </tr>
-                        <tr id='furball-craft-lab'>
+                        <tr id='b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>
                             <td class='door-locked'></td>
                             <td>
                                 <a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a>
@@ -697,7 +705,7 @@
                             </td>
                             <td class='voc'></td>
                         </tr>
-                        <tr id='furball-slytherin'>
+                        <tr id='067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>
                             <td class='door-locked'></td>
                             <td>
                                 <a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a>
@@ -1260,9 +1268,19 @@
                 client.subscribe('homebus/device/+/org.homebus.experimental.server-status'); 
                 client.subscribe('homebus/device/+/org.homebus.experimental.weather'); 
                 client.subscribe('homebus/device/+/org.homebus.experimental.aqi'); 
+
                 client.subscribe('homebus/device/+/org.homebus.experimental.air-sensor'); 
+                client.subscribe('homebus/device/+/org.homebus.experimental.air-quality-sensor'); 
+                client.subscribe('homebus/device/+/org.homebus.experimental.light-sensor'); 
+
+                client.subscribe('/homebus/device/+/org.homebus.experimental.air-sensor'); 
+                client.subscribe('/homebus/device/+/org.homebus.experimental.air-quality-sensor'); 
+                client.subscribe('/homebus/device/+/org.homebus.experimental.light-sensor'); 
+
                 client.subscribe('homebus/device/+/org.homebus.experimental.3dprinter'); 
                 client.subscribe('homebus/device/+/org.homebus.experimental.printer'); 
+
+                client.subscribe('homebus/device/+/org.homebus.experimental.solar-clock'); 
             }
 
             function mqtt_connect() {
@@ -1312,9 +1330,6 @@
             }
 
             function getDDC(topic) {
-                if(topic.charAt(0) == '/')
-                    return "";
-
                 let index = topic.lastIndexOf('/');
                 if(index == -1)
                     return "";
@@ -1378,15 +1393,6 @@ console.log(data);
                     onSmokeOStatFan(data, message); 
                 }
 
-                if (message.destinationName == 'homebus/device/c7a1e762-9fa8-41c2-9311-81543c69f4ed') {
-                    onSunriseSunset(data);
-                }
-                furballs.forEach(function (item, index) {
-                    if (message.destinationName == '/homebus/device/' + item['uuid']) {
-                        onFurball(data, item['container'], item['has_pm']);
-                    }
-                });
-
                 if(message.destinationName == 'homebus/device/551ddc38-d11f-40dc-8162-440e3fceea40')
                     onAccessLastN(data, message);
 
@@ -1402,15 +1408,14 @@ console.log(data);
                     }
                 );
 
-
                 if(ddc == 'org.homebus.experimental.air-sensor') 
                   onAirSensor(data); 
 
+                if(ddc == 'org.homebus.experimental.air-quality-sensor') 
+                  onAirQualitySensor(data); 
+
                 if(ddc == 'org.homebus.experimental.printer') 
                   onPrinter(data); 
-
-                if(ddc == 'org.homebus.experimental.solar') 
-                  onSunriseSunset(data); 
 
                 if(ddc == 'org.homebus.experimental.weather') 
                   onWeather(data); 
@@ -1429,6 +1434,9 @@ console.log(data);
 
                 if(ddc == 'org.homebus.experimental.image')
                   onCamera(data); 
+
+                if(ddc == 'org.homebus.experimental.solar-clock')
+                  onSunriseSunset(data);
             }
 
             function onNetworkActive(network) {
@@ -1471,6 +1479,14 @@ console.log(data);
 
                 $(id + " .temperature").text(data["temperature"]);
                 $(id + " .humidity").text(data["humidity"]);
+            }
+
+            function onAirQualitySensor(msg) {
+                let data = msg['org.homebus.experimental.air-quality-sensor'];
+                let id = '#' + msg['id'];
+
+                $(id + " .pm").text(data["pm1"] + '/' + data["pm25"] + '/' + data["pm10"]);
+                $(id + " .voc").text(data["tvoc"]);
             }
 
             function onLightSensor(msg) {
@@ -1729,8 +1745,10 @@ console.log(data);
                 activateTimeago();
             }
             function onSunriseSunset(msg) {
-                let sunrise_date = new Date(msg['solar_times']['sunrise']*1000); 
-                let sunset_date = new Date(msg['solar_times']['sunset']*1000); 
+                let data = msg['org.homebus.experimental.solar-clock'];
+
+                let sunrise_date = new Date(data['sunrise']*1000); 
+                let sunset_date = new Date(data['sunset']*1000); 
 
                 $('.sunrise').text(sunrise_date.getHours() + ':' + sunrise_date.getMinutes() + 'AM'); 
                 $('.sunset').text(sunset_date.getHours() + ':' + sunset_date.getMinutes() + 'PM'); 

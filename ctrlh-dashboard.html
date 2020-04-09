@@ -113,9 +113,21 @@
         <div class="container-fluid">
 	      <div class='row'>
                 <div class='col'>
+		  <h2>Solar Clock</h2>
 		  Sunrise: <span class='sunrise'></span> Sunset: <span class='sunset'></span>
                 </div>
 	      </div>
+
+            <hr class='hr'/>
+
+	      <div class='row'>
+                <div class='col'>
+		  <h2>GoFundMe Campaign</h2>
+		  <p class='gofundme'></p>
+                </div>
+	      </div>
+
+            <hr class='hr'/>
 
 	      <div class='row'>
                 <div class='col'>
@@ -1306,6 +1318,9 @@
                 client.subscribe('homebus/device/+/org.homebus.experimental.printer'); 
 
                 client.subscribe('homebus/device/+/org.homebus.experimental.solar-clock'); 
+
+                client.subscribe('homebus/device/+/org.homebus.experimental.gofundme'); 
+                client.subscribe('homebus/device/+/org.homebus.experimental.pollen'); 
             }
 
             function mqtt_connect() {
@@ -1460,8 +1475,14 @@ console.log(data);
                 if(ddc == 'org.homebus.experimental.image')
                   onCamera(data); 
 
-                if(ddc == 'org.homebus.experimental.solar-clock')
-                  onSunriseSunset(data);
+                if(ddc == 'org.homebus.experimental.solar-clock') 
+                  onSunriseSunset(data); 
+
+                if(ddc == 'org.homebus.experimental.gofundme') 
+                  onGoFundMe(data); 
+
+                if(ddc == 'org.homebus.experimental.pollen') 
+                  onPollen(data);
             }
 
             function onNetworkActive(network) {
@@ -1766,8 +1787,8 @@ console.log(data);
                 $(id + ' .bed-temp-target').text(data['temperatures']['bed_target']);
 
                 $(id + ' time').remove();
-                $(id).append(getTimeagostamp(msg['timestamp']));
-                activateTimeago();
+                $(id).append(getTimeagostamp(msg['timestamp'])); 
+                activateTimeago(); 
             }
             function onSunriseSunset(msg) {
                 let data = msg['org.homebus.experimental.solar-clock'];
@@ -1777,6 +1798,16 @@ console.log(data);
 
                 $('.sunrise').text(sunrise_date.getHours() + ':' + sunrise_date.getMinutes() + 'AM'); 
                 $('.sunset').text(sunset_date.getHours() + ':' + sunset_date.getMinutes() + 'PM'); 
+            }
+            function onGoFundMe(msg) {
+                let data = msg['org.homebus.experimental.gofundme'];
+
+                $('.gofundme').html('$' + data['raised'] + '/' + data['goal'] + ' by ' + data['people'] + ' people in ' + data['days'] + ' days<br/>' + getTimeagostamp(msg['timestamp']));
+                activateTimeago(); 
+            }
+
+            function onPollen(msg) {
+                let data = msg['org.homebus.experimental.pollen'];
             }
         </script>
     </body>

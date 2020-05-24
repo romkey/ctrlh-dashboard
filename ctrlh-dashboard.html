@@ -1720,6 +1720,8 @@ console.log(data);
                 $(container + ' time').remove();
                 $(container).append(getTimeagostamp(msg['timestamp']));
                 activateTimeago();
+		let d = new Date();
+		if (d - (Number(msg['timestamp']) * 1000) > 5*60*1000) $(container + ' img').attr('src', 'test-pattern.jpg');
             }
             // from https://stackoverflow.com/questions/36098913/convert-seconds-to-days-hours-minutes-and-seconds
             function secondsToDhms(seconds) {

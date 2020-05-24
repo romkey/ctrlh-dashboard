@@ -1710,9 +1710,11 @@ console.log(data);
                 image = msg['org.homebus.experimental.image']; 
 //                console.log(image);
 
-                let data = 'data:' + image['mime_type'] + ';base64,' +image['data'];
+		// the following replace helps match against ekko-lightbox which uses new Image when initializing
+                let data = 'data:' + image['mime_type'] + ';base64,' +image['data'].replace(/\n/g,'');
                 let container = '#' + msg['id'];
 
+		if ($(container + ' a[data-toggle="lightbox"]').attr('href') == $('.ekko-lightbox img').attr('src')) $('.ekko-lightbox img').attr('src', data);
                 $(container + ' img').attr('src', data);
                 $(container + ' a[data-toggle="lightbox"]').attr('href', data);
                 $(container + ' time').remove();

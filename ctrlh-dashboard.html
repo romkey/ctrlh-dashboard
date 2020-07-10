@@ -986,6 +986,16 @@ console.log(data);
                     return;
                 }
 
+                if(data["source"]) {
+                    data["id"] = data["source"];
+                    try {
+                        let ddc = data["contents"]["ddc"];
+                        data[ddc] = data["contents"]["payload"];
+                    } catch(error) {
+                        return;
+                    }
+                }
+
                 if (data["timestamp"]) {
                     $('#last_updated_container').html(getTimeagostamp(data["timestamp"]));
                     activateTimeago();

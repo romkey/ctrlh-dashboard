@@ -92,15 +92,6 @@
 
 	      <div class='row'>
                 <div class='col'>
-		  <h2>GoFundMe Campaign</h2>
-		  <p class='gofundme'></p>
-                </div>
-	      </div>
-
-            <hr class='hr'/>
-
-	      <div class='row'>
-                <div class='col'>
                     <h2 id='cameras'>Camera Stills</h2>
                 </div>
 	      </div>
@@ -191,6 +182,7 @@
                   </div>
                 </div><!-- dremel -->
 
+<!--
                 <div class='col-sm-4'>
 		  <div class='cam' id='d5a6e892-f89f-416b-91c4-2953330e5f17' name='Zoya Cam'></div>
                   <div id='37853276-5ac4-406c-bb66-e012cd360781'>
@@ -234,9 +226,9 @@
                     </table>
                   </div>
 
-                </div><!-- zoya -->
-
-
+                </div><!-- zoya
+-->
+<!--
                 <div class='col-sm-4'>
 		  <div class='cam' id='3bbbf6f5-f4d4-4acc-9d65-a4a03ea93762' name='Olga Cam'></div>
                   <div id='ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696'>
@@ -279,10 +271,11 @@
                         </tr>
                     </table>
                   </div>
-                </div><!-- olga-cam -->
-            </div><!-- row -->
+                </div><!-- olga-cam
+            </div><!-- row
 
             <div class='row'>
+-->
                 <div class='col-sm-4'>
 		  <div class='cam' id='ad543d04-871f-4fde-9e0c-e05ca4cff288' name='Prusa-1 Cam'></div>
                   <div id='6ab73b55-006b-4a95-adaa-1b9e34c85d46'>
@@ -729,8 +722,10 @@
             <div class='row'>
 	      <div class='col-sm-4 server' id='8cb9e03e-1bfe-4ad7-b96e-e9186956b746' name='ctrlh.homebus.io'></div>
 	      <div class='col-sm-4 server' id='59905e56-b683-4b22-bc66-345705a3f27e' name='zuul'></div>
+<!--
 	      <div class='col-sm-4 server' id='9fb914b1-1c5a-40b0-8c6d-eac29bb1ea3d' name='zoya'></div>
-	      <div class='col-sm-4 server' id='7f9ee46e-355e-4b7c-a2c1-fe24e733796a' name='Name'></div>
+	      <div class='col-sm-4 server' id='7f9ee46e-355e-4b7c-a2c1-fe24e733796a' name='olga'></div>
+-->
 	      <div class='col-sm-4 server' id='0d1fd497-8cf7-47b2-b0fc-baab52c52301' name='cnc-octopi'></div>
 	      <div class='col-sm-4 server' id='0b75a4f6-0467-4986-9b05-fedeba1bbbf8' name='prusa-1'></div>
 	      <div class='col-sm-4 server' id='64f0aa9c-aa4e-4ee5-b886-4afe1a557b4a' name='prusa-2'></div>
@@ -806,42 +801,6 @@
                     container: 'furball-unit3'
                 }
             ];
-            var furballs = [
-                {
-                    uuid: '638a9d78-09f6-4d92-b70a-2b14edb8d84a',
-                    name: 'Laser Lab',
-                    container: 'furball-laser-lab',
-                    has_pm: true
-                },
-                {
-                    uuid: '04001f9a-122b-4045-84f4-69b7c7318250',
-                    name: 'Unit 2',
-                    container: 'furball-unit2',
-                    has_pm: false
-                },
-                {
-                    uuid: '067746e8-7a2f-4f6e-bb59-e1b2043b37f3',
-                    name: 'Slytherin',
-                    container: 'furball-slytherin',
-                    has_pm: true
-                },
-                {
-                    uuid: 'b3efa04b-dac8-4ddc-bc34-94f1daec3c0a',
-                    name: 'Craft Lab',
-                    container: 'furball-craft-lab',
-                    has_pm: false
-                }, {
-                    uuid: '1955b27e-17fd-429a-b1ce-293879149e42',
-                    name: 'Unit 2 (ws)',
-                    container: 'ws-unit2-2',
-                    has_pm: false
-                }, {
-                    uuid: 'ae1dd9a7-b55c-4255-8f16-7e5c69fd678b',
-                    name: 'Electronics Lab',
-                    container: 'furball-electronics-lab',
-                    has_pm: true
-                }
-            ];
 
             // client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());
             client = new Paho.Client(credentials.MQTT_SERVER, 4569, credentials.MQTT_UUID + new Date().getTime());
@@ -856,8 +815,6 @@
                 client.subscribe('/network/activity');
                 client.subscribe('/projectors');
 
-                // sunrise sunset
-                client.subscribe('homebus/device/c7a1e762-9fa8-41c2-9311-81543c69f4ed'); 
                 // laser access 
                 client.subscribe('/homebus/device/8a6f30c2-7adc-44aa-bf0b-aeea197a02c0');
                 // smoke-o-stat 
@@ -865,15 +822,8 @@
                 // smoke-o-stat fan
                 client.subscribe('homebus/device/29f5bad9-09a1-4580-8a93-3ed1dfeacd12');
 
-//                access.forEach(function (item, index) {
-//                    client.subscribe('/homebus/device/' + item["uuid"]);
-//                });
-
                 client.subscribe('homebus/device/551ddc38-d11f-40dc-8162-440e3fceea40');
 
-                furballs.forEach(function (item, index) {
-                    client.subscribe('/homebus/device/' + item["uuid"]);
-                });
                 leds.forEach(function (item, index) {
                     client.subscribe('/homebus/device/' + item["uuid"]);
                 });
@@ -899,9 +849,6 @@
                 client.subscribe('homebus/device/+/org.homebus.experimental.printer'); 
 
                 client.subscribe('homebus/device/+/org.homebus.experimental.solar-clock'); 
-
-                client.subscribe('homebus/device/+/org.homebus.experimental.gofundme'); 
-                client.subscribe('homebus/device/+/org.homebus.experimental.pollen'); 
             }
 
             function mqtt_connect() {
@@ -955,8 +902,8 @@
                 if(index == -1)
                     return "";
 
-                console.log("#### getDDC", index+1, topic.length); 
-                console.log("#### getDDC", topic.substring(index+1, topic.length)); 
+//                console.log("#### getDDC", index+1, topic.length); 
+//                console.log("#### getDDC", topic.substring(index+1, topic.length)); 
                 return topic.substring(index+1, topic.length);
             }
 
@@ -967,19 +914,20 @@
                 }, 1000);
 
                 // console.log('onMessageArrived:' + message.payloadString);
-                console.log('topic is ' + message.destinationName);
+                console.log('topic is ' + message.destinationName, message); 
+
 
                 let ddc = getDDC(message.destinationName);
-                console.log('ddc is ' + ddc);
-                if(ddc != '') {
-console.log(message);
-}
+//                console.log('ddc is ' + ddc);
+//                if(ddc != '') {
+//                    console.log(message);
+//                }
 
                 let data = "";
 
                 try {
                     data = JSON.parse(message.payloadString);
-console.log(data);
+//                    console.log(data);
                 } catch(error) {
                     console.error("JSON parsing error");
                     console.error(message.payloadString);
@@ -1066,8 +1014,10 @@ console.log(data);
                 if(ddc == 'org.homebus.experimental.image')
                   onCamera(data); 
 
-                if(ddc == 'org.homebus.experimental.solar-clock') 
+                if(ddc == 'org.homebus.experimental.solar-clock') {
+                  console.log('solar clock');
                   onSunriseSunset(data); 
+                }
 
                 if(ddc == 'org.homebus.experimental.gofundme') 
                   onGoFundMe(data); 
@@ -1301,7 +1251,7 @@ console.log(data);
             function onCamera(msg) {
                 var image;
 
-                console.log('using org.homebus.image'); 
+//                console.log('using org.homebus.image'); 
                 image = msg['org.homebus.experimental.image']; 
 //                console.log(image);
 
@@ -1388,13 +1338,16 @@ console.log(data);
                 activateTimeago(); 
             }
             function onSunriseSunset(msg) {
+console.log(msg);
                 let data = msg['org.homebus.experimental.solar-clock'];
+try {
 
                 let sunrise_date = new Date(data['sunrise']*1000); 
                 let sunset_date = new Date(data['sunset']*1000); 
 
                 $('.sunrise').text(sunrise_date.getHours() + ':' + sunrise_date.getMinutes() + 'AM'); 
                 $('.sunset').text(sunset_date.getHours() + ':' + sunset_date.getMinutes() + 'PM'); 
+} catch(error) { }
             }
             function onGoFundMe(msg) {
                 let data = msg['org.homebus.experimental.gofundme'];
@@ -1425,7 +1378,8 @@ console.log(data);
                     const img = dce('img');
                     img.src = 'test-pattern.jpg'
                     img.setAttribute('class', 'img-fluid img-thumbnail');
-                    img.setAttribute('style', 'object-fit: contain');
+                    img.setAttribute('loading', 'lazy');
+                    img.setAttribute('style', 'object-fit: contain'); 
                     imgA = dce('a');
                     imgA.setAttribute('data-toggle', 'lightbox');
                     imgA.appendChild(img);

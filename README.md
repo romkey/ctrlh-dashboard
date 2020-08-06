@@ -2,17 +2,24 @@
 
 This is a prototype dashboard for [PDX Hackerspace](https://pdxhackerspace.org).
 
-It's based on data  fed to it by an MQTT broker that uses adapters to publish  data from a variety of sources (hardware sensors, OpenWeatherMap, SNMP).
+The dashboard pulls data from an MQTT broker using the Homebus protocol. Homebus uses MQTT defines a structured data-oriented network layer above MQTT which enforces access control based on the types of data.
 
-Data is published with the "retain" flag set, so when the page loads it can always show the most recent data.
+The dashboard depends on Bootstrap, Bootswatch, jQuery, [Timeago](https://timeago.yarp.com/) and [ekko lightbox](https://ashleydw.github.io/lightbox/).
 
-Most publishers  update once a minute, so there may be up to a minute lag.
+## Structure
 
-Currently it cannot be served over HTTPS because our MQTT websocket server crashes when it uses SSL and HTTPS pages require SSL websockets.
+Ideally the dashboard consists of a page of container elements which identify the publisher whose data they're presenting. At page load the container elements are filled with HTML based on templates embedded in the Javascript.
+
+Container elements may use several [`data-` attributes](https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes) to provide information to the templates:
+- `data-name` - a human-friendly name for the element (for instance, 'Prusa-1' or 'Garden').
+- `data-gallery` - a gallery name to allow ekko-lightbox to group images
+- `data-transform`- the name of a simple function to call to transform data before storing it. Transforms should do simple math or string computations but avoid anything which might block the event loop or take a long time to run.
+
+Container elements should have an `id` set to the `UUID` of the Homebus data they are presenting. They may have a class set to the DDC of the data with dots translated to underscores (for instance, `org.homebus.experimental.air-sensor` would be `org_homebus_experimental_air_sensor`) in order to avoid compatability issues and ambiguities with the `.` character inside CSS class names.
 
 ## Contributing
 
-I welcome contributions! Fork it and submit a PR, or open an issue or contact me to contribute.
+Contributions are welcome! Fork it and submit a PR, or open an issue or contact me to contribute.
 
 ## License
 

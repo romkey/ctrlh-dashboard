@@ -1,1425 +1,318 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>PDX Hackerspace Dashboard</title>
-        <meta name="viewport" content="width=device-width">
-        <meta name="description" content="Portland's Hackerspace. Check out our website calendar for our weekly open house and all other events open to the public.">
-        <meta name="robots" content="noindex">
-        <script src="https://kit.fontawesome.com/0556c42d44.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" integrity="sha384-degZUV6f5Qw/AGD0Kq6kEC7j8V6h+IWPfm+AJ+2q3gaTFa9U4fu/9u3Egh7xOYE4" crossorigin="anonymous">
-        <style>
-            html {
-                font-size: 16px;
-            }
-            .hr-green {
-                color: green !important;
-            }
-            time,
-            #last_updated {
-                font-size: small;
-                font-style: italic;
-            }
-            body { 
-                padding-top: 65px;
-            }
-            body, .list-group-item {
-                background-color: white; 
-                color: black; 
-            }
-            .progress-bar { color: black; }
-            @media screen and (prefers-color-scheme: dark) {
-                img {
-                    opacity: .75;
-                    transition: opacity .5s ease-in-out;
-                }
-                img:hover {
-                    opacity: 1;
-                }
-                body, .list-group-item {
-                    background-color: black; 
-                    color: white; 
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="container-fluid">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>PDX Hackerspace Dashboard</title>
+      <meta name="viewport" content="width=device-width">
+      <meta name="description" content="Portland's Hackerspace. Check out our website calendar for our weekly open house and all other events open to the public.">
+      <meta name="robots" content="noindex">
+      <script src="https://kit.fontawesome.com/0556c42d44.js"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" integrity="sha384-degZUV6f5Qw/AGD0Kq6kEC7j8V6h+IWPfm+AJ+2q3gaTFa9U4fu/9u3Egh7xOYE4" crossorigin="anonymous">
+      <style>
+         @import url("https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/flatly/bootstrap.min.css") (prefers-color-scheme: light); 
+         @import url("https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/darkly/bootstrap.min.css") (prefers-color-scheme: dark); 
+         html {
+         font-size: 16px;
+         }
+         .hr-green {
+         color: green !important;
+         }
+         time,
+         #last_updated {
+         font-size: small;
+         font-style: italic;
+         }
+         body { 
+         padding-top: 65px;
+         }
+         .progress-bar { color: black; }
 
-	      <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-	        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	          <span class="navbar-toggler-icon"></span>
-	        </button>
-	        <a class="navbar-brand activity-bar" href="#">PDX Hackerspace</a>
-	        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-		  <ul class="navbar-nav mr-auto">
-		    <li class="nav-item"><a class="nav-link" href="#cameras">Cameras</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#video">Video</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#3d-printers">3D Printers</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#cnc">CNC</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#laser-cutter-access">Laser</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#smoke-o-stat">Smoke-o-stat</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#rooms">Rooms</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#facilities">Facilities</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#access">Access</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#weather">Weather</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#air-quality">Air Quality</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#printer">Printer</a></li>
-		    <li class="nav-item"><a class="nav-link" href="#servers">Servers</a></li>
-		    <li class="nav-item">|</li>
-		    <li class="nav-item"><a class="nav-link" href="graph.html">Graphs</a></li>
-		  </ul>
+         .ekko-lightbox-nav-overlay { color: white !important; }
+      </style>
+   </head>
+   <body>
+      <div class="container-fluid">
+         <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand activity-bar" href="#">PDX Hackerspace</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	      <ul class="navbar-nav mr-auto">
+		<li class="nav-item active">
+		<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+		</li>
+		<li class="nav-item">
+		  <select class='custom-select nav-link-item' onChange='window.location.href=this.value'>
+		    <option value='#cameras'>Cameras</option>
+		    <option value='#video'>Video</option>
+		    <option value='#3d-printers'>3D Printers</option>
+		    <option value='#laser-cutter-access'>Laser Cutter</option>
+		    <option value='#rooms'>Rooms</option>
+		    <option value='#facilities'>Facilities</option>
+		    <option value='#access'>Access</option>
+		    <option value='#weather'>Weather</option>
+		    <option value='#aqi'>AQI</option>
+		    <option value='#printer'>Printer</option>
+		    <option value='#servers'>Servers</option>
+		    <option value='#devices'>Devices</option>
+		  </select>
+		</li>
+	      </ul>
+    	    </div>
 
-                  <span id='last_updated' class='navbar-text'>
-		    Last updated: <span id='last_updated_container'></span>
-		  </span>
-
-	        </div>
-	      </nav>
-
-	</div>
-        <div class="container-fluid">
-	      <div class='row'>
-                <div class='col'>
-		  <h2>Solar Clock</h2>
-		  Sunrise: <span class='sunrise'></span> Sunset: <span class='sunset'></span>
-                </div>
-	      </div>
-
-            <hr class='hr'/>
-
-	      <div class='row'>
-                <div class='col'>
-                    <h2 id='cameras'>Camera Stills</h2>
-                </div>
-	      </div>
-
-            <div class='row'>
-                <div class='col-sm-3 cam' id='05c7b4e1-3176-4106-a197-cd05dbef18f1' name='Back Yard'></div>
-                <div class='col-sm-3 cam' id='a0f8e5ec-d5dc-4b7b-8c78-aa00575227f7' name='Russet EF'></div>
-                <div class='col-sm-3 cam' id='736ec20e-1320-48c2-9a6b-2376f97e3d52' name='Russet WF'></div>
-                <div class='col-sm-3 cam' id='af1fd463-145b-427d-ba90-2234c0283489' name='Interstate NF'></div>
-                <div class='col-sm-3 cam' id='8401df69-1edf-4ac2-bd70-5076bf84c0be' name='Unit 2 Entry'></div>
-                <div class='col-sm-3 cam' id='cb793414-ebe9-4720-b008-4835f25eec5b' name='Unit 2 Entry G3'></div>
-                <div class='col-sm-3 cam' id='6f971443-b685-4a2b-86fb-65522c0ab775' name='Interstate SF'></div>
-                <div class='col-sm-3 cam' id='03eca981-8a78-467f-868d-2af2159b34dd' name='Unit 2'></div>
-                <div class='col-sm-3 cam' id='1fb47d15-ccf6-42d3-aea3-173c77b0bc37' name='E. Lab G3'></div>
-                <div class='col-sm-3 cam' id='3b22ad64-3439-4e94-971f-13f055878dfb' name='Yard'></div>
-                <div class='col-sm-3 cam' id='47e5a8cc-c699-4194-9d58-ff11b1425dd3' name='Unit 3'></div>
-                <div class='col-sm-3 cam' id='11a391f8-0a23-4222-8d06-84cbad8deb3e' name='Woodshop G3'></div>
-                <div class='col-sm-3 cam' id='fc4c1edb-c8e3-4771-9879-290358dbf746' name='Gate'></div>
-                <div class='col-sm-3 cam' id='dc4ed7f9-b263-4288-9e9c-6d58deec48fb' name='Garden'></div>
+               <span id='last_updated' class='navbar-text'>
+               Last updated: <span id='last_updated_container'></span>
+               </span>
             </div>
-            <hr class='hr'/>
-
-            <div class='row'>
-                <div class='col'>
-                    <h2 id='video'>Live video feeds</h2>
-                </div>
+         </nav>
+      </div>
+      <div class="container-fluid">
+         <div class='row'>
+            <div class='col' id='c7a1e762-9fa8-41c2-9311-81543c69f4ed'>
+               <h2>Solar Clock</h2>
+               Sunrise: <span class='org-homebus-experimental-solar-clock sunrise' data-transform='transform_hours'></span>AM Sunset: <span class='org-homebus-experimental-solar-clock sunset' data-transform='transform_hours'></span>PM
             </div>
-
-            <div class='row'>
-                <div class='col-sm-3'>
-                    <h2>Unit 3</h2>
-                    <iframe src='https://video.nest.com/embedded/live/WdeSzuB41b?autoplay=1'></iframe>
-                </div>
+         </div>
+         <hr class='hr'/>
+         <div class='row'>
+            <div class='col'>
+               <h2 id='cameras'>Camera Stills</h2>
             </div>
-
-            <hr class='hr'/>
-            <div class='row'>
-                <div class='col'>
-                    <h2 id='3d-printers'>3D Printers</h2>
-                </div>
+         </div>
+         <div class='row'>
+            <div class='col-sm-3 load-image-html' id='05c7b4e1-3176-4106-a197-cd05dbef18f1' data-name='Back Yard' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='a0f8e5ec-d5dc-4b7b-8c78-aa00575227f7' data-name='Russet EF' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='736ec20e-1320-48c2-9a6b-2376f97e3d52' data-name='Russet WF' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='af1fd463-145b-427d-ba90-2234c0283489' data-name='Interstate NF' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='8401df69-1edf-4ac2-bd70-5076bf84c0be' data-name='North Fence' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='cb793414-ebe9-4720-b008-4835f25eec5b' data-name='Unit 2 Entry G3' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='6f971443-b685-4a2b-86fb-65522c0ab775' data-name='Interstate SF' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='03eca981-8a78-467f-868d-2af2159b34dd' data-name='Unit 2' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='1fb47d15-ccf6-42d3-aea3-173c77b0bc37' data-name='E. Lab G3' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='3b22ad64-3439-4e94-971f-13f055878dfb' data-name='Yard' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='47e5a8cc-c699-4194-9d58-ff11b1425dd3' data-name='Unit 3' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='11a391f8-0a23-4222-8d06-84cbad8deb3e' data-name='Woodshop G3' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='fc4c1edb-c8e3-4771-9879-290358dbf746' data-name='Gate' data-gallery-name='security-cams'></div>
+            <div class='col-sm-3 load-image-html' id='dc4ed7f9-b263-4288-9e9c-6d58deec48fb' data-name='Garden' data-gallery-name='security-cams'></div>
+         </div>
+         <hr class='hr'/>
+         <div class='row'>
+            <div class='col'>
+               <h2 id='video'>Live video feeds</h2>
             </div>
+         </div>
+         <div class='row'>
+            <div class='col-sm-3'>
+               <h2>Unit 3</h2>
+               <iframe src='https://video.nest.com/embedded/live/WdeSzuB41b?autoplay=1'></iframe>
+            </div>
+         </div>
+         <hr class='hr'/>
+         <div class='row'>
+            <div class='col'>
+               <h2 id='3d-printers'>3D Printers</h2>
+            </div>
+         </div>
 
-            <div class='row'>
-                <div class='col-sm-4'>
-		  <div class='cam' id='c0603a32-7817-4922-b661-2a6be57b6bd0' name='Dremel Cam'></div>
-                  <div id='7bfff065-f2e8-406d-b8d1-734a84c4c222'>
-                    <h3>
-                        <a href='graph.html?uuid=7bfff065-f2e8-406d-b8d1-734a84c4c222'>Dremel</a>
-                    </h3>
-                    <h6 class='status'></h6>
-                    <div class='job' style='display: none'>
-                        <ul class='list-group'>
-                            <li class='list-group-item'>Filename:
-                                <span class='filename'></span>
-                            </li>
-                            <li class='list-group-item'><span class='print-progress progress-bar' role='progressbar' style='width: 0%;'></span></li>
-                            <li class='list-group-item'>Time Remaining:
-                                <span class='print-time'></span>
-                                of
-                                <span class='print-time-remaining'></span>
-                                sec
-                            </li>
-                        </ul>
-                        <table class='table'>
-                            <tr>
-                                <th>temp</th>
-                                <th>actual</th>
-                                <th>target</th>
-                            </tr>
-                            <tr>
-                                <td>tool</td>
-                                <td>
-                                    <span class='tool-temp'></span>°C</td>
-                                <td>
-                                    <span class='tool-temp-target'></span>°C</td>
-                            </tr>
-                            <tr>
-                                <td>bed</td>
-                                <td>
-                                    <span class='bed-temp'></span>°C</td>
-                                <td>
-                                    <span class='bed-temp-target'></span>°C</td>
-                            </tr>
-                        </table>
-                    </div>
-		    <time class="timeago" datetime=""></time>
-                    <!-- #dremel-job -->
-                  </div>
-                </div><!-- dremel -->
+         <div class='row'>
+            <div class='col-sm-4'>
+               <div class='load-image-html' id='c0603a32-7817-4922-b661-2a6be57b6bd0' data-name='Dremel' data-gallery-name='3d-printers'></div>
+               <div class='load-3dprinter-html' id='7bfff065-f2e8-406d-b8d1-734a84c4c222'></div>
+            </div>
+            <!-- dremel -->
 
-<!--
-                <div class='col-sm-4'>
-		  <div class='cam' id='d5a6e892-f89f-416b-91c4-2953330e5f17' name='Zoya Cam'></div>
-                  <div id='37853276-5ac4-406c-bb66-e012cd360781'>
-                    <h3>
-                        <a href='graph.html?uuid=37853276-5ac4-406c-bb66-e012cd360781'>Zoya</a>
-                    </h3>
-                    <h6 class='status'></h6>
-                    <div class='job' style='display: none'>
-                        <ul class='list-group'>
-                            <li class='list-group-item'>Filename:
-                                <span class='filename text-truncate'></span>
-                            </li>
-                            <li class='list-group-item'><span class='print-progress progress-bar' role='progressbar' style='width: 0%;'></span></li>
-                            <li class='list-group-item'>Time Remaining:
-                                <span class='print-time'></span>
-                                of
-                                <span class='print-time-remaining'></span>
-                                sec</li>
-                        </ul>
-                    </div>
-                    <table class='table'>
-                        <tr>
-                            <th>temp</th>
-                            <th>actual</th>
-                            <th>target</th>
-                        </tr>
-                        <tr>
-                            <td>tool</td>
-                            <td>
-                                <span class='tool-temp'></span>°C</td>
-                            <td>
-                                <span class='tool-temp-target'></span>°C</td>
-                        </tr>
-                        <tr>
-                            <td>bed</td>
-                            <td>
-                                <span class='bed-temp'></span>°C</td>
-                            <td>
-                                <span class='bed-temp-target'></span>°C</td>
-                        </tr>
-                    </table>
-                  </div>
+            <div class='col-sm-4'>
+               <div class='load-image-html' id='ad543d04-871f-4fde-9e0c-e05ca4cff288' data-name='Prusa-1' data-gallery-name='3d-printers'></div>
+               <div class='load-3dprinter-html' id='6ab73b55-006b-4a95-adaa-1b9e34c85d46'></div>
+            </div>
+            <div class='col-sm-4'>
+               <div class='load-image-html' id='efcf12d3-3f10-4f16-9cfd-e39b5c683b14' data-name='Prusa-2' data-gallery-name='3d-printers'></div>
+               <div class='load-3dprinter-html' id='34a8cf9b-1c94-4554-8fad-ddb616b0f07f'></div>
+            </div>
+         </div>
 
-                </div><!-- zoya
--->
-<!--
-                <div class='col-sm-4'>
-		  <div class='cam' id='3bbbf6f5-f4d4-4acc-9d65-a4a03ea93762' name='Olga Cam'></div>
-                  <div id='ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696'>
-                    <h3>
-                        <a href='graph.html?uuid=ca01bc7f-21ed-4e86-bcc8-efcdb3dcd696'>Olga</a>
-                    </h3>
-                    <h6 class='status'></h6>
-                    <div class='job' style='display: none'>
-                        <ul class='list-group'>
-                            <li class='list-group-item'>Filename:
-                                <span class='filename text-truncate'></span>
-                            </li>
-                            <li class='list-group-item'><span class='print-progress progress-bar' role='progressbar' style='width: 0%;'></span></li>
-                            <li class='list-group-item'>Time Remaining:
-                                <span class='print-time'></span>
-                                of
-                                <span class='print-time-remaining'></span>
-                                sec</li>
-                        </ul>
-                    </div>
-                    <table class='table'>
-                        <tr>
-                            <th>temp</th>
-                            <th>actual</th>
-                            <th>target</th>
-                        </tr>
-                        <tr>
-                            <td>tool</td>
-                            <td>
-                                <span class='tool-temp'></span>°C</td>
-                            <td>
-                                <span class='tool-temp-target'></span>°C</td>
-                        </tr>
-                        <tr>
-                            <td>bed</td>
-                            <td>
-                                <span class='bed-temp'></span>°C</td>
-                            <td>
-                                <span class='bed-temp-target'></span>°C</td>
-                        </tr>
-                    </table>
-                  </div>
-                </div><!-- olga-cam
-            </div><!-- row
+         <hr class='hr'/>
 
-            <div class='row'>
--->
-                <div class='col-sm-4'>
-		  <div class='cam' id='ad543d04-871f-4fde-9e0c-e05ca4cff288' name='Prusa-1 Cam'></div>
-                  <div id='6ab73b55-006b-4a95-adaa-1b9e34c85d46'>
-                    <h3>
-                        <a href='graph.html?uuid=6ab73b55-006b-4a95-adaa-1b9e34c85d46'>Prusa 1</a>
-                    </h3>
-                    <h6 class='status'></h6>
-                    <div class='job' style='display: none'>
-                        <ul class='list-group'>
-                            <li class='list-group-item'>Filename:
-                                <span class='filename text-truncate'></span>
-                            </li>
-                            <li class='list-group-item'><span class='print-progress progress-bar' role='progressbar' style='width: 0%;'></span></li>
-                            <li class='list-group-item'>Time Remaining:
-                                <span class='print-time'></span>
-                                of
-                                <span class='print-time-remaining'></span>
-                                sec</li>
-                        </ul>
-                    </div>
-                    <table class='table'>
-                        <tr>
-                            <th>temp</th>
-                            <th>actual</th>
-                            <th>target</th>
-                        </tr>
-                        <tr>
-                            <td>tool</td>
-                            <td>
-                                <span class='tool-temp'></span>°C</td>
-                            <td>
-                                <span class='tool-temp-target'></span>°C</td>
-                        </tr>
-                        <tr>
-                            <td>bed</td>
-                            <td>
-                                <span class='bed-temp'></span>°C</td>
-                            <td>
-                                <span class='bed-temp-target'></span>°C</td>
-                        </tr>
-                    </table>
-                  </div>
-                </div><!-- prusa-1 -->
-
-                <div class='col-sm-4'>
-		  <div class='cam' id='efcf12d3-3f10-4f16-9cfd-e39b5c683b14' name='Prusa-2 Cam'></div>
-                  <div id='34a8cf9b-1c94-4554-8fad-ddb616b0f07f'>
-                    <h3>
-                        <a href='graph.html?uuid=6ab73b55-006b-4a95-adaa-1b9e34c85d46'>Prusa 2</a>
-                    </h3>
-                    <h6 class='status'></h6>
-                    <div class='job' style='display: none'>
-                        <ul class='list-group'>
-                            <li class='list-group-item'>Filename:
-                                <span class='filename text-truncate'></span>
-                            </li>
-                            <li class='list-group-item'><span class='print-progress progress-bar' role='progressbar' style='width: 0%;'></span></li>
-                            <li class='list-group-item'>Time Remaining:
-                                <span class='print-time'></span>
-                                of
-                                <span class='print-time-remaining'></span>
-                                sec</li>
-                        </ul>
-                    </div>
-                    <table class='table'>
-                        <tr>
-                            <th>temp</th>
-                            <th>actual</th>
-                            <th>target</th>
-                        </tr>
-                        <tr>
-                            <td>tool</td>
-                            <td>
-                                <span class='tool-temp'></span>°C</td>
-                            <td>
-                                <span class='tool-temp-target'></span>°C</td>
-                        </tr>
-                        <tr>
-                            <td>bed</td>
-                            <td>
-                                <span class='bed-temp'></span>°C</td>
-                            <td>
-                                <span class='bed-temp-target'></span>°C</td>
-                        </tr>
-                    </table>
-                  </div>
-                </div><!-- prusa-2 -->
-            </div><!-- row -->
-
-
-            <hr class='hr'/>
-
-
-            <div class='row'>
-              <div class='col-sm-4'>
-		<div class='cam' id='1973ad68-9ea0-4cbe-91d3-b7ea2f7f6e23' name='CNC Cam'></div>
-		<div id='cnc-octoprint'>
-                <h3>
-                    <a href='graph.html?uuid='>CNC Octoprint</a>
-                </h3>
-                    <h6 class='status'></h6>
-                    <div class='job' style='display: none'>
-                        <ul>
-                            <li>Filename:
-                                <span class='filename'></span>
-                            </li>
-                            <li>Progress:
-                                <span class='print-progress'></span>%</li>
-                            <li>Time Remaining:
-                                <span class='print-time'></span>
-                                of
-                                <span class='print-time-remaining'></span>
-                                sec</li>
-                        </ul>
-                    </div>
-                    <table class='table'>
-                        <tr>
-                            <th>temp</th>
-                            <th>actual</th>
-                            <th>target</th>
-                        </tr>
-                        <tr>
-                            <td>tool</td>
-                            <td>
-                                <span class='tool-temp'></span>°C</td>
-                            <td>
-                                <span class='tool-temp-target'></span>°C</td>
-                        </tr>
-                        <tr>
-                            <td>bed</td>
-                            <td>
-                                <span class='bed-temp'></span>°C</td>
-                            <td>
-                                <span class='bed-temp-target'></span>°C</td>
-                        </tr>
-                    </table>
-                  </div><!-- #cnc-octoprint -->
-              </div>
-
-              <div class='col-sm-4'>
-		<div class='cam' id='219a06e5-ba67-4dae-aab8-4a9b762d3dc2' name='Laser Cutter Cam'></div>
-                <div id='laser-cutter-access'>
+         <div class='row'>
+            <div class='col-sm-4'>
+               <div class='load-image-html' id='1973ad68-9ea0-4cbe-91d3-b7ea2f7f6e23' data-name='CNC Cam'></div>
+               <div class='load-load-load-3dprinter-html' id=''></div>
+            </div>
+            <div class='col-sm-4'>
+               <div class='cam' id='219a06e5-ba67-4dae-aab8-4a9b762d3dc2' data-name='Laser Cutter Cam'></div>
+               <div id='laser-cutter-access'>
                   <div>
-                    <h3>
-                        <a href='graph.html?uuid='>Laser Cutter Access</a>
-                    </h3>
-		    <ul class='list-group list-group-flush'>
-		    </ul>
+                     <h3>Laser Cutter Access</h3>
+                     <ul id='' class='list-group list-group-flush'>
+                     </ul>
                   </div>
-                </div>
-              </div>
-
-              <div class='col-sm-4' id='smoke-o-stat'>
-                  <div>
-                    <h2>
-                        <a href='graph.html?uuid='>Smoke-o-stat</a>
-		    </h2>
-		    <p id='smoke-o-stat-fan-status'>
-		    </p>
-		    <p id='smoke-o-stat-smoke-status'>
-		    </p>
-		    <p id='smoke-o-stat-light-status'>
-		    </p>
-		    <ul class='list-group list-group-flush'>
-		    </ul>
-                  </div>
-              </div>
-
-
+               </div>
             </div>
-            <!-- row -->
-            <hr class='hr'/>
-            <div class='row'>
-                <div class='col'>
-                    <h2 id='rooms'>Rooms</h2>
-                    <table class='table table-striped'>
-                        <tr>
-                            <th></th>
-                            <th>Room</th>
-			    <th><i class="fas fa-lightbulb"></i></th>
-                            <th>Temp</th>
-                            <th>Hum</th>
-                            <th>PM1/2.5/10</th>
-                            <th>VOC</th>
-                        </tr>
-                        <tr id='unit1'>
-                            <td class='door-locked'></td>
-                            <td>Unit 1</td>
-			    <td>
-			    </td>
-                            <td>
-                                <span class='temperature'></span>°C</td>
-                            <td>
-                                <span class='humidity'></span>%</td>
-                            <td>
-                                <span class='occupied'></span>
-                            </td>
-                            <td class='voc'></td>
-                        </tr>
-                        <tr id='638a9d78-09f6-4d92-b70a-2b14edb8d84a'>
-                            <td class='door-locked'></td>
-                            <td>
-                                <a href='graph.html?uuid=638a9d78-09f6-4d92-b70a-2b14edb8d84a'>Laser Lab</a>
-                            </td>
-			    <td>
-			    </td>
-                            <td>
-                                <span class='temperature'></span>°C</td>
-                            <td>
-                                <span class='humidity'></span>%</td>
-                            <td>
-                                <span class='pm'></span>
-                            </td>
-                            <td class='voc'></td>
-                        </tr>
-                        <tr id='04001f9a-122b-4045-84f4-69b7c7318250'>
-                            <td class='door-locked'></td>
-                            <td>
-                                <a href='graph.html?uuid=04001f9a-122b-4045-84f4-69b7c7318250'>Unit 2</a>
-                            </td>
-			    <td>
-			    </td>
-                            <td>
-                                <span class='temperature'></span>°C</td>
-                            <td>
-                                <span class='humidity'></span>%</td>
-                            <td>
-                                <span class='pm'></span>
-                            </td>
-                            <td class='voc'></td>
-                        </tr>
-                        <tr id='1955b27e-17fd-429a-b1ce-293879149e42'>
-                            <td class='door-locked'></td>
-                            <td>
-                                <a href='graph.html?uuid=1955b27e-17fd-429a-b1ce-293879149e42'>Unit 2 (ws)</a>
-                            </td>
-			    <td>
-			    </td>
-                            <td>
-                                <span class='temperature'></span>°C</td>
-                            <td>
-                                <span class='humidity'></span>%</td>
-                            <td>
-                                <span class='pm'></span>
-                            </td>
-                            <td class='voc'></td>
-                        </tr>
-                        <tr id='ae1dd9a7-b55c-4255-8f16-7e5c69fd678b'>
-                            <td class='door-locked'></td>
-                            <td>
-                                <a href='graph.html?uuid=ae1dd9a7-b55c-4255-8f16-7e5c69fd678b'>Electronics Lab</a>
-                            </td>
-			    <td>
-			    </td>
-			    <td>
-                                <span class='temperature'></span>°C</td>
-                            <td>
-                                <span class='humidity'></span>%</td>
-                            <td>
-                                <span class='pm'></span>
-                            </td>
-                            <td class='voc'></td>
-                        </tr>
-                        <tr id='b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>
-                            <td class='door-locked'></td>
-                            <td>
-                                <a href='graph.html?uuid=b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'>Craft Lab</a>
-                            </td>
-			    <td class='brightness'></td>
-                            <td>
-                                <span class='temperature'></span>°C</td>
-                            <td>
-                                <span class='humidity'></span>%</td>
-                            <td>
-                                <span class='pm'></span>
-                            </td>
-                            <td class='voc'></td>
-                        </tr>
-                        <tr id='furball-unit3'>
-                            <td class='door-locked'></td>
-                            <td>Unit 3</td>
-			    <td>
-			    </td>
-                            <td>
-                                <span class='temperature'></span>°C</td>
-                            <td>
-                                <span class='humidity'></span>%</td>
-                            <td>
-                                <span class='pm'></span>
-                            </td>
-                            <td class='voc'></td>
-                        </tr>
-                        <tr id='067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>
-                            <td class='door-locked'></td>
-                            <td>
-                                <a href='graph.html?uuid=067746e8-7a2f-4f6e-bb59-e1b2043b37f3'>Slytherin</a>
-                            </td>
-			    <td>
-			    </td>
-                            <td>
-                                <span class='temperature'></span>°C</td>
-                            <td>
-                                <span class='humidity'></span>%</td>
-                            <td>
-                                <span class='pm'></span>
-                            </td>
-                            <td class='voc'></td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>Garden</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </table>
-                </div>
-                <!-- col -->
-                <div class='col'>
-                    <h2 id='facilities'>Facilities</h2>
-                    <table class='table table-striped'>
-                        <tr>
-                            <td rowspan="2">
-                                <a href='graph.html?uuid=7db061e9-d73a-47a0-a4ab-f3d097da5504'>Network</a>
-                            </td>
-                            <td>rx:
-                                <span id='network_rx'></span>ps</td>
-                            <td>tx:
-                                <span id='network_tx'></span>ps</td>
-                        </tr>
-                        <tr>
-                            <td>active hosts</td>
-                            <td id='network_active'></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href='http://192.168.15.99/'>^H Sign</a>
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr id='discoball-vendo-leds'>
-                            <td>
-                                <a href='http://192.168.15.22' target='_blank'>Vendo LEDs</a>
-                            </td>
-                            <td class='preset'></td>
-                            <td class='animation'></td>
-                            <td class='speed'></td>
-                            <td class='brightness'></td>
-                        </tr>
-                        <tr id='discoball-led-strip1'>
-                            <td>
-                                <a href='http://192.168.15.23' target='_blank'>LED strip</a>
-                            </td>
-                            <td class='preset'></td>
-                            <td class='animation'></td>
-                            <td class='speed'></td>
-                            <td class='brightness'></td>
-                        </tr>
-                        <tr id='discoball-garden-leds'>
-                            <td>
-                                <a href='http://192.168.15.28' target='_blank'>Garden LEDs</a>
-                            </td>
-                            <td class='preset'></td>
-                            <td class='animation'></td>
-                            <td class='speed'></td>
-                            <td class='brightness'></td>
-                        </tr>
-                        <tr>
-                            <td>Unit 2 Projector</td>
-                            <td id="unit2_projector_status"></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>Unit 3 Projector</td>
-                            <td id="unit3_projector_status"></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href='graph.html?uuid=4cf5765b-6a1a-4f05-879f-1285e092beb3'>Vendo</a>
-                            </td>
-                            <td>
-                                <span id='vendo-temperature'></span>°C</td>
-                            <td>
-                                <span id='vendo-humidity'></span>%</td>
-                        </tr>
-                    </table>
-                </div>
-                <!-- col -->
-                <div class='col'>
-                    <h2 id='access'>
-                        <a href='graph.html?uuid=03bf9198-1fe5-480f-b3c7-efdf628d2b8a'>Access</a>
-                    </h2>
-                    <ul id="access-list" class="list-group list-group-flush" style='max-height: 32.4em; overflow:scroll; -webkit-overflow-scrolling: touch; magin-bottom: 10px'></ul>
-                </div>
-                <!-- col -->
+         </div>
+         <!-- row -->
+         <hr class='hr'/>
+         <div class='row'>
+            <div class='col'>
+               <h2 id='rooms'>Rooms</h2>
+               <table class='table table-striped'>
+                  <tr>
+                     <th></th>
+                     <th>Room</th>
+                     <th><i class="fas fa-lightbulb"></i></th>
+                     <th>Temp</th>
+                     <th>Hum</th>
+                     <th>PM1/2.5/10</th>
+                     <th>VOC</th>
+                     <th>Lux</th>
+                     <th>IR</th>
+                  </tr>
+                  <tr id='638a9d78-09f6-4d92-b70a-2b14edb8d84a' class='load-room-html' data-name='Laser Lab'></tr>
+                  <tr id='04001f9a-122b-4045-84f4-69b7c7318250' class='load-room-html' data-name='Unit 2' data-door-uuid='3cebd358-63bf-42b3-a694-8bd016b86968'></tr>
+                  <tr id='1955b27e-17fd-429a-b1ce-293879149e42' class='load-room-html' data-name='Unit 2 (ws)'></tr>
+                  <tr id='ae1dd9a7-b55c-4255-8f16-7e5c69fd678b' class='load-room-html' data-name='Electronics Lab'></tr>
+                  <tr id='1955b27e-17fd-429a-b1ce-293879149e42' class='load-room-html' data-name='Unit 3' data-door-uuid='2b2b257a-b846-41f2-b29b-fedb096f59b1'></tr>
+                  <tr id='b3efa04b-dac8-4ddc-bc34-94f1daec3c0a' class='load-room-html' data-name='Craft Lab' data-door-uuid='4cec18dd-0ecc-4d27-bb91-cabd053ae088' data-light-uuid='b64f813e-75e2-4f52-a723-7bbfc003c221'></tr>
+                  <tr id='067746e8-7a2f-4f6e-bb59-e1b2043b37f3' class='load-room-html' data-name='Wood Shop'></tr>
+               </table>
             </div>
+            <!-- col -->
 
-            <hr class='hr'/>
-
-            <div class='row'>
-                <div class='col'>
-                    <h2 id='weather'>Weather</h2>
-                    <h3>
-                        <a href='graph.html?uuid=691faad6-bad4-4c87-838b-091ce650e4d4'>OpenWeatherMap</a>
-                    </h3>
-                    <p id='691faad6-bad4-4c87-838b-091ce650e4d4'></p>
-                    <h3>
-                        <a href='graph.html?uuid=ea52198c-6162-4ea8-9e19-2f99bcfb4462'>^H Weather Station</a>
-                    </h3>
-                    <p id='ea52198c-6162-4ea8-9e19-2f99bcfb4462'></p>
-                </div>
-                <!-- col -->
-                <div class='col'>
-                    <h2 id='air-quality'>Air Quality
-                    </h2>
-                    <p id='aqi'></p>
-                </div>
-                <!-- col -->
-                <div class='col'>
-                    <h2 id='printer'>
-                        <a href='graph.html?uuid=4f265e2c-3c08-4635-8e50-8400d5294c29' class='printer-name'>Brother Printer</a>
-                    </h2>
-                    <p class='printer-status'></p>
-                    <p>
-                        <span class='pages-printed'></span>
-                        pages printed</p>
-                </div>
-                <!-- col -->
+            <div class='col'>
+               <h2 id='facilities'>Facilities</h2>
+               <table class='table table-striped'>
+                  <tr id='7db061e9-d73a-47a0-a4ab-f3d097da5504'>
+                     <td rowspan="2">
+                        Network
+                     </td>
+                     <td>rx:
+                        <span class='org-homebus-experimental-network-bandwidth rx_bps' data-transform='transform_bps'></span>
+                     </td>
+                     <td>tx:
+                        <span class='org-homebus-experimental-network-bandwidth tx_bps' data-transform='transform_bps'></span>
+                     </td>
+                  </tr>
+                  <tr id='7db061e9-d73a-47a0-a4ab-f3d097da5504'>
+                     <td>active hosts</td>
+                     <td class='org-homebus-experimental-network-active-hosts arp_table_length'></td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <a href='http://192.168.15.99/'>^H Sign</a>
+                     </td>
+                     <td></td>
+                     <td></td>
+                  </tr>
+		  <tr>
+		    <th></th>
+		    <th>color</th>
+		    <th>animation</th>
+		    <th>speed</th>
+		    <th>bright</th>
+		  </tr>
+                  <tr class='load-led-html' id='4cf5765b-6a1a-4f05-879f-1285e092beb3' data-name='Vendo LEDs'></tr>
+                  <tr class='load-led-html' id='ce7bb47f-7e3d-4933-b7a6-195fd7620ead' data-name='Door LED strip'></tr>
+                  <tr class='load-led-html' id='13923957-c3be-4018-98d8-a300d593e974' data-name='Garden LEDs'></tr>
+                  <tr class='load-led-html' id='3b6b0730-9acc-41a4-a995-a319a0f9df6e' data-name='Chef hat'></tr>
+                  <tr class='load-projector-html' id='' data-name='Unit 2 projector'></tr>
+                  <tr class='load-projector-html' id='' data-name='Unit 3 projector'></tr>
+                  <tr id='4cf5765b-6a1a-4f05-879f-1285e092beb3'>
+                     <td>Vendo</td>
+                     <td><span class='org-homebus-experimental-air-sensor temperature' data-transform='transform_temperature'></span>°C</td>
+                     <td><span class='org-homebus-experimental-air-sensor humidity'></span>%</td>
+                  </tr>
+               </table>
             </div>
-            <!-- row -->
-
-            <hr class='hr'/>
-
-	    <div class='row'>
-	        <div class='col'>
- 	            <h2 id='servers'>Servers</h2>
-                </div>
+            <!-- col -->
+	 </div>
+	 <div class='row'>
+            <div class='col'  id='551ddc38-d11f-40dc-8162-440e3fceea40'>
+               <h2 id='access'>Access Log</h2>
+               <ul class='list-group list-group-flush org-homebus-experimental-component-queue queue' data-transform='transform_access_list' style='max-height: 32.4em; overflow:scroll; -webkit-overflow-scrolling: touch; magin-bottom: 10px'></ul>
             </div>
-            <!-- row -->
-
-            <div class='row'>
-	      <div class='col-sm-4 server' id='8cb9e03e-1bfe-4ad7-b96e-e9186956b746' name='ctrlh.homebus.io'></div>
-	      <div class='col-sm-4 server' id='59905e56-b683-4b22-bc66-345705a3f27e' name='zuul'></div>
-<!--
-	      <div class='col-sm-4 server' id='9fb914b1-1c5a-40b0-8c6d-eac29bb1ea3d' name='zoya'></div>
-	      <div class='col-sm-4 server' id='7f9ee46e-355e-4b7c-a2c1-fe24e733796a' name='olga'></div>
--->
-	      <div class='col-sm-4 server' id='0d1fd497-8cf7-47b2-b0fc-baab52c52301' name='cnc-octopi'></div>
-	      <div class='col-sm-4 server' id='0b75a4f6-0467-4986-9b05-fedeba1bbbf8' name='prusa-1'></div>
-	      <div class='col-sm-4 server' id='64f0aa9c-aa4e-4ee5-b886-4afe1a557b4a' name='prusa-2'></div>
+            <!-- col -->
+         </div>
+         <hr class='hr'/>
+         <div id='weather' class='row'>
+            <div id='691faad6-bad4-4c87-838b-091ce650e4d4' class='col load-weather-html' data-name='Openweather Map'></div>
+            <div id='ea52198c-6162-4ea8-9e19-2f99bcfb4462' class='col load-weather-html' data-name='^H Weather Station'></div>
+            <div id='93281edb-8466-4272-8381-851d61dddd48' class='col load-aqi-html'></div>
+	 </div>
+         <div class='row'>
+            <div class='col'>
+               <h2 id='4f265e2c-3c08-4635-8e50-8400d5294c29'>
+                  <a href='graph.html?uuid=4f265e2c-3c08-4635-8e50-8400d5294c29' class='printer-name'>Brother Printer</a>
+               </h2>
+               <p class='org.homebus.experimental.printer printer-status'></p>
+               <p>
+                  <span class='org.homebus.experimental.printer pages-printed'></span>
+                  pages printed
+               </p>
             </div>
-            <!-- row -->
+            <!-- col -->
+         </div>
+         <!-- row -->
 
-
-            <hr class='hr'/>
-
-            <div class='row'>
-                <div class='col'>
-                    <i>Want to hack this?</i>
-                    Source is at
-                    <a href='https://github.com/romkey/ctrlh-dashboard'>https://github.com/romkey/ctrlh-dashboard</a>
-                </div>
+         <hr class='hr'/>
+         <div class='row'>
+            <div class='col'>
+               <h2 id='servers'>Servers</h2>
             </div>
-        </div>
-        <!-- from https://www.cloudmqtt.com/docs/websocket.html -->
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js' type='text/javascript'></script>
-        <script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js' integrity='sha384-bIExnxLHdrb4/5cUciUyC490hqkTPFw6V1eUbG0gpKQ67B3dsT6KOdXvl5RycCM6' crossorigin='anonymous'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
-        <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js' integrity='sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl' crossorigin='anonymous'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js' integrity='sha384-bqIl0+8hxcMpOFf8O3ffwAy5qTUbFPyuNFytX/omkD4RDPMOBtt/uV6Lqlw7sljM' crossorigin='anonymous'></script>
-        <script src='https://ctrlh.romkey.com/credentials.js'></script>
-	<script type='text/javascript'>
-	// enable lightbox
-	$(document).on('click', '[data-toggle="lightbox"]', function(event) {
-                event.preventDefault();
-                $(this).ekkoLightbox();
-	});
-	
-            // we loaded the credentials in separate JS
-            // this is still not at all secure but it allows us to decouple management of this page and its content
-            // from management of the credentials, and lets us not check them into Github
-            // (despite the fact that they're flapping in the window here on the web)
-            // they should be for an account with read-only access only to the topic used for the hydroponics
-            // var credentials = new CTLHProjectorMQTT();
-            var lights = [
-                {
-                    uuid: 'b64f813e-75e2-4f52-a723-7bbfc003c221',
-                    container: 'furball-craft-lab'
-                }
-            ];
-
-            var leds = [
-                {
-                    uuid: '4cf5765b-6a1a-4f05-879f-1285e092beb3',
-                    container: 'vendo-leds',
-                    has_temp: true
-                }, {
-                    uuid: '52864d8f-62c2-4fe4-867c-c625ff006df5',
-                    container: 'led-strip1',
-                    has_temp: false
-                }, {
-                    uuid: '1d14577a-76ab-4d84-8bf8-194ee1b157a9',
-                    container: 'garden-leds',
-                    has_temp: false
-                }
-            ];
-            var access = [
-                {
-                    uuid: '4cec18dd-0ecc-4d27-bb91-cabd053ae088',
-                    door: 'front craft lab',
-                    container: 'furball-craft-lab'
-                }, {
-                    uuid: '3cebd358-63bf-42b3-a694-8bd016b86968',
-                    door: 'unit 2 front door',
-                    container: 'furball-unit2'
-                }, {
-                    uuid: '2b2b257a-b846-41f2-b29b-fedb096f59b1',
-                    door: 'unit 3 back door',
-                    container: 'furball-unit3'
-                }
-            ];
-
-            // client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());
-            client = new Paho.Client(credentials.MQTT_SERVER, 4569, credentials.MQTT_UUID + new Date().getTime());
-            client.onConnectionLost = onConnectionLost;
-            client.onMessageArrived = onMessageArrived;
-            mqtt_connect();
-            onAccess.last_messages = {};
-            access.forEach(function (item, index) {
-                onAccess.last_messages[item['uuid']] = '';
-            });
-            function onConnect() {
-                client.subscribe('/network/activity');
-                client.subscribe('/projectors');
-
-                // laser access 
-                client.subscribe('/homebus/device/8a6f30c2-7adc-44aa-bf0b-aeea197a02c0');
-                // smoke-o-stat 
-                client.subscribe('homebus/device/4ec1b516-f090-4967-82c2-ff3dfe45ffd7'); 
-                // smoke-o-stat fan
-                client.subscribe('homebus/device/29f5bad9-09a1-4580-8a93-3ed1dfeacd12');
-
-                client.subscribe('homebus/device/551ddc38-d11f-40dc-8162-440e3fceea40');
-
-                leds.forEach(function (item, index) {
-                    client.subscribe('/homebus/device/' + item["uuid"]);
-                });
-                lights.forEach(function (item, index) {
-                    client.subscribe('homebus/device/' + item['uuid']); 
-                });
-
-                // new school subscriptions 
-                client.subscribe('homebus/device/+/org.homebus.experimental.image'); 
-                client.subscribe('homebus/device/+/org.homebus.experimental.server-status'); 
-                client.subscribe('homebus/device/+/org.homebus.experimental.weather'); 
-                client.subscribe('homebus/device/+/org.homebus.experimental.aqi'); 
-
-                client.subscribe('homebus/device/+/org.homebus.experimental.air-sensor'); 
-                client.subscribe('homebus/device/+/org.homebus.experimental.air-quality-sensor'); 
-                client.subscribe('homebus/device/+/org.homebus.experimental.light-sensor'); 
-
-                client.subscribe('/homebus/device/+/org.homebus.experimental.air-sensor'); 
-                client.subscribe('/homebus/device/+/org.homebus.experimental.air-quality-sensor'); 
-                client.subscribe('/homebus/device/+/org.homebus.experimental.light-sensor'); 
-
-                client.subscribe('homebus/device/+/org.homebus.experimental.3dprinter'); 
-                client.subscribe('homebus/device/+/org.homebus.experimental.printer'); 
-
-                client.subscribe('homebus/device/+/org.homebus.experimental.solar-clock'); 
-            }
-
-            function mqtt_connect() {
-                var options = {
-                    useSSL: true,
-                    userName: credentials.MQTT_USERNAME,
-                    password: credentials.MQTT_PASSWORD,
-                    onSuccess: onConnect,
-                    onFailure: doFail,
-                    reconnect: true
-                };
-                console.log("mqtt connect");
-                client.connect(options);
-            }
-            function doFail(e) {
-                console.log(e);
-                console.log("doFail");
-            }
-            function onConnectionLost(responseObject) {
-                if (responseObject.errorCode !== 0) {
-                    console.log("onConnectionLost:" + responseObject.errorMessage);
-                }
-                console.log("connection lost");
-            }
-            // shamelessly taken from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
-            function formatBytes(bytes, decimals = 2) {
-                if (bytes === 0) {
-                    return '0 Bytes';
-                }
-                const k = 1024;
-                const dm = decimals < 0
-                    ? 0
-                    : decimals;
-                const sizes = [
-                    'Bytes',
-                    'KB',
-                    'MB',
-                    'GB',
-                    'TB',
-                    'PB',
-                    'EB',
-                    'ZB',
-                    'YB'
-                ];
-                const i = Math.floor(Math.log(bytes) / Math.log(k));
-                return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-            }
-
-            function getDDC(topic) {
-                let index = topic.lastIndexOf('/');
-                if(index == -1)
-                    return "";
-
-//                console.log("#### getDDC", index+1, topic.length); 
-//                console.log("#### getDDC", topic.substring(index+1, topic.length)); 
-                return topic.substring(index+1, topic.length);
-            }
-
-            function onMessageArrived(message) {
-                $('.activity-bar').addClass('hr-green');
-                setTimeout(function () {
-                    $('.activity-bar').removeClass('hr-green');
-                }, 1000);
-
-                // console.log('onMessageArrived:' + message.payloadString);
-                console.log('topic is ' + message.destinationName, message); 
-
-
-                let ddc = getDDC(message.destinationName);
-//                console.log('ddc is ' + ddc);
-//                if(ddc != '') {
-//                    console.log(message);
-//                }
-
-                let data = "";
-
-                try {
-                    data = JSON.parse(message.payloadString);
-//                    console.log(data);
-                } catch(error) {
-                    console.error("JSON parsing error");
-                    console.error(message.payloadString);
-                    return;
-                }
-
-                if(data["source"]) {
-                    data["id"] = data["source"];
-                    try {
-                        let ddc = data["contents"]["ddc"];
-                        data[ddc] = data["contents"]["payload"];
-                    } catch(error) {
-                        return;
-                    }
-                }
-
-                if (data["timestamp"]) {
-                    $('#last_updated_container').html(getTimeagostamp(data["timestamp"]));
-                    activateTimeago();
-                }
-
-                if (message.destinationName == '/network/activity') {
-                    onNetworkActive(data);
-                }
-                if (message.destinationName == '/projectors') {
-                    onProjectors(data);
-                }
-
-                if (message.destinationName == '/homebus/device/4cf5765b-6a1a-4f05-879f-1285e092beb3') {
-                    onVendo(data);
-                }
-
-                if (message.destinationName == '/homebus/device/8a6f30c2-7adc-44aa-bf0b-aeea197a02c0') {
-                    onLaserCutterAccess(data, message); 
-                }
-
-                if (message.destinationName == 'homebus/device/4ec1b516-f090-4967-82c2-ff3dfe45ffd7') {
-                    onSmokeOStat(data, message); 
-                }
-
-                if (message.destinationName == 'homebus/device/29f5bad9-09a1-4580-8a93-3ed1dfeacd12') {
-                    onSmokeOStatFan(data, message); 
-                }
-
-                if(message.destinationName == 'homebus/device/551ddc38-d11f-40dc-8162-440e3fceea40')
-                    onAccessLastN(data, message);
-
-                leds.forEach(function (item, index) {
-                    if (message.destinationName == '/homebus/device/' + item['uuid']) {
-                        onDiscoball(data, item['container'], item['has_temp']);
-                    }
-                });
-
-               lights.forEach(function (item, index) {
-                    if(message.destinationName == 'homebus/device/' + item['uuid'])
-                        onLight(data, item['container']);
-                    }
-                );
-
-                if(ddc == 'org.homebus.experimental.air-sensor') 
-                  onAirSensor(data); 
-
-                if(ddc == 'org.homebus.experimental.air-quality-sensor') 
-                  onAirQualitySensor(data); 
-
-                if(ddc == 'org.homebus.experimental.printer') 
-                  onPrinter(data); 
-
-                if(ddc == 'org.homebus.experimental.weather') 
-                  onWeather(data); 
-
-                if(ddc == 'org.homebus.experimental.3dprinter')
-                  onOctoprint(data); 
-
-                if(ddc == 'org.homebus.experimental.3dprinter-completed-job') 
-                  on3DPrinterJob(data); 
-
-                if(ddc == 'org.homebus.experimental.server-status') 
-                  onServer(data); 
-
-                if(ddc == 'org.homebus.experimental.aqi')
-                  onAQI(data); 
-
-                if(ddc == 'org.homebus.experimental.image')
-                  onCamera(data); 
-
-                if(ddc == 'org.homebus.experimental.solar-clock') {
-                  console.log('solar clock');
-                  onSunriseSunset(data); 
-                }
-
-                if(ddc == 'org.homebus.experimental.gofundme') 
-                  onGoFundMe(data); 
-
-                if(ddc == 'org.homebus.experimental.pollen') 
-                  onPollen(data);
-            }
-
-            function onNetworkActive(network) {
-                $("#network_active").text(network["active_hosts"]["arp_table_length"]);
-                $("#network_rx").text(formatBytes(Number(network["bandwidth"]["rx_bps"])));
-                $("#network_tx").text(formatBytes(Number(network["bandwidth"]["tx_bps"])));
-            }
-
-            function onDiscoball(discoball, unit, has_temp) {
-                if (discoball["leds"]["state"] == 'off' || (discoball["leds"]["preset"] == 'off' && discoball["leds"]["animation"] == "none")) {
-                    $('#discoball-' + unit + ' .preset').text('off');
-                    return;
-                }
-                $('#discoball-' + unit + ' .preset').text(discoball["leds"]["preset"]);
-                $('#discoball-' + unit + ' .animation').text(discoball["leds"]["animation"]);
-                $('#discoball-' + unit + ' .speed').text(discoball["leds"]["speed"] + 'x');
-                $('#discoball-' + unit + ' .brightness').text(discoball["leds"]["brightness"] + '%');
-            }
-
-            function onFurball(furball, unit, has_pm) {
-                $("#" + unit + " .temperature").text(furball["environment"]["temperature"]);
-                $("#" + unit + " .humidity").text(furball["environment"]["humidity"]);
-                if (has_pm) {
-                    $("#" + unit + " .pm").text(furball["air"]["pm1"] + '/' + furball["air"]["pm25"] + '/' + furball["air"]["pm10"]);
-                }
-                if (furball["air"]) {
-                    $("#" + unit + " .voc").text(furball["air"]["tvoc"]);
-                }
-
-
-                if(furball["id"] == '638a9d78-09f6-4d92-b70a-2b14edb8d84a') {
-    		    $('#smoke-o-stat-light-status').html('<i class="fas fa-lightbulb"></i> ' + furball['light']['lux']); 
-    		    $('#smoke-o-stat-smoke-status').html('<i class="fas fa-smoke"></i> ' + furball["air"]["pm1"] + '/' + furball["air"]["pm25"] + '/' + furball["air"]["pm10"]);
-                }
-            }
-
-            function onAirSensor(msg) {
-                let data = msg['org.homebus.experimental.air-sensor'];
-                let id = '#' + msg['id'];
-
-                $(id + " .temperature").text(data["temperature"]);
-                $(id + " .humidity").text(data["humidity"]);
-            }
-
-            function onAirQualitySensor(msg) {
-                let data = msg['org.homebus.experimental.air-quality-sensor'];
-                let id = '#' + msg['id'];
-
-                $(id + " .pm").text(data["pm1"] + '/' + data["pm25"] + '/' + data["pm10"]);
-                $(id + " .voc").text(data["tvoc"]);
-            }
-
-            function onLightSensor(msg) {
-                let data = msg['org.homebus.experimental.light-sensor'];
-                let id = '#' + msg['id'];
-
-                $(id + " .lux").text(data["lux"]);
-                $(id + " .ir").text(data["ir"]);
-            }
-
-            function onSoundSensor(msg) {
-                let data = msg['org.homebus.experimental.sound-sensor'];
-                let id = '#' + msg['id'];
-
-                $(id + " .lux").text(data["lux"]);
-                $(id + " .ir").text(data["ir"]);
-            }
-
-            function onProjectors(projectors) {
-                if (projectors["name"] == "Unit 2") {
-                    id = "#unit2_projector_status";
-                }
-                if (projectors["name"] == "Unit 3") {
-                    id = "#unit3_projector_status";
-                }
-                $(id).text(projectors["status"]);
-            }
-
-            function getTimeagostamp(timestamp) {
-                var d = new Date(Number(timestamp) * 1000);
-                return "<time class='timeago' datetime='" + d.toISOString() + "' title='" + d.toLocaleString() + "'></time>";
-            }
-            function updateTimeagostamp(id, timestamp) {
-                var d = new Date(Number(timestamp) * 1000);
-		return $(id+' time').timeago('update', d.toISOString());
-            }
-            function activateTimeago() {
-                $('.timeago').timeago();
-            }
-
-            function onAccessLastN(access_items, message) {
-                if(onAccessLastN.last_msg == message.payloadString)
-                    return;
-
-                onAccessLastN.last_msg = message.payloadString;
-                $('#access-list').text('');
-
-                access_items.forEach(function(item, index) {
-                    access.forEach(function(item2, index) {
-                        if(item['id'] == item2['uuid'])
-                            onAccess(item, item2['container'], JSON.stringify(item));
-                });
-            });
-            }
-
-            function onAccess(access, container, message) {
-                // try to avoid repeated old messages
-                // this is not a great way to do that as timestamps can drift
-                // and messages could potentially be held up
-//                if (onAccess.last_messages[access['id']] == message.payloadString) {
-//                    console.log("ignoring repeated Access message", access);
-//                    return;
-//                }
-
-//                onAccess.last_messages[access['id']] = message.payloadString;
-
-                var id = '#' + container;
-                if (access['action'] == 'unlocked' || access['action'] == 'already unlocked') {
-                    $(id + ' .door-locked').html('<i class="fas fa-lock-open" style="color: red;"></i>');
-                } else {
-                    $(id + ' .door-locked').html('<i class="fas fa-lock" style="color: green;"></i>');
-                }
-                $("#access-list").prepend("<li class='list-group-item'>" + access["door"] + " " + access["person"] + " " + access["action"] + "<br/>" + getTimeagostamp(access["timestamp"]) + "</li>");
-                activateTimeago();
-            }
-
-            function onLaserCutterAccess(access, message) {
-		if(onLaserCutterAccess.last_access == message.payloadString) 
-		    return;
-
-		onLaserCutterAccess.last_access = message.payloadString;
-
-		$('#laser-cutter-access ul').prepend("<li class='list-group-item'>" + access["action"] + " by " + access["person"] + "<br/>" +  getTimeagostamp(access["timestamp"]) + "</li>");
-                activateTimeago();
-            }
-
-            function onSmokeOStat(msg, message) {
-		console.log('>>> SMOKE-O-STAT', msg);
-
-		if(onSmokeOStat.last_update == message.payloadString) 
-		    return;
-
-		onSmokeOStat.last_update = message.payloadString;
-
-		$('#smoke-o-stat ul').prepend("<li class='list-group-item'>" + msg['org.pdxhackerspace.smokeostat']['state'] + "<br/>" + msg['org.pdxhackerspace.smokeostat']['triggers'].join('<br/>') + '<br/>' +  getTimeagostamp(msg["timestamp"]) + "</li>");
-                activateTimeago();
-
-            }
-
-            function onSmokeOStatFan(msg) {
-		console.log('>>> SMOKE-O-STAT FAN', msg);
-
-		$('#smoke-o-stat-fan-status').html('<i class="fas fa-fan"></i> ' + msg['org.homebus.light-switch']['state'] + '</br>' + getTimeagostamp(msg["timestamp"]));
-                activateTimeago();
-            }
-
-            function onWeather(w) {
-		let id = '#' + w["id"];
-		let data = w["org.homebus.experimental.weather"];
-
-//		alert("weather");
-
-                $(id).text('');
-
-                if (data["conditions_short"]) {
-                    $(id).append(data["conditions_short"] + ': ');
-                }
-                $(id).append(data["temperature"] + "°C, " + data["humidity"] + "%");
-                if (data["conditions_long"]) {
-                    $(id).append(", " + data["conditions_long"]);
-                }
-                $(id).append("<br/>" + getTimeagostamp(w["timestamp"]));
-                activateTimeago();
-            }
-            function onPrinter(printer) {
-		let data = printer['org.homebus.experimental.printer'];
-                let system = data["system"];
-                let status = data["status"];
-                $(".printer-name").text(system["model"]);
-                $(".printer-status").text(status["status"]);
-                $(".pages-printed").text(status["total_page_count"]);
-            }
-            function onAQI(msg) {
-                let text = "";
-		data = msg["org.homebus.experimental.aqi"];
-
-                data.forEach(function (item, index) {
-                    text += item["name"] + " AQI is " + item["aqi"] + " (" + item["condition"] + ")<br />";
-                });
-                text += getTimeagostamp(msg["timestamp"]);
-                $('#aqi').html(text);
-                activateTimeago();
-            }
-
-            function onLight(msg, container) {
-//		$('#' + container + ' .fa-lightbulb').attr('style', 'color: yellow; opacity: ' + Number(msg['org.homebus.light-switch']['brightness'])/100.0 + ''); 
-
-                if(msg['org.homebus.light-switch']['state'] == 'on') 
-    		    $('#' + container + ' .brightness').text(msg['org.homebus.light-switch']['brightness'] + '%'); 
-                else
-    		    $('#' + container + ' .brightness').text('off');
-            }
-
-            // functions from https://stackoverflow.com/questions/20958078/resize-a-base-64-image-in-javascript-without-using-canvas
-            // resize an image using an off-page canvas
-            function resizeImage() {
-                var newDataUri = imageToDataUri(this, width, height);
-            }
-            function imageToDataUri(base4_image, width, height) {
-                let img = new Image;
-
-                img.onload = resizeImage;
-                img.src = 'data:image/jpeg;base64,' + base64_image;
-                // create an off-screen canvas
-                let canvas = document.createElement('canvas');
-                let ctx = canvas.getContext('2d');
-                // set its dimension to target size
-                canvas.width = width;
-                canvas.height = height;
-                // draw source image into the off-screen canvas:
-                ctx.drawImage(img, 0, 0, width, height);
-                // encode image to data-uri with base64 version of compressed image
-                return canvas.toDataURL();
-            }
-            function onCamera(msg) {
-                var image;
-
-//                console.log('using org.homebus.image'); 
-                image = msg['org.homebus.experimental.image']; 
-//                console.log(image);
-
-		// the following replace helps match against ekko-lightbox which uses new Image when initializing
-                let data = 'data:' + image['mime_type'] + ';base64,' +image['data'].replace(/\n/g,'');
-                let container = '#' + msg['id'];
-
-		if ($(container + ' a[data-toggle="lightbox"]').attr('href') == $('.ekko-lightbox img').attr('src')) $('.ekko-lightbox img').attr('src', data);
-                $(container + ' img').attr('src', data);
-                $(container + ' a[data-toggle="lightbox"]').attr('href', data);
-		updateTimeagostamp(container, msg['timestamp']);
-		let d = new Date();
-		if (d - (Number(msg['timestamp']) * 1000) > 5*60*1000) $(container + ' img').attr('src', 'test-pattern.jpg');
-            }
-            // from https://stackoverflow.com/questions/36098913/convert-seconds-to-days-hours-minutes-and-seconds
-            function secondsToDhms(seconds) {
-                seconds = Number(seconds);
-                var d = Math.floor(seconds / (3600*24));
-                var h = Math.floor(seconds % (3600*24) / 3600);
-                var m = Math.floor(seconds % 3600 / 60);
-                var s = Math.floor(seconds % 60);
-
-                var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
-                var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-                var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-                var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-                return dDisplay + hDisplay + mDisplay + sDisplay;
-            }
-
-            function onServer(msg) {
-                let id = '#'+msg['id'];
-
-                let data = msg['org.homebus.experimental.server-status'];
-
-                if(!data)
-                    return;
-
-                $(id + ' .server-name').text(data['system']['hostname']); 
-                $(id + ' .server-uptime').text(secondsToDhms(data['system']['uptime'])); 
-                $(id + ' .server-load-average').text(data['load']['one_minute'] + '/' + data['load']['five_minutes'] + '/' + data['load']['fifteen_minutes']);
-                $(id + ' .server-memory').text(formatBytes(data['memory']['free']*1024) + ' free/' + formatBytes(data['memory']['total']*1024) + ' total');
-
-                $(id + ' .server-filesystem-info').remove();
-                filesystems = ''
-                data['filesystems'].forEach(function(item, index) {
-                                               filesystems += '<tr class="server-filesystem-info"><td></td><td>' + item['mount_point'] + '</td><td>' + (100 - Number(item['used_percentage'])) + '% free</td></tr>';
-                                            });
-
-                $(id + ' .server-filesystems').after(filesystems);
-
-                $(id + ' time').remove();
-                $(id).append(getTimeagostamp(msg['timestamp']));
-                activateTimeago();
-            }
-
-            function onVendo(msg) {
-                $('#vendo-temperature').text(msg['environment']['temperature']);
-                $('#vendo-humidity').text(msg['environment']['humidity']);
-            }
-
-            function onOctoprint(msg) {
- 	        let id = '#' + msg["id"];
-                let data = msg["org.homebus.experimental.3dprinter"];
-
-                $(id + ' .status').text(data['status']['state']);
-                $(id + ' .filename').text(data['job']['file']);
-                if(data['job']['progress']) {
-                    $(id + ' .print-progress').text(data['job']['progress'].toFixed(2) + '%');
-                    $(id + ' .print-progress').attr('aria-valuenow', data['job']['progress'].toFixed(2));
-                    $(id + ' .print-progress').css("width", + data['job']['progress'].toFixed(2) + '%');
-                }
-                $(id + ' .print-time').text(data['job']['print_time']);
-                $(id + ' .print-time-remaining').text(data['job']['print_time_remaining']);
-                if (data['status']['state'] != 'idle') {
-                    $(id + ' .job').show();
-                }
-                $(id + ' .tool-temp').text(data['temperatures']['tool0_actual']);
-                $(id + ' .tool-temp-target').text(data['temperatures']['tool0_target']);
-                $(id + ' .bed-temp').text(data['temperatures']['bed_actual']);
-                $(id + ' .bed-temp-target').text(data['temperatures']['bed_target']);
-
-                $(id + ' time').remove();
-                $(id).append(getTimeagostamp(msg['timestamp'])); 
-                activateTimeago(); 
-            }
-            function onSunriseSunset(msg) {
-console.log(msg);
-                let data = msg['org.homebus.experimental.solar-clock'];
-try {
-
-                let sunrise_date = new Date(data['sunrise']*1000); 
-                let sunset_date = new Date(data['sunset']*1000); 
-
-                $('.sunrise').text(sunrise_date.getHours() + ':' + sunrise_date.getMinutes() + 'AM'); 
-                $('.sunset').text(sunset_date.getHours() + ':' + sunset_date.getMinutes() + 'PM'); 
-} catch(error) { }
-            }
-            function onGoFundMe(msg) {
-                let data = msg['org.homebus.experimental.gofundme'];
-
-                $('.gofundme').html('$' + data['raised'] + '/' + data['goal'] + ' by ' + data['people'] + ' people in ' + data['days'] + ' days<br/>' + getTimeagostamp(msg['timestamp']));
-                activateTimeago(); 
-            }
-
-            function onPollen(msg) {
-                let data = msg['org.homebus.experimental.pollen'];
-            }
-
-            function dce(tagName) {
-                return document.createElement(tagName);
-            }
-
-            function dctn(text) {
-                return document.createTextNode(text);
-            }
-
-            function initCam(elemList, opts={}) {
-                if (!('keys' in elemList)) elemList = [elemList];
-                elemList.forEach((el)=>{
-                    const graphA = dce('a');
-                    graphA.href = 'graph.html?uuid='+el.id;
-                    graphA.appendChild(dctn(el.getAttribute('name')));
-                    el.appendChild(dce('h2')).appendChild(graphA);
-                    const img = dce('img');
-                    img.src = 'test-pattern.jpg'
-                    img.setAttribute('class', 'img-fluid img-thumbnail');
-                    img.setAttribute('loading', 'lazy');
-                    img.setAttribute('style', 'object-fit: contain'); 
-                    imgA = dce('a');
-                    imgA.setAttribute('data-toggle', 'lightbox');
-                    imgA.appendChild(img);
-                    el.appendChild(imgA);
-                    el.appendChild(dce('time')).setAttribute('class', 'timeago');
-                });
-            }
-
-            function initServer(elemList, opts={}) {
-                if (!('keys' in elemList)) elemList = [elemList];
-                const serverClasses = {
-                    'server-uptime': 'Uptime:',
-                    'server-load-average': 'Load average:',
-                    'server-memory': 'Memory:',
-                };
-                elemList.forEach((el)=>{
-                    const graphA = el.appendChild(dce('h3')).appendChild(dce('a'));
-                    graphA.href = 'graph.html?uuid='+el.id;
-                    graphA.setAttribute('class', 'server-name');
-                    graphA.appendChild(dctn(el.getAttribute('name')));
-                    const serverTable = el.appendChild(dce('table'));
-                    ['server-uptime','server-load-average','server-memory'].forEach((serverClass)=>{
-                        const row = serverTable.appendChild(dce('tr'));
-                        const tdName = row.appendChild(dce('td'));
-                        tdName.appendChild(dctn(serverClasses[serverClass]));
-                        const tdClass = row.appendChild(dce('td'));
-                        tdClass.setAttribute('class', serverClass);
-                        tdClass.setAttribute('colspan', '2');
-                    });
-                    const trFS = serverTable.appendChild(dce('tr'));
-                    trFS.setAttribute('class', 'server-filesystems');
-                    trFS.appendChild(dce('td')).appendChild(dctn('Filesystems:'));
-                    el.appendChild(dce('time')).setAttribute('class', 'timeago');
-                });
-            }
-
-            document.addEventListener('DOMContentLoaded', ()=>{
-                initCam(document.querySelectorAll('div.cam'));
-                initServer(document.querySelectorAll('div.server'));
-            });
-        </script>
-    </body>
+         </div>
+         <!-- row -->
+         <div class='row'>
+            <div class='col-sm-4 load-server-html' id='8cb9e03e-1bfe-4ad7-b96e-e9186956b746' data-name='ctrlh.homebus.io'></div>
+            <div class='col-sm-4 load-server-html' id='59905e56-b683-4b22-bc66-345705a3f27e' data-name='zuul'></div>
+            <div class='col-sm-4 load-server-html' id='0b75a4f6-0467-4986-9b05-fedeba1bbbf8' data-name='prusa-1'></div>
+            <div class='col-sm-4 load-server-html' id='64f0aa9c-aa4e-4ee5-b886-4afe1a557b4a' data-name='prusa-2'></div>
+         </div>
+         <!-- row -->
+         <hr class='hr'>
+         <div class='row'>
+            <div class='col'>
+               <h2 id='devices'>Devices</h2>
+            </div>
+         </div>
+         <div class='row'>
+            <div class='col-md-4 load-device-html' id='638a9d78-09f6-4d92-b70a-2b14edb8d84a'></div>
+            <div class='col-md-4 load-device-html' id='04001f9a-122b-4045-84f4-69b7c7318250'></div>
+            <div class='col-md-4 load-device-html' id='ae1dd9a7-b55c-4255-8f16-7e5c69fd678b'></div>
+         </div>
+         <div class='row'>
+            <div class='col-md-4 load-device-html' id='b3efa04b-dac8-4ddc-bc34-94f1daec3c0a'></div>
+            <div class='col-md-4 load-device-html' id='067746e8-7a2f-4f6e-bb59-e1b2043b37f3'></div>
+            <div class='col-md-4 load-device-html' id='4cf5765b-6a1a-4f05-879f-1285e092beb3'></div><!-- vending machine LEDs -->
+         </div>
+         <div class='row'>
+            <div class='col-md-4 load-device-html' id='ce7bb47f-7e3d-4933-b7a6-195fd7620ead'></div><!-- electronics lab door LED strip -->
+            <div class='col-md-4 load-device-html' id='13923957-c3be-4018-98d8-a300d593e974'></div><!-- garden LEDs -->
+            <div class='col-md-4 load-device-html' id='3b6b0730-9acc-41a4-a995-a319a0f9df6e'></div><!-- chef hat -->
+         </div>
+         <hr class='hr'/>
+         <div class='row d-none'>
+            <div class='col'>
+	      <h2>Log</h2>
+	      <table id='log' class='table table-striped'>
+	      </table>
+            </div>
+         </div>
+         <hr class='hr'/>
+         <div class='row'>
+            <div class='col'>
+               <i>Want to hack this?</i>
+               Source is at
+               <a href='https://github.com/romkey/ctrlh-dashboard'>https://github.com/romkey/ctrlh-dashboard</a>
+            </div>
+         </div>
+      </div>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js' type='text/javascript'></script>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.6.7/jquery.timeago.min.js' integrity='sha384-bIExnxLHdrb4/5cUciUyC490hqkTPFw6V1eUbG0gpKQ67B3dsT6KOdXvl5RycCM6' crossorigin='anonymous'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js' integrity='sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q' crossorigin='anonymous'></script>
+      <script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js' crossorigin='anonymous'></script>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js' integrity='sha384-bqIl0+8hxcMpOFf8O3ffwAy5qTUbFPyuNFytX/omkD4RDPMOBtt/uV6Lqlw7sljM' crossorigin='anonymous'></script>
+      <script src='https://ctrlh.romkey.com/credentials.js'></script>
+      <script src='dashboard.js'></script>
+   </body>
 </html>

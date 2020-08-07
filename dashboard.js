@@ -69,12 +69,12 @@ $(document).ready(function() {
     });
     
     // MQTT/Homebus setup - should be wrapped in a Homebus class
-    client = new Paho.Client(credentials.MQTT_SERVER, credentials.MQTT_PORT, credentials.MQTT_UUID + new Date().getTime());
+    client = new Paho.Client(credentials.MQTT_SERVER, 4569, credentials.MQTT_UUID + new Date().getTime());
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
 
     let options = {
-	useSSL: false,
+	useSSL: true,
 	userName: credentials.MQTT_USERNAME,
 	password: credentials.MQTT_PASSWORD,
 	onSuccess:onConnect,

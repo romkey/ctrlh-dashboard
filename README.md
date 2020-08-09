@@ -15,7 +15,7 @@ Container elements may use several [`data-` attributes](https://developer.mozill
 - `data-gallery` - a gallery name to allow ekko-lightbox to group images
 - `data-transform`- the name of a simple function to call to transform data before storing it. Transforms should do simple math or string computations but avoid anything which might block the event loop or take a long time to run.
 
-Container elements should have an `id` set to the `UUID` of the Homebus data they are presenting. They may have a class set to the DDC of the data with dots translated to underscores (for instance, `org.homebus.experimental.air-sensor` would be `org_homebus_experimental_air_sensor`) in order to avoid compatability issues and ambiguities with the `.` character inside CSS class names.
+Container elements should have an `id` set to the `UUID` of the Homebus data they are presenting. Elements with the container tagged with the `UUID` may have a class set to the DDC of the data with dots translated to dashes (for instance, `org.homebus.experimental.air-sensor` would be `org-homebus-experimental-air-sensor`) in order to avoid compatability issues and ambiguities with the `.` character inside CSS class names.
 
 ## Contributing
 

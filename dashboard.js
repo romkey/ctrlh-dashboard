@@ -41,6 +41,17 @@ $(document).ready(function() {
 	return results;
     };
 
+    transforms['transform_filesystems'] = function(value, ddc_type, ddc) {
+	let results = '';
+
+	ddc['filesystems'].forEach(function(item, index) {
+            results += '<tr><td></td><td>' + item['mount_point'] + '</td><td>' + (100 - Number(item['used_percentage'])) + '% free</td></tr>';
+	});
+
+	return results;
+    };
+
+
     // from https://stackoverflow.com/questions/36098913/convert-seconds-to-days-hours-minutes-and-seconds
     function secondsToDhms(seconds) {
 	seconds = Number(seconds);
@@ -314,15 +325,6 @@ function onImage(src, ddc, timestamp, payload) {
     setTimeago(container, timestamp);
 }
 
-//
-//    $(id + ' .server-filesystem-info').remove();
-//    filesystems = ''
-//    payload['filesystems'].forEach(function(item, index) {
-//        filesystems += '<tr class="server-filesystem-info"><td></td><td>' + item['mount_point'] + '</td><td>' + (100 - Number(item['used_percentage'])) + '% free</td></tr>';
-//    });
-
-//    $(id + ' .server-filesystems').after(filesystems);
-
 /*
  * for the moment we're keeping this for reference; this should be removed after the 3D printer template has been thoroughly tested
 
@@ -436,9 +438,14 @@ function initServerHTML(selector) {
 	      <td>Memory:</td>
               <td><span class='org-homebus-experimental-server-status memory free' data-transform='transform_thousands'></span> free/<span class='org-homebus-experimental-server-status memory total'  data-transform='transform_thousands'></span> total</td>
 	    </tr>
-            <tr>
-	      <td class='org-homebus-experimental-server-status filesystems'>Filesystems:</td>
+	    <tr>
+	      <td>Filesystems</td>
 	    </tr>
+	  </table>
+
+	  <table class='table'>
+	    <tbody class='org-homebus-experimental-server-status filesystems' data-transform='transform_filesystems'>
+	    </tbody>
 	  </table>
           <p>
     	    <time class='timeago'></time>

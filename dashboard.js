@@ -41,13 +41,37 @@ $(document).ready(function() {
 	return results;
     };
 
-    transforms['transform_bps'] = function(value, ddc_type, ddc) {
-	if(value == 0)
-	    return '0bps';
+    // from https://stackoverflow.com/questions/36098913/convert-seconds-to-days-hours-minutes-and-seconds
+    function secondsToDhms(seconds) {
+	seconds = Number(seconds);
+	var d = Math.floor(seconds / (3600*24));
+	var h = Math.floor(seconds % (3600*24) / 3600);
+	var m = Math.floor(seconds % 3600 / 60);
+	var s = Math.floor(seconds % 60);
 
-	const sizes = [ 'Bps', 'KBbps', 'MBps', 'GBps', 'TBps', 'PBps', 'EBps', 'ZBps', 'YBps' ];
+	var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
+	var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
+	var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+	var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+	return dDisplay + hDisplay + mDisplay + sDisplay;
+    }
+
+    transforms['transform_seconds_to_dhms'] = function(value, ddc_type, ddc) {
+	return secondsToDhms(value);
+    };
+
+
+    function thousandsSuffix(value) {
+	if(value == 0)
+	    return '0';
+
+	const sizes = [ '', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y' ];
 	const i = Math.floor(Math.log(value) / Math.log(1024));
 	return parseFloat((value / Math.pow(1024, i)).toFixed(1)) + ' ' + sizes[i];
+    };
+
+    transforms['transform_thousands'] = function(value, ddc_type, ddc) {
+	return thousandsSuffix(value);
     }
 
     initImageHTML('.load-image-html'); 
@@ -135,10 +159,6 @@ function onConnectionLost(responseObject) {
     console.log("connection lost");
 }
 
-// shamelessly taken from https://stackoverflow.com/questions/15900485/correct-way-to-convert-size-in-bytes-to-kb-mb-gb-in-javascript
-function formatBytes(bytes, decimals = 2) {
-}
-
 // much of this should be inside a Homebus JS class
 function onMessageArrived(message) {
     $('.activity-bar').addClass('hr-green');
@@ -149,6 +169,7 @@ function onMessageArrived(message) {
 //    console.log('onMessageArrived:' + message.payloadString);
 //    console.log('topic is ' + message.destinationName, message); 
 
+    // this is the start of what should be hidden by Homebus
     let data = {};
 
     try {
@@ -173,28 +194,14 @@ function onMessageArrived(message) {
         }
     }
 
-    if(timestamp) {
-        setTimeago('#last_updated_container', timestamp);
-    }
+    // this is the end of what should be hidden by Homebus
 
+ 
+
+    // if there's no source this is an old style message and should be ignored
     if(!source) return;
     
-    if(ddc === 'org.homebus.experimental.image') {
-	onImage(source, ddc, timestamp, payload); 
-	return; 
-    }
-
-    if(ddc === 'org.homebus.experimental.server-status') {
-	onServer(source, ddc, timestamp, payload);
-	return;
-    }
-
-    if(ddc === 'org.homebus.experimental.3dprinter') {
-	on3DPrinter(source, ddc, timestamp, payload);
-	return;
-    }
-
-    onGeneric(source, ddc, timestamp, payload);
+    processMessage(source, ddc, timestamp, payload, '');
 }
 
 function setTimeago(container, timestamp) {
@@ -208,15 +215,26 @@ function setTimeago(container, timestamp) {
     }
 }
 
-function onGeneric(source, ddc, timestamp, payload) {
-//    console.info('onGeneric', source, ddc, timestamp, String(payload).substr(0, 23));
+function processMessage(source, ddc, timestamp, payload, leaf = '') {
+    if(ddc === 'org.homebus.experimental.image') {
+	onImage(source, ddc, timestamp, payload); 
+	return; 
+    }
 
 //    $('#log').prepend('<tr><td>' + source + '</td><td>' + ddc + '</td><td><pre>' + JSON.stringify(payload).substr(0, 200) + '</pre></td></tr>');
 
     for(prop in payload) {
+	let current_leaf = leaf + '.' + prop;
+
+	// do not recurse into arrays...
+	if(typeof payload[prop] === 'object' && !(payload[prop] instanceof Array)) {
+            processMessage(source, ddc, timestamp, payload[prop], current_leaf);
+	    continue;
+	}
+
 	let rewritten_ddc = ddc.replace(/\./g, '-');
-	let sel1 = '.' + source + '.' + rewritten_ddc + ' .' + prop;
-	let sel2 = '#' + source + ' .' + rewritten_ddc + '.' + prop; 
+	let sel1 = '.' + source + '.' + rewritten_ddc + current_leaf;
+	let sel2 = '#' + source + ' .' + rewritten_ddc + current_leaf;
 	let sels = [sel1, sel2].join(', ');
 
 	$(sels).each(function(index) {
@@ -225,7 +243,7 @@ function onGeneric(source, ddc, timestamp, payload) {
 	    if(transformer_name && transforms.hasOwnProperty(transformer_name)) {
 		try {
 		    let f = transforms[transformer_name];
-		    $(this).attr('data-value', payload[prop]);
+		    $(this).attr('data-value', JSON.stringify(payload[prop]));
 		    $(this).html(f(payload[prop], ddc, payload));
 		} catch(error) {
 		    console.error('transformer failed: ' + transformer_name, error);
@@ -238,8 +256,13 @@ function onGeneric(source, ddc, timestamp, payload) {
 	$(sels).timeago();
     }
 
-    if(timestamp)
+    if(timestamp) {
 	setTimeago('#' + source, timestamp);
+
+	if(leaf == '')
+            setTimeago('#page_last_updated', timestamp);
+    }
+            setTimeago('#page_last_updated', timestamp);
 }
 
 
@@ -261,15 +284,6 @@ function onLaserCutterAccess(access, message) {
     onLaserCutterAccess.last_access = message.payloadString;
 
     $('#laser-cutter-access ul').prepend("<li class='list-group-item'>" + access["action"] + " by " + access["person"] + "</li>");
-}
-
-function onPrinter(printer) {
-    let data = printer['org.homebus.experimental.printer'];
-    let system = data["system"];
-    let status = data["status"];
-    $(".printer-name").text(system["model"]);
-    $(".printer-status").text(status["status"]);
-    $(".pages-printed").text(status["total_page_count"]);
 }
 
 function onLight(msg, container) {
@@ -300,32 +314,6 @@ function onImage(src, ddc, timestamp, payload) {
     setTimeago(container, timestamp);
 }
 
-// from https://stackoverflow.com/questions/36098913/convert-seconds-to-days-hours-minutes-and-seconds
-function secondsToDhms(seconds) {
-    seconds = Number(seconds);
-    var d = Math.floor(seconds / (3600*24));
-    var h = Math.floor(seconds % (3600*24) / 3600);
-    var m = Math.floor(seconds % 3600 / 60);
-    var s = Math.floor(seconds % 60);
-
-    var dDisplay = d > 0 ? d + (d == 1 ? " day, " : " days, ") : "";
-    var hDisplay = h > 0 ? h + (h == 1 ? " hour, " : " hours, ") : "";
-    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-    return dDisplay + hDisplay + mDisplay + sDisplay;
-}
-
-function onServer(src, ddc, timestamp, payload) {
-  let sel = '#' + src + ' .' + 'org-homebus-experimental-server-status.';
-
-  $(sel + 'hostname').text(payload['system']['hostname']); 
-  $(sel + 'uptime').text(secondsToDhms(payload['system']['uptime'])); 
-  $(sel + 'load').text(payload['load']['one_minute'] + '/' + payload['load']['five_minutes'] + '/' + payload['load']['fifteen_minutes']); 
-  $(sel + 'memory').text(formatBytes(payload['memory']['free']*1024) + ' free/' + formatBytes(payload['memory']['total']*1024) + ' total'); 
-
-  setTimeago('#' + src, timestamp); 
-}
-
 //
 //    $(id + ' .server-filesystem-info').remove();
 //    filesystems = ''
@@ -335,10 +323,8 @@ function onServer(src, ddc, timestamp, payload) {
 
 //    $(id + ' .server-filesystems').after(filesystems);
 
-function onVendo(msg) {
-    $('#vendo-temperature').text(msg['environment']['temperature']);
-    $('#vendo-humidity').text(msg['environment']['humidity']);
-}
+/*
+ * for the moment we're keeping this for reference; this should be removed after the 3D printer template has been thoroughly tested
 
 function on3DPrinter(src, ddc, timestamp, payload) {
     let id = '#' + src;
@@ -362,6 +348,7 @@ function on3DPrinter(src, ddc, timestamp, payload) {
 
     setTimeago(id, timestamp);
 }
+*/
 
 // Multiline Function String - Nate Ferrero - Public Domain
 // from https://stackoverflow.com/questions/4376431/javascript-heredoc
@@ -399,18 +386,30 @@ function initImageHTML(selector) {
 function init3DPrinterHTML(selector) {
     let printerHTML = heredoc(function() {
 	/*
-	  <h6 class='status'></h6>
+	  <h6 class='org-homebus-experimental-3dprinter status state'></h6>
   	  <div class='job' style='display: none'>
-	  <ul>
-	  <li>Filename: <span class='filename'></span></li>
-	  <li>Progress: <span class='print-progress'></span>%</li>
-	  <li>Time Remaining: <span class='print-time'></span> of <span class='print-time-remaining'></span> sec</li>
-          </ul>
+	    <ul>
+	      <li>Filename: <span class='org-homebus-experimental-3dprinter job file'></span></li>
+	      <li>Progress: <span class='org-homebus-experimental-3dprinter job progress'></span>%</li>
+	      <li>Time Remaining: <span class='org-homebus-experimental-3dprinter job progress print_time'></span> of <span class='org-homebus-experimental-3dprinter job print_time_remaining'></span> sec</li>
+            </ul>
 	  </div>
 	  <table class='table'>
-	  <tr><th>temp</th><th>actual</th><th>target</th></tr>
-	  <tr><td>tool</td><td><span class='tool-temp'></span>°C</td><td><span class='tool-temp-target'></span>°C</td></tr>
-	  <tr><td>bed</td><td><span class='bed-temp'></span>°C</td><td><span class='bed-temp-target'></span>°C</td></tr>
+	    <tr>
+	      <th>temp</th>
+	      <th>actual</th>
+	      <th>target</th>
+	    </tr>
+	    <tr>
+	      <td>tool</td>
+	      <td class='org-homebus-experimental-3dprinter temperatures tool0_actual' data-transform='transform_temperature'></td>
+	      <td class='org-homebus-experimental-3dprinter temperatures tool0_target' data-transform='transform_temperature'></td>
+	    </tr>
+	    <tr>
+	      <td>bed</td>
+	      <td class='org-homebus-experimental-3dprinter temperatures bed_actual' data-transform='transform_temperature'></td>
+	      <td class='org-homebus-experimental-3dprinter temperatures bed_target' data-transform='transform_temperature'></td>
+	    </tr>
 	  </table>
           <p>
 	    <time class='timeago'></time>
@@ -423,37 +422,23 @@ function init3DPrinterHTML(selector) {
 function initServerHTML(selector) {
     let serverHTML = heredoc(function() {
 	/*
-	  <h3 class='org-homebus-experimental-server-status hostname'></a>
-	  </h3>
+	  <h3 class='org-homebus-experimental-server-status system hostname'></h3>
 	  <table class='table table-striped'>
-	  <tr>
-	  <td>
-	  Uptime:
-	  </td>
-	  <td class='org-homebus-experimental-server-status uptime'>
-	  
-	  </td>
-	  </tr>
-	  <tr>
-	  <td>
-	  Load average:
-	  </td>
-	  <td class='org-homebus-experimental-server-status load'>
-	  
-	  </td>
-	  </tr>
-	  <tr>
-	  <td>
-	  Memory:
-	  </td>
-	  <td class='org-homebus-experimental-server-status memory'>
-	  </td>
-	  </tr>
-	  <tr>
-	  <td class='org-homebus-experimental-server-status filesystems'>
-          Filesystems:
-	  </td>
-	  </tr>
+	    <tr>
+	      <td>Uptime:</td>
+	      <td class='org-homebus-experimental-server-status system uptime' data-transform='transform_seconds_to_dhms'></td>
+  	    </tr>
+	    <tr>
+	      <td>Load Average:</td>
+              <td><span class='org-homebus-experimental-server-status load one_minute'></span>/<span class='org-homebus-experimental-server-status load five_minutes'></span>/<span class='org-homebus-experimental-server-status load fifteen_minutes'></span></td>
+	    </tr>
+	    <tr>
+	      <td>Memory:</td>
+              <td><span class='org-homebus-experimental-server-status memory free' data-transform='transform_thousands'></span> free/<span class='org-homebus-experimental-server-status memory total'  data-transform='transform_thousands'></span> total</td>
+	    </tr>
+            <tr>
+	      <td class='org-homebus-experimental-server-status filesystems'>Filesystems:</td>
+	    </tr>
 	  </table>
           <p>
     	    <time class='timeago'></time>
@@ -538,7 +523,7 @@ function initDeviceHTML(selector) {
 	  <td>Platform</td><td class='org-homebus-experimental-system platform'></td>
 	  </tr>
 	  <tr>
-	  <td>Uptime</td><td class='org-homebus-experimental-diagnostic uptime'></td>
+	  <td>Uptime</td><td class='org-homebus-experimental-diagnostic uptime' data-transform='transform_seconds_to_dhms'></td>
 	  </tr>
 	  <tr>
 	  <td>RSSI</td><td class='org-homebus-experimental-diagnostic rssi'></td>

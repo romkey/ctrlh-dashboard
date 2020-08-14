@@ -1,6 +1,7 @@
 $(document).ready(function() {
     let client;
     let transforms = {};
+    let temperature_units = Cookies.get('temperature_units') || 'C';
 
     transforms['transform_hours'] = function(value) {
 	let d = new Date(value*1000);
@@ -9,7 +10,14 @@ $(document).ready(function() {
     };
 
     transforms['transform_temperature'] = function(value) {
-	return String((Number(value)*9/5+32).toFixed(1)) + '°F';
+	if(temperature_units === 'F')
+	    return String((Number(value)*9/5+32).toFixed(1)) + '°F';
+	if(temperature_units === 'C')
+	    return Number(value).toFixed(1) + '°C';
+	if(temperature_units === 'K')
+	    return (Number(value) + 273.15).toFixed(1) + '°K';
+
+	return '??.?°' + temperature_units;
     };
 
     transforms['transform_pms'] = function(value, ddc_type, ddc) {
@@ -102,7 +110,25 @@ $(document).ready(function() {
         event.preventDefault();
         $(this).ekkoLightbox();
     });
-    
+
+    // enable temperature unit button
+    $('#temperature-units').val(temperature_units);
+    $('#temperature-units').change(function() {
+	$("select#temperature-units option:selected").each(function() {
+	    temperature_units = $(this).text();
+	    Cookies.set('temperature_units', temperature_units, { expires: 365 });
+
+	    $('[data-transform="transform_temperature"]').each(function() {
+		let json = $(this).attr('data-value');
+		console.error(json);
+		if(json) {
+		    let temperature = JSON.parse($(this).attr('data-value'));
+		    $(this).html(transforms['transform_temperature'](temperature));
+		}
+	    });
+	});
+    });
+
     // MQTT/Homebus setup - should be wrapped in a Homebus class
     client = new Paho.Client(credentials.MQTT_SERVER, 4569, credentials.MQTT_UUID + new Date().getTime());
     client.onConnectionLost = onConnectionLost;

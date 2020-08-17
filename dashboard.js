@@ -271,7 +271,7 @@ function processMessage(source, ddc, timestamp, payload, leaf = '') {
 
 	let rewritten_ddc = ddc.replace(/\./g, '-');
 	let sel1 = '.' + source + '.' + rewritten_ddc + current_leaf;
-	let sel2 = '#' + source + ' .' + rewritten_ddc + current_leaf;
+	let sel2 = '[data-homebus-uuid="' + source + '"] .' + rewritten_ddc + current_leaf;
 	let sels = [sel1, sel2].join(', ');
 
 	$(sels).each(function(index) {
@@ -294,7 +294,7 @@ function processMessage(source, ddc, timestamp, payload, leaf = '') {
     }
 
     if(timestamp) {
-	setTimeago('#' + source, timestamp);
+	setTimeago('[data-homebus-uuid="' + source + '"]', timestamp);
 
 	if(leaf == '')
             setTimeago('#page_last_updated', timestamp);
@@ -333,7 +333,7 @@ function onLight(msg, container) {
 function onImage(src, ddc, timestamp, payload) {
     // the following replace helps match against ekko-lightbox which uses new Image when initializing
     let data = 'data:' + payload['mime_type'] + ';base64,' +payload['data'].replace(/\n/g,'');
-    let container = '#' + src;
+    let container = '[data-homebus-uuid="' + src + '"]';
 
     if ($(container + ' a[data-toggle="lightbox"]').attr('href') == $('.ekko-lightbox img').attr('src')) $('.ekko-lightbox img').attr('src', data);
 
@@ -541,6 +541,9 @@ function initDeviceHTML(selector) {
 	  <h3 class='org-homebus-experimental-system name'></h3>
 	  <table class='table  table-striped'>
 	  <tr>
+	  <td>UUID</td><td>{UUID}</td>
+	  </tr>
+	  <tr>
 	  <td>Platform</td><td class='org-homebus-experimental-system platform'></td>
 	  </tr>
 	  <tr>
@@ -570,8 +573,12 @@ function initDeviceHTML(selector) {
 	  </p>
 	*/
     });
-    $(selector).html(deviceHTML);
-};
+    $(selector).each(function(index) {
+	let uuid = $(this).closest('[data-homebus-uuid]').attr('data-homebus-uuid');
+	let named_html = deviceHTML.replace('{UUID}', uuid);
+
+	$(this).html(named_html);
+    });};
 
 function initLEDHTML(selector) {
     let ledHTML = heredoc(function() {

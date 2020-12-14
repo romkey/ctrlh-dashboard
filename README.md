@@ -2,7 +2,7 @@
 
 This is a prototype dashboard for [PDX Hackerspace](https://pdxhackerspace.org).
 
-The dashboard pulls data from an MQTT broker using the Homebus protocol. Homebus uses MQTT defines a structured data-oriented network layer above MQTT which enforces access control based on the types of data.
+The dashboard pulls data from an MQTT broker using the Homebus protocol. Homebus is a data-focussed network that defines a structured data-oriented network layer and uses MQTT  as its transport. It enforces access control based on the types, sources and destinations of data.
 
 The dashboard depends on Bootstrap, Bootswatch, jQuery, [Timeago](https://timeago.yarp.com/) and [ekko lightbox](https://ashleydw.github.io/lightbox/).
 
@@ -14,8 +14,9 @@ Container elements may use several [`data-` attributes](https://developer.mozill
 - `data-name` - a human-friendly name for the element (for instance, 'Prusa-1' or 'Garden').
 - `data-gallery` - a gallery name to allow ekko-lightbox to group images
 - `data-transform`- the name of a simple function to call to transform data before storing it. Transforms should do simple math or string computations but avoid anything which might block the event loop or take a long time to run.
+- `data-homebus-uuid` - a Homebus UUID which declares this element to be a container for Homebus data from the device corresponding to `uuid`.
 
-Container elements should have an `id` set to the `UUID` of the Homebus data they are presenting. Elements with the container tagged with the `UUID` may have a class set to the DDC of the data with dots translated to dashes (for instance, `org.homebus.experimental.air-sensor` would be `org-homebus-experimental-air-sensor`) in order to avoid compatability issues and ambiguities with the `.` character inside CSS class names.
+Container elements should have an `data-homebus-uuid` set to the `UUID` of the Homebus data they are presenting. Elements with the container tagged with the `UUID` may have a class set to the DDC of the data with dots translated to dashes (for instance, `org.homebus.experimental.air-sensor` would be `org-homebus-experimental-air-sensor`) in order to avoid compatability issues and ambiguities with the `.` character inside CSS class names.
 
 ## Contributing
 

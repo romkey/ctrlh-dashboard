@@ -168,6 +168,9 @@ function onConnect() {
       'org.homebus.experimental.air-sensor',
       'org.homebus.experimental.air-quality-sensor',
       'org.homebus.experimental.light-sensor',
+      'org.homebus.experimental.uv-light-sensor',
+      'org.homebus.experimental.soil-sensor',
+      'org.homebus.experimental.temperature-sensor',
       'org.homebus.experimental.system', 
       'org.homebus.experimental.diagnostic', 
       'org.homebus.experimental.3dprinter',
@@ -248,7 +251,7 @@ function setTimeago(container, timestamp) {
 	d = new Date(timestamp*1000);
 	$(container + ' .timeago').timeago('update', d.toISOString()); 
     } catch(error) {
-	console.error('setTimeago() error:', error, timestamp);
+	console.error('setTimeago() error:', error, timestamp, $(container).attr('id'));
     }
 }
 
@@ -484,7 +487,7 @@ function initServerHTML(selector) {
 function initWeatherHTML(selector) {
     let weatherHTML = heredoc(function() {
 	/*
-          <h2>Weather</h2>
+          <h2>{NAME}</h2>
 	  <table class='table'>
 	  <tr>
 	  <td>Temperature</td>
@@ -509,6 +512,13 @@ function initWeatherHTML(selector) {
 	*/
     });
     $(selector).html(weatherHTML);
+
+
+    $(selector).each(function(index) {
+	let name = $(this).attr('data-name');
+	let named_html = weatherHTML.replace('{NAME}', name);
+	$(this).html(named_html);
+    });
 };
 
 function initAQIHTML(selector) {
